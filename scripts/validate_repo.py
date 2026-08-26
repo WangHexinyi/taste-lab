@@ -20,6 +20,8 @@ ARCHIVES = {
     "v0.4": ROOT / "archive" / "v0.4" / "TASTE_SKILL_V3.4_SINGLE_FILE_TEST.md",
 }
 DEMO_COUNTS = {"v0.0": 1, "v0.1": 1, "v0.2": 3, "v0.3": 2, "v0.4": 1}
+PREVIEW_COUNTS = {"v0.1": 1, "v0.2": 3, "v0.3": 2, "v0.4": 1}
+ANIMATION_COUNTS = {"v0.1": 1, "v0.2": 3, "v0.3": 2, "v0.4": 1}
 SECRET_PATTERNS = (
     re.compile(r"gh[pousr]_[A-Za-z0-9]{20,}"),
     re.compile(r"sk-[A-Za-z0-9]{20,}"),
@@ -95,6 +97,22 @@ def validate_archive_and_demos(errors: list[str]) -> None:
                 continue
             if not parser.title:
                 errors.append(f"missing HTML title: {path.relative_to(ROOT)}")
+    for version, expected in PREVIEW_COUNTS.items():
+        directory = ROOT / "docs" / "previews" / version
+        files = sorted(directory.glob("*.jpg")) if directory.is_dir() else []
+        if len(files) != expected:
+            errors.append(f"{version} expected {expected} README preview(s), found {len(files)}")
+        for path in files:
+            if path.stat().st_size < 10_000:
+                errors.append(f"preview is unexpectedly small: {path.relative_to(ROOT)}")
+    for version, expected in ANIMATION_COUNTS.items():
+        directory = ROOT / "docs" / "previews" / version
+        files = sorted(directory.glob("*.webp")) if directory.is_dir() else []
+        if len(files) != expected:
+            errors.append(f"{version} expected {expected} animated preview(s), found {len(files)}")
+        for path in files:
+            if path.stat().st_size < 100_000:
+                errors.append(f"animated preview is unexpectedly small: {path.relative_to(ROOT)}")
 
 
 def validate_gallery_links(errors: list[str]) -> None:
@@ -113,6 +131,16 @@ def validate_gallery_links(errors: list[str]) -> None:
             errors.append(f"broken local gallery link: {href}")
 
 
+def validate_readme_previews(errors: list[str]) -> None:
+    readme = (ROOT / "README.md").read_text(encoding="utf-8")
+    refs = re.findall(r'src="(docs/previews/[^"]+\.webp)"', readme)
+    if len(refs) != 7 or len(set(refs)) != 7:
+        errors.append(f"README must embed 7 unique animated previews, found {len(set(refs))}")
+    for ref in refs:
+        if not (ROOT / ref).is_file():
+            errors.append(f"README references a missing animated preview: {ref}")
+
+
 def validate_secrets(errors: list[str]) -> None:
     suffixes = {".md", ".html", ".yml", ".yaml", ".py", ".txt"}
     for path in ROOT.rglob("*"):
@@ -129,12 +157,13 @@ def main() -> int:
     validate_skill(errors)
     validate_archive_and_demos(errors)
     validate_gallery_links(errors)
+    validate_readme_previews(errors)
     validate_secrets(errors)
     if errors:
         for error in errors:
             print(f"ERROR: {error}", file=sys.stderr)
         return 1
-    print("Taste Lab validation passed: canonical Skill, 5 archives, 8 gallery pages, links and secret scan.")
+    print("Taste Lab validation passed: canonical Skill, 5 archives, 8 gallery pages, 7 static and 7 animated WebP previews, links and secret scan.")
     return 0
 
 

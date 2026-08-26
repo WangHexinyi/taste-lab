@@ -1,3 +1,6 @@
 * text=auto eol=lf
 *.html linguist-detectable=true
 *.md linguist-detectable=true
+*.jpg binary
+*.gif binary
+*.webp binary

@@ -4,7 +4,8 @@ All notable public releases of Taste Lab are documented here.
 
 ## [Unreleased]
 
-- Reserve this section for the next decision-architecture iteration.
+- Rebuilt the repository README as a direct visual portfolio.
+- Added 30-second, 18 FPS browser-rendered previews for all seven archived HTML demos, cropped to keep browser scrollbars out of frame.
 
 ## [0.4.0] - 2026-08-26
 
