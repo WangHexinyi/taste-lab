@@ -1,4 +1,4 @@
-# TASTE-OVERRIDE (delta-only v2.1: overrides only where skill defaults diverge)
+# TASTE-OVERRIDE (delta-only v2.2: overrides only where skill defaults diverge)
 - Aesthetic family: editorial/luxury; serif display justified (serif discipline override).
 - Palette: morandi low-sat gray (HSL S 10-24%, L 46-64%), stage hue drawn per session;
   overrides "neutral + one high-contrast accent" default.
@@ -21,6 +21,19 @@
   (fully out of viewport) AND after 400ms grace; content still on screen must never fade out.
 - NATIVE SCROLL IS SACRED: never preventDefault on wheel/touch; all motion driven by
   native scroll position; page must scroll normally even if every CDN script fails.
+- IMAGE POLICY (CRITICAL): MUST use real product photography or high-quality realistic 
+  images (Unsplash/Picsum/official brand assets). BANNED: hand-drawn SVG illustrations, 
+  abstract placeholder graphics, div-based mockups,简笔画-style icons for hero/product 
+  sections. Tech/hardware pages require实物图 showing actual PCB circuits, GPU chips, 
+  product shots, server rooms. Use <img> with real URLs, not inline SVG placeholders.
+- VISUAL IMPACT FOR TECH/HARDWARE: When brief mentions "视觉冲击", "stunning visuals", 
+  "premium showcase", or involves hardware/GPU/AI infrastructure: MOTION_INTENSITY 
+  automatically bumps to 8-9. Deploy: parallax scrolling, border glow animations, 
+  3D tilt cards on hover, gradient pulse backgrounds, neon text glow effects, grain 
+  texture overlays. Default aesthetic shifts to "dark tech with brand accent color".
+- PROMPT INTERPRETATION: If user says "平庸/too plain/boring", immediately escalate 
+  VISUAL_IMPACT: add layered gradients, increase MOTION_INTENSITY by +2, introduce 
+  physics-based hover states, add ambient particle effects or mesh gradient animation.
 
 ---
 ---
