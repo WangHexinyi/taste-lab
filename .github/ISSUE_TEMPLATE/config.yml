@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Open-ended design discussion
+    url: https://github.com/WangHexinyi/taste-lab/discussions
+    about: Explore taste, trade-offs and early ideas before turning them into fixed rules.
+  - name: Private security report
+    url: https://github.com/WangHexinyi/taste-lab/security/advisories/new
+    about: Report vulnerabilities or accidental secret exposure privately.

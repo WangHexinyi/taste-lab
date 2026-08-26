@@ -1,0 +1,5 @@
+interface:
+  display_name: "Taste Lab Frontend"
+  short_description: "Decision-driven art direction for better frontends"
+  brand_color: "#66705F"
+  default_prompt: "Use $design-taste-frontend to design and implement this interface from the brief."

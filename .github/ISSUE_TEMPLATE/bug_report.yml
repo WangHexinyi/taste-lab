@@ -1,0 +1,43 @@
+name: Skill behavior bug
+description: Report a reproducible failure or contradiction in the current Skill.
+title: "[Bug]: "
+labels:
+  - bug
+body:
+  - type: markdown
+    attributes:
+      value: Thanks for supplying rendered evidence instead of a purely theoretical complaint.
+  - type: input
+    id: environment
+    attributes:
+      label: Agent and environment
+      description: Model, tool, framework and browser if relevant.
+    validations:
+      required: true
+  - type: textarea
+    id: brief
+    attributes:
+      label: Original brief
+      description: Remove secrets and private data before posting.
+    validations:
+      required: true
+  - type: textarea
+    id: observed
+    attributes:
+      label: Observed result
+      description: Link a demo, screenshots or a minimal reproduction.
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected decision or behavior
+    validations:
+      required: true
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Safety checks
+      options:
+        - label: I removed credentials, personal data and proprietary assets.
+          required: true

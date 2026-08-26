@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="zh-CN" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>行迹考 · THE CARTOGRAPHY OF SOLITUDE</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&family=Noto+Serif+SC:wght@300;400;600;900&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+  
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            paper: '#F7F5F0',       // 纸本底色
+            'paper-dark': '#EFECE4',  // 暗部纸张/边框
+            ink: '#181817',         // 主油墨黑
+            'ink-muted': '#6B6860',  // 次级说明文本
+            'ink-light': '#9E9A90',  // 边缘注记/元数据
+            ochre: '#8C6842',       // 矿物土赭印记色
+            moss: '#48554B'         // 远山冷苔绿
+          },
+          fontFamily: {
+            serif: ['"Cormorant Garamond"', '"Noto Serif SC"', 'serif'],
+            mono: ['"Space Mono"', 'monospace'],
+            chinese: ['"Noto Serif SC"', 'serif']
+          },
+          letterSpacing: {
+            'widest-plus': '0.25em',
+            'editorial': '0.15em'
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* 杂志排版精修 */
+    ::selection {
+      background-color: #181817;
+      color: #F7F5F0;
+    }
+    .vertical-mode {
+      writing-mode: vertical-rl;
+    }
+    .fine-border {
+      border-color: rgba(24, 24, 23, 0.12);
+    }
+    .grain-overlay {
+      background-image: radial-gradient(rgba(24, 24, 23, 0.04) 1px, transparent 0);
+      background-size: 24px 24px;
+    }
+    /* 图片微弱渐现 */
+    .img-fade {
+      transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), filter 0.8s ease;
+    }
+    .img-fade:hover {
+      transform: scale(1.015);
+    }
+  </style>
+</head>
+<body class="bg-paper text-ink font-chinese antialiased selection:bg-ink selection:text-paper grain-overlay min-h-screen">
+
+  <header class="border-b fine-border sticky top-0 bg-paper/95 backdrop-blur-sm z-50">
+    <div class="max-w-7xl mx-auto px-6 sm:px-10 h-16 flex items-center justify-between font-mono text-xs text-ink-muted">
+      <div class="flex items-center space-x-6">
+        <span class="tracking-widest uppercase font-semibold text-ink">VOL. 08</span>
+        <span class="hidden sm:inline border-l fine-border pl-6 text-ink-light">AUTUMN / EXPEDITION ARCHIVE</span>
+      </div>
+      
+      <div class="font-serif italic text-base tracking-widest text-ink">
+        行 迹 考
+      </div>
+
+      <nav class="flex items-center space-x-8 text-xs tracking-wider">
+        <a href="#prologue" class="hover:text-ink transition-colors">序言</a>
+        <a href="#chapter-1" class="hover:text-ink transition-colors">脊线</a>
+        <a href="#chapter-2" class="hover:text-ink transition-colors">人烟</a>
+        <a href="#colophon" class="hover:text-ink transition-colors">版记</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="max-w-7xl mx-auto px-6 sm:px-10">
+
+    <section id="prologue" class="pt-16 sm:pt-24 pb-20 border-b fine-border">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-baseline mb-12">
+        <div class="lg:col-span-8">
+          <p class="font-mono text-xs uppercase tracking-widest-plus text-ochre mb-4">Essays & Photography 2021—2026</p>
+          <h1 class="text-4xl sm:text-6xl md:text-7xl font-serif font-light leading-[1.1] tracking-tight text-ink">
+            在万物的裂隙中，<br />
+            <span class="italic font-normal">辨认光阴的形制。</span>
+          </h1>
+        </div>
+        <div class="lg:col-span-4 font-serif text-sm leading-relaxed text-ink-muted flex flex-col justify-between">
+          <p class="mb-4">
+            「我们测量山峰与河谷的高度，不过是为了度量人类灵魂在荒原中的重量。镜头留下的不是证据，而是我们曾在此处屏息凝视的刹那。」
+          </p>
+          <div class="font-mono text-[11px] text-ink-light border-t fine-border pt-3 flex justify-between">
+            <span>CURATOR: T. CHEN</span>
+            <span>FORMAT: 6×7 ANALOG & DIGITAL</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+        <div class="lg:col-span-10 relative overflow-hidden bg-paper-dark">
+          <img 
+            src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=2000&q=85" 
+            alt="雾霭弥漫的山脉谷底" 
+            class="w-full aspect-[16/9] object-cover img-fade"
+            loading="eager"
+          />
+          <div class="absolute bottom-4 left-4 bg-ink/80 backdrop-blur-md px-3 py-1.5 text-[10px] font-mono text-paper tracking-wider">
+            FIG 01. 晨雾初破的冰蚀阶地 · ALTITUDE 4,200M
+          </div>
+        </div>
+        
+        <div class="hidden lg:flex lg:col-span-2 flex-col justify-between h-full pt-2 font-mono text-[11px] text-ink-muted leading-relaxed">
+          <div class="vertical-mode tracking-widest text-ink-light opacity-75">
+            44°18′N 87°58′E — 06:14 AM
+          </div>
+          <div class="border-t fine-border pt-4">
+            <span class="text-ochre block mb-1">EXIF DATA</span>
+            50mm · f/8.0 · 1/250s<br />
+            ISO 100 · Portra 160
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="chapter-1" class="py-24 border-b fine-border">
+      <div class="flex items-center justify-between mb-16">
+        <span class="font-mono text-xs uppercase tracking-widest text-ochre">Chapter 01 / Geological Silence</span>
+        <span class="font-serif italic text-ink-muted text-sm">第一章 · 寂静的骨骼</span>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16">
+        <div class="lg:col-span-5 flex flex-col justify-between order-2 lg:order-1">
+          <div class="space-y-6">
+            <h2 class="text-2xl sm:text-3xl font-serif font-normal leading-snug">
+              岩石并不沉默，<br />
+              只是它的语速比文明更慢。
+            </h2>
+            <div class="w-12 h-px bg-ochre/60 my-6"></div>
+            <p class="font-serif text-sm sm:text-base text-ink-muted leading-relaxed">
+              行走在海拔四千米以上的高原地带，呼吸逐渐被风声替换。花岗岩在亿万年的风化中呈现出冷冽的几何断层，那些锋利的阴影将晨昏切割成纯粹的光斑。
+            </p>
+            <p class="font-serif text-sm sm:text-base text-ink-muted leading-relaxed">
+              摄影在此刻不再是捕捉，而是一种漫长的等待——等待一片云的边缘刚好咬住山峰的拐角，等待光线以极斜的角度擦亮岩石表面的矿物结晶。
+            </p>
+          </div>
+
+          <blockquote class="border-l-2 border-ink pl-4 py-2 mt-8 font-serif italic text-ink text-sm sm:text-base bg-paper-dark/30">
+            「当你长久地注视一座山，山并不向你走来，但你内心的嘈杂在悄然剥落。」
+          </blockquote>
+
+          <div class="mt-10 pt-6 border-t fine-border font-mono text-xs text-ink-light flex justify-between">
+            <span>FIELD NOTE #104</span>
+            <span>OCTOBER, GOBI CRAGS</span>
+          </div>
+        </div>
+
+        <div class="lg:col-span-7 grid grid-cols-1 sm:grid-cols-12 gap-6 order-1 lg:order-2">
+          <div class="sm:col-span-7 overflow-hidden bg-paper-dark">
+            <img 
+              src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=1200&q=80" 
+              alt="雪山与山谷光影" 
+              class="w-full aspect-[3/4] object-cover img-fade"
+              loading="lazy"
+            />
+            <p class="font-mono text-[11px] text-ink-light mt-3">PLATE 1.1 / 晨光裁断的雪峰与山峦</p>
+          </div>
+          <div class="sm:col-span-5 flex flex-col justify-between mt-8 sm:mt-0">
+            <div class="overflow-hidden bg-paper-dark">
+              <img 
+                src="https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&fit=crop&w=800&q=80" 
+                alt="岩石与夜空" 
+                class="w-full aspect-[4/5] object-cover img-fade"
+                loading="lazy"
+              />
+              <p class="font-mono text-[11px] text-ink-light mt-3">PLATE 1.2 / 寒夜前夕的冷石质感</p>
+            </div>
+            <div class="font-mono text-[11px] text-ink-muted mt-6 p-4 bg-paper-dark/50 border fine-border leading-relaxed">
+              <span class="text-ink font-semibold block mb-1">CURATORIAL NOTE:</span>
+              采用低饱和度冲印调性，保留玄武岩与石灰石在自然散射光下的原始颗粒感。
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="chapter-2" class="py-24 border-b fine-border">
+      <div class="flex items-center justify-between mb-16">
+        <span class="font-mono text-xs uppercase tracking-widest text-ochre">Chapter 02 / Ephemeral Echoes</span>
+        <span class="font-serif italic text-ink-muted text-sm">第二章 · 瓦砾与面孔</span>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center mb-16">
+        <div class="lg:col-span-8 overflow-hidden bg-paper-dark">
+          <img 
+            src="https://images.unsplash.com/photo-1513836279014-a89f7a76ae86?auto=format&fit=crop&w=1800&q=80" 
+            alt="古树与苍茫光影" 
+            class="w-full aspect-[16/10] object-cover img-fade"
+            loading="lazy"
+          />
+        </div>
+        <div class="lg:col-span-4 space-y-6 lg:pl-4">
+          <div class="font-mono text-xs text-ochre tracking-widest">HUMANISTIC ARCHIVE</div>
+          <h3 class="text-2xl sm:text-3xl font-serif font-light text-ink leading-tight">
+            那些被磨蚀的门阶，<br />
+            记着每一个行人的重量。
+          </h3>
+          <p class="font-serif text-sm text-ink-muted leading-relaxed">
+            在偏远的驿道与古村落，人与自然的博弈留下了斑驳的咬痕。屋檐下悬挂的铜铃、长满苍苔的条石，无一不在证明：生活的坚韧，恰恰存在于这些日复一日的磨损里。
+          </p>
+          <div class="pt-4 border-t fine-border font-mono text-[11px] text-ink-light">
+            LOCATION: ANCIENT TEA-HORSE ROAD<br />
+            SERIES: THE MEMORY OF TIMBER
+          </div>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8 pt-8">
+        <div class="border-t fine-border pt-4">
+          <div class="overflow-hidden bg-paper-dark mb-4">
+            <img 
+              src="https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?auto=format&fit=crop&w=800&q=80" 
+              alt="薄雾森林" 
+              class="w-full aspect-square object-cover img-fade"
+              loading="lazy"
+            />
+          </div>
+          <h4 class="font-serif font-normal text-base text-ink mb-1">01. 晨雾穿过林梢的时刻</h4>
+          <p class="font-serif text-xs text-ink-muted leading-relaxed">光束落入腐殖土，树木吐出潮湿的气息。在快门落下的1/125秒里，万籁俱寂。</p>
+        </div>
+
+        <div class="border-t fine-border pt-4">
+          <div class="overflow-hidden bg-paper-dark mb-4">
+            <img 
+              src="https://images.unsplash.com/photo-1447752875215-b2761acb3c5d?auto=format&fit=crop&w=800&q=80" 
+              alt="落叶与溪流" 
+              class="w-full aspect-square object-cover img-fade"
+              loading="lazy"
+            />
+          </div>
+          <h4 class="font-serif font-normal text-base text-ink mb-1">02. 溪水抚平的卵石</h4>
+          <p class="font-serif text-xs text-ink-muted leading-relaxed">水流无休止地擦洗岁月，冷杉的落针在回水湾处聚成暗金色的圆环。</p>
+        </div>
+
+        <div class="border-t fine-border pt-4">
+          <div class="overflow-hidden bg-paper-dark mb-4">
+            <img 
+              src="https://images.unsplash.com/photo-1472214103451-9374bd1c798e?auto=format&fit=crop&w=800&q=80" 
+              alt="远山草甸" 
+              class="w-full aspect-square object-cover img-fade"
+              loading="lazy"
+            />
+          </div>
+          <h4 class="font-serif font-normal text-base text-ink mb-1">03. 暮色浸染的牧场</h4>
+          <p class="font-serif text-xs text-ink-muted leading-relaxed">炊烟从低矮的石木屋升起，人烟在此处不过是大地上最温柔的一抹点缀。</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="py-24 border-b fine-border">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12">
+        <div class="lg:col-span-4">
+          <span class="font-mono text-xs uppercase tracking-widest text-ochre block mb-4">Field Methodology</span>
+          <h3 class="text-3xl font-serif font-light text-ink mb-6">行囊、镜头与观察之道</h3>
+          <p class="font-serif text-sm text-ink-muted leading-relaxed mb-6">
+            真正的旅途从不追求效率。精简的机械相机、几卷中画幅负片、一本随时记录气温与风向的手账，便构成了观察世界全部的锚点。
+          </p>
+          <div class="font-mono text-xs text-ink-light">
+            TOTAL MILEAGE: 18,400 KM<br />
+            ARCHIVED NEGATIVES: 142 ROLLS
+          </div>
+        </div>
+
+        <div class="lg:col-span-8">
+          <div class="divide-y fine-border border-t border-b">
+            <div class="py-5 flex flex-col sm:flex-row sm:items-baseline justify-between gap-2 group hover:bg-paper-dark/30 transition-colors px-3">
+              <span class="font-mono text-xs text-ochre">#01 / LIGHTING</span>
+              <span class="font-serif text-base text-ink font-normal sm:w-1/2">克制使用直射光，只在侧光与散射光中寻找质地</span>
+              <span class="font-mono text-xs text-ink-light sm:text-right">NATURAL AMBIENT</span>
+            </div>
+            <div class="py-5 flex flex-col sm:flex-row sm:items-baseline justify-between gap-2 group hover:bg-paper-dark/30 transition-colors px-3">
+              <span class="font-mono text-xs text-ochre">#02 / DISTANCE</span>
+              <span class="font-serif text-base text-ink font-normal sm:w-1/2">保持退后三步的凝视，拒绝侵略性的特写</span>
+              <span class="font-mono text-xs text-ink-light sm:text-right">MIDDLE DISTANCE</span>
+            </div>
+            <div class="py-5 flex flex-col sm:flex-row sm:items-baseline justify-between gap-2 group hover:bg-paper-dark/30 transition-colors px-3">
+              <span class="font-mono text-xs text-ochre">#03 / MEMORY</span>
+              <span class="font-serif text-base text-ink font-normal sm:w-1/2">文字记录温度与声响，影像负责留存几何与明暗</span>
+              <span class="font-mono text-xs text-ink-light sm:text-right">NOTE & SHADOW</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer id="colophon" class="py-20 text-ink">
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-10 items-baseline mb-16">
+        <div class="lg:col-span-5">
+          <div class="font-serif text-2xl font-light tracking-wide mb-3">行 迹 考</div>
+          <p class="font-serif text-xs text-ink-muted max-w-sm leading-relaxed">
+            一份关于空间、光影与个体行旅经验的独立数字期刊。所有图像均由自然光拍摄，无AI合成成分。
+          </p>
+        </div>
+
+        <div class="lg:col-span-3 font-mono text-xs text-ink-muted space-y-2">
+          <div class="text-ink font-semibold mb-3">PUBLICATIONS</div>
+          <div><a href="#" class="hover:text-ink transition-colors">Vol. 07 极北荒原 (2025)</a></div>
+          <div><a href="#" class="hover:text-ink transition-colors">Vol. 06 季风带纪事 (2024)</a></div>
+          <div><a href="#" class="hover:text-ink transition-colors">Vol. 05 盐沼与沙丘 (2023)</a></div>
+        </div>
+
+        <div class="lg:col-span-4 font-mono text-xs text-ink-muted space-y-2">
+          <div class="text-ink font-semibold mb-3">SUBSCRIPTION / PRINTS</div>
+          <p class="text-[11px] text-ink-light leading-relaxed mb-3">定期寄送限量版手工银盐明信片与随笔印本。</p>
+          <div class="flex items-center">
+            <input 
+              type="email" 
+              placeholder="YOUR EMAIL ADDRESS" 
+              class="bg-transparent border fine-border px-3 py-2 text-xs font-mono focus:outline-none focus:border-ink w-full placeholder:text-ink-light/60"
+            />
+            <button class="bg-ink text-paper px-4 py-2 font-mono text-xs hover:bg-ochre transition-colors tracking-widest uppercase">
+              JOIN
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="border-t fine-border pt-8 flex flex-col sm:flex-row justify-between items-center font-mono text-[11px] text-ink-light gap-4">
+        <div>© 2026 THE CARTOGRAPHY OF SOLITUDE. ALL RIGHTS RESERVED.</div>
+        <div class="flex space-x-6">
+          <span>TYPESET IN NOTO SERIF & CORMORANT</span>
+          <span>CURATED WITH RESTRAINT</span>
+        </div>
+      </div>
+    </footer>
+
+  </main>
+
+</body>
+</html>

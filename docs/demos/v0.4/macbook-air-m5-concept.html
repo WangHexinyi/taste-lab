@@ -1,0 +1,687 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MacBook Air M5 · 概念演示 — 苹果品牌故事</title>
+<meta name="description" content="独立前端概念演示：MacBook Air M5。苹果品牌发展史、Air 族谱与 M5 芯片官方数据解剖。非苹果官方页面，整机信息以官方发布为准。">
+<meta property="og:title" content="MacBook Air M5 · 概念演示">
+<meta property="og:description" content="从 1976 年的车库到 M5 芯片：一个关于“轻”的品牌故事。独立概念演示，非官方。">
+<style>
+/* ============ TOKENS ============ */
+:root{
+  --ink:#050506; --ink-2:#0b0b0f; --panel:#0e0e13;
+  --paper:#f5f5f7; --paper-ink:#1d1d1f; --paper-dim:#515154; --paper-mute:#6e6e73;
+  --txt:#f5f5f7; --txt-dim:rgba(245,245,247,.66); --txt-faint:rgba(245,245,247,.45);
+  --line:rgba(245,245,247,.14); --line-soft:rgba(245,245,247,.08);
+  --g1:#64d2ff; --g2:#bf5af2; --g3:#ff375f; --g4:#ffd60a; --blue:#0071e3;
+  --grad:linear-gradient(90deg,var(--g1),var(--g2) 42%,var(--g3) 72%,var(--g4));
+  --font:-apple-system,BlinkMacSystemFont,"SF Pro Display","SF Pro Text","Helvetica Neue","PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans SC",sans-serif;
+  --mono:"SF Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
+  --nav:60px;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  background:var(--ink);color:var(--txt);font-family:var(--font);
+  -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;
+  overflow-x:clip;line-height:1.6;
+}
+::selection{background:rgba(191,90,242,.4);color:#fff}
+img,svg{display:block;max-width:100%}
+a{color:inherit;text-decoration:none}
+ul{list-style:none}
+:focus-visible{outline:2px solid var(--g1);outline-offset:3px;border-radius:4px}
+section[id],footer[id]{scroll-margin-top:calc(var(--nav) + 16px)}
+.wrap{width:min(1200px,92vw);margin-inline:auto}
+.mono{font-family:var(--mono)}
+.skip{position:absolute;left:-9999px;top:0;background:#fff;color:#000;padding:.6rem 1rem;z-index:99}
+.skip:focus{left:12px;top:12px}
+
+/* ============ REVEAL SYSTEM（A2 可重播）============ */
+[data-reveal]{opacity:0;transform:translateY(26px);transition:opacity .7s ease,transform .7s cubic-bezier(.2,.7,.2,1);transition-delay:var(--d,0s)}
+[data-reveal="left"]{transform:translateX(-34px)}
+[data-reveal="right"]{transform:translateX(34px)}
+[data-reveal="scale"]{transform:scale(.95)}
+[data-reveal="down"]{transform:translateY(-18px)}
+[data-reveal].is-on{opacity:1;transform:none}
+
+/* ============ 母题：光缝 hairline ============ */
+.hairline{height:1px;border:0;background:linear-gradient(90deg,transparent,var(--g1) 15%,var(--g2) 45%,var(--g3) 75%,var(--g4) 90%,transparent);background-size:200% 100%;animation:hair 7s linear infinite;opacity:.85}
+@keyframes hair{to{background-position:200% 0}}
+
+/* ============ NAV ============ */
+.nav{position:fixed;inset:0 0 auto 0;height:var(--nav);z-index:50;background:rgba(5,5,6,.66);backdrop-filter:blur(18px) saturate(1.4);-webkit-backdrop-filter:blur(18px) saturate(1.4);border-bottom:1px solid var(--line-soft)}
+.nav-in{width:min(1200px,94vw);margin-inline:auto;height:100%;display:flex;align-items:center;gap:1.6rem}
+.brand{font-weight:700;letter-spacing:-.01em;font-size:.95rem;white-space:nowrap}
+.brand b{color:var(--g1);font-weight:700;padding:0 .3em}
+.nav nav{display:flex;gap:1.4rem;margin-left:auto;overflow-x:auto;scrollbar-width:none}
+.nav nav::-webkit-scrollbar{display:none}
+.nav nav a{font-size:.82rem;color:var(--txt-dim);white-space:nowrap;padding:.3rem 0;background:linear-gradient(var(--txt),var(--txt)) left bottom / 0 1px no-repeat;transition:background-size .35s,color .35s}
+.nav nav a:hover{color:var(--txt);background-size:100% 1px}
+.pill{font-size:.6rem;letter-spacing:.16em;color:var(--txt-dim);border:1px solid var(--line);border-radius:999px;padding:.32em .8em;white-space:nowrap}
+.nav-prog{position:absolute;left:0;bottom:-1px;width:100%;height:2px;background:var(--grad);transform:scaleX(0);transform-origin:left}
+
+/* ============ HERO ============ */
+.hero{position:relative;min-height:100svh;display:flex;flex-direction:column;justify-content:center;padding:calc(var(--nav) + 6vh) 6vw 10vh;background-image:radial-gradient(rgba(245,245,247,.05) 1px,transparent 1px);background-size:26px 26px}
+.hero::before{content:"";position:absolute;inset:0;background:radial-gradient(60% 46% at 50% 0%,rgba(100,210,255,.07),transparent 70%);pointer-events:none}
+.hero>*{position:relative}
+.hero-kicker{font-size:.66rem;letter-spacing:.22em;color:var(--txt-faint);margin-bottom:2.2rem}
+.hero-title{font-weight:700;letter-spacing:-.035em;line-height:.98}
+.hero-title .line{display:block;overflow:hidden;padding-bottom:.06em}
+.hero-title .word{display:inline-block;transform:translateY(115%);animation:wordUp 1s cubic-bezier(.2,.7,.2,1) forwards;animation-delay:calc(.2s + var(--d,0s))}
+@keyframes wordUp{to{transform:none}}
+.t-air{font-size:clamp(3.2rem,11vw,9.2rem)}
+.t-m5{font-size:clamp(4rem,15vw,12.5rem);color:transparent;-webkit-text-stroke:1.5px rgba(245,245,247,.85)}
+.m5-tag{font-family:var(--mono);font-size:clamp(.62rem,1.1vw,.8rem);letter-spacing:.2em;color:var(--txt-dim);border:1px solid var(--line);padding:.4em .9em;border-radius:999px;vertical-align:super;margin-left:1.2rem;-webkit-text-stroke:0}
+.hero-sub{margin-top:2.4rem;font-size:clamp(1.05rem,2vw,1.5rem);color:var(--txt-dim);font-weight:500}
+.hero-hair{width:min(680px,78vw);margin-top:2.8rem}
+.hero-fine{margin-top:1.4rem;font-size:.68rem;letter-spacing:.06em;color:var(--txt-faint);max-width:640px;line-height:1.9}
+.scrollcue{position:absolute;right:6vw;bottom:4.5vh;display:flex;flex-direction:column;align-items:center;gap:.7rem;font-size:.6rem;letter-spacing:.3em;color:var(--txt-faint);writing-mode:vertical-rl}
+.cue-line{width:1px;height:52px;background:var(--line);position:relative;overflow:hidden}
+.cue-line::after{content:"";position:absolute;left:0;top:-40%;width:100%;height:40%;background:var(--grad);animation:cue 1.8s ease-in-out infinite}
+@keyframes cue{to{top:110%}}
+
+/* ============ MANIFESTO + FIG.01 ============ */
+.manifesto{padding:clamp(5rem,11vw,9rem) 0}
+.mani{font-size:clamp(1.4rem,3.2vw,2.5rem);font-weight:600;letter-spacing:-.015em;line-height:1.55}
+.mani span{display:block}
+.mani em{font-style:normal;font-family:var(--mono);font-size:.72em;letter-spacing:.08em;color:var(--g1);padding-right:.5em}
+
+/* 官方资产占位槽（诚实占位，非伪造产品） */
+.slot{margin-top:4.5rem}
+.slot-frame{position:relative;aspect-ratio:16/6.5;border:1px solid var(--line);display:flex;align-items:center;justify-content:center;overflow:hidden;
+  background:radial-gradient(120% 160% at 50% -20%,rgba(100,210,255,.08),transparent 55%),radial-gradient(90% 120% at 85% 120%,rgba(191,90,242,.07),transparent 60%),#08080b}
+.slot-frame::before{content:"";position:absolute;inset:0;background-image:radial-gradient(rgba(245,245,247,.045) 1px,transparent 1px);background-size:22px 22px}
+.slot-label{position:relative;font-family:var(--mono);font-size:.66rem;letter-spacing:.16em;color:var(--txt-faint);text-transform:uppercase;text-align:center;padding:0 1.2rem;line-height:2.1}
+.slot-corner{position:absolute;width:14px;height:14px;border:1px solid rgba(245,245,247,.45)}
+.slot-corner.tl{top:-1px;left:-1px;border-right:0;border-bottom:0}
+.slot-corner.tr{top:-1px;right:-1px;border-left:0;border-bottom:0}
+.slot-corner.bl{bottom:-1px;left:-1px;border-right:0;border-top:0}
+.slot-corner.br{bottom:-1px;right:-1px;border-left:0;border-top:0}
+.slot figcaption{margin-top:.9rem;text-align:center;font-family:var(--mono);font-size:.62rem;letter-spacing:.18em;color:var(--txt-faint)}
+
+/* ============ 章节头 ============ */
+.chapter{padding:clamp(5rem,10vw,8.5rem) 0}
+.ch-head{margin-bottom:clamp(3rem,6vw,5rem)}
+.ch-kicker{font-size:.66rem;letter-spacing:.24em;color:var(--txt-faint);margin-bottom:1.3rem}
+.ch-head h2{font-size:clamp(2rem,5vw,3.6rem);font-weight:700;letter-spacing:-.025em;line-height:1.15}
+.ch-lede{margin-top:1.1rem;max-width:660px;color:var(--txt-dim);font-size:clamp(.95rem,1.4vw,1.1rem)}
+
+/* ============ CH.01 时间线（浅色编辑部）============ */
+.light{background:var(--paper);color:var(--paper-ink)}
+.light .ch-kicker{color:var(--paper-mute)}
+.light .ch-head h2{color:var(--paper-ink)}
+.light .ch-lede{color:var(--paper-dim)}
+.timeline{position:relative;max-width:880px;margin-inline:auto;padding:1rem 0 0}
+.tl-track,.tl-fill{position:absolute;left:7px;top:0;bottom:0;width:1.5px}
+.tl-track{background:rgba(29,29,31,.14)}
+.tl-fill{background:linear-gradient(180deg,var(--blue),var(--g2) 70%,var(--g3));transform-origin:top;transform:scaleY(0)}
+.timeline li{position:relative;padding:0 0 3rem 44px}
+.timeline li::before{content:"";position:absolute;left:0;top:.62em;width:15px;height:15px;border-radius:50%;background:var(--paper);border:1.5px solid rgba(29,29,31,.3)}
+.tl-year{display:block;font-family:var(--mono);font-weight:600;font-size:.78rem;letter-spacing:.2em;color:var(--paper-mute)}
+.timeline h3{font-size:1.3rem;font-weight:700;letter-spacing:-.01em;margin:.25rem 0 .35rem}
+.timeline p{color:var(--paper-dim);max-width:600px;font-size:.95rem}
+
+/* ============ CH.02 Air 族谱 · 层叠卡 ============ */
+.stack{width:min(1080px,92vw);margin-inline:auto}
+.era{position:sticky;top:calc(var(--nav) + 18px + var(--i)*16px);z-index:calc(var(--i) + 1);
+  background:var(--panel);border:1px solid var(--line);border-radius:18px;
+  padding:clamp(1.6rem,4vw,3rem);margin-bottom:11vh;min-height:clamp(340px,50vh,460px);
+  box-shadow:0 -20px 50px rgba(0,0,0,.55);display:flex;flex-direction:column;justify-content:center;overflow:hidden}
+.era:last-child{margin-bottom:2vh}
+.era-year{position:absolute;top:1.2rem;right:1.6rem;font-weight:700;font-size:clamp(3.2rem,8vw,6.6rem);letter-spacing:-.04em;line-height:1;color:rgba(245,245,247,.1)}
+@supports (-webkit-text-stroke:1px #fff){.era-year{color:transparent;-webkit-text-stroke:1px rgba(245,245,247,.24)}}
+.era-tag{font-size:.62rem;letter-spacing:.22em;color:var(--txt-faint);margin-bottom:1rem}
+.era h3{font-size:clamp(1.5rem,3vw,2.2rem);font-weight:700;letter-spacing:-.02em;margin-bottom:.8rem}
+.era-body p{color:var(--txt-dim);max-width:560px}
+.era-fact{margin-top:1.6rem;font-size:.7rem;letter-spacing:.12em;color:var(--txt-faint);border-top:1px solid var(--line-soft);padding-top:1rem}
+
+/* ============ CH.03 M5 · 钉住解剖（签名动效）============ */
+.chip-section{background-image:radial-gradient(rgba(245,245,247,.04) 1px,transparent 1px);background-size:26px 26px}
+.chip-pin{height:430vh;position:relative}
+.chip-sticky{position:sticky;top:var(--nav);height:calc(100dvh - var(--nav));display:grid;grid-template-columns:minmax(0,1.12fr) minmax(0,1fr);gap:clamp(2rem,5vw,5rem);align-items:center;padding:0 6vw}
+.chip-visual{position:relative;display:flex;justify-content:center}
+.chip-svg{width:min(500px,86%);filter:drop-shadow(0 0 46px rgba(100,210,255,.13))}
+.chip-svg text{font-family:var(--mono)}
+.chip-svg .pack{fill:#0b0b10;stroke:url(#chipGrad);stroke-width:1.6}
+.chip-svg .die{fill:#0d0d13;stroke:rgba(245,245,247,.09)}
+.chip-svg .block{fill:#111118;stroke:rgba(245,245,247,.16);stroke-width:1;transition:stroke .5s}
+.chip-svg .cell{fill:rgba(245,245,247,.13);stroke:rgba(245,245,247,.22)}
+.chip-svg .cell.p{fill:rgba(100,210,255,.18)}
+.chip-svg .tick{stroke:rgba(245,245,247,.34);stroke-width:2}
+.chip-svg .lbl{font-size:10px;letter-spacing:.12em;fill:rgba(245,245,247,.55)}
+.chip-svg .m5w{font-size:42px;font-weight:700;fill:#f5f5f7;font-family:var(--font);letter-spacing:.02em}
+.chip-svg .flow{stroke:rgba(100,210,255,.75);stroke-width:2;stroke-dasharray:8 10;animation:flowmove 1.1s linear infinite;animation-play-state:paused}
+@keyframes flowmove{to{stroke-dashoffset:-18}}
+.chip-svg .na{fill:var(--g4);transform-box:fill-box;transform-origin:center}
+.cg{opacity:.25;transition:opacity .55s ease}
+#chip[data-stage="1"] #g-cpu,
+#chip[data-stage="2"] #g-gpu,
+#chip[data-stage="3"] #g-ne,
+#chip[data-stage="3"] #g-mem{opacity:1}
+#chip[data-stage="4"] .cg,#chip[data-stage="4"] #g-m5{opacity:1}
+#chip[data-stage="1"] #g-cpu .block,
+#chip[data-stage="2"] #g-gpu .block,
+#chip[data-stage="3"] #g-ne .block,
+#chip[data-stage="3"] #g-mem .block{stroke:url(#chipGrad)}
+#chip[data-stage="2"] .na{animation:naPulse 1.6s ease-out infinite}
+@keyframes naPulse{0%{transform:scale(1);opacity:.95}70%,100%{transform:scale(2.6);opacity:0}}
+#chip[data-stage="3"] .flow{animation-play-state:running}
+#g-m5{opacity:.3;transition:opacity .6s}
+.chip-side{display:flex;flex-direction:column;justify-content:center}
+.stage-box{position:relative;min-height:330px}
+.cstage{position:absolute;inset:0;opacity:0;transform:translateY(18px);transition:opacity .55s ease,transform .55s ease;pointer-events:none}
+#chip[data-stage="0"] .st-0,#chip[data-stage="1"] .st-1,#chip[data-stage="2"] .st-2,#chip[data-stage="3"] .st-3,#chip[data-stage="4"] .st-4{opacity:1;transform:none;pointer-events:auto}
+.cs-idx{font-size:.64rem;letter-spacing:.24em;color:var(--g1);margin-bottom:1.1rem}
+.cstage h3{font-size:clamp(1.5rem,2.8vw,2.2rem);font-weight:700;letter-spacing:-.02em;margin-bottom:1rem}
+.cstage p{color:var(--txt-dim);max-width:480px;font-size:.98rem}
+.chip-dots{display:flex;gap:10px;margin-top:2rem}
+.chip-dots i{width:28px;height:3px;border-radius:2px;background:rgba(245,245,247,.15);transition:background .4s}
+.chip-dots i.on{background:linear-gradient(90deg,var(--g1),var(--g2))}
+.chip-hint{position:absolute;left:50%;bottom:3.5vh;transform:translateX(-50%);font-size:.6rem;letter-spacing:.3em;color:var(--txt-faint);transition:opacity .5s}
+#chip:not([data-stage="0"]) .chip-hint{opacity:.3}
+
+/* ============ 数字条 ============ */
+.nums{border-block:1px solid var(--line-soft);padding:clamp(3rem,6vw,4.5rem) 0}
+.nums-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:2.4rem}
+.num strong{font-size:clamp(2.3rem,4.6vw,3.6rem);font-weight:700;letter-spacing:-.03em;line-height:1;display:flex;align-items:baseline}
+.num strong small{font-size:.42em;color:var(--txt-dim);font-weight:600;margin-left:.35em}
+.num p{margin-top:.7rem;color:var(--txt-dim);font-size:.86rem}
+
+/* ============ CH.04 概念推演 ============ */
+.claim{display:grid;grid-template-columns:110px 1fr;gap:1.5rem;padding:clamp(2.2rem,4vw,3.2rem) 0;border-top:1px solid var(--line-soft)}
+.claim:last-of-type{border-bottom:1px solid var(--line-soft)}
+.claim-idx{font-family:var(--mono);font-size:.8rem;letter-spacing:.2em;color:var(--g2);padding-top:.7rem}
+.claim h3{font-size:clamp(1.6rem,3.4vw,2.5rem);font-weight:700;letter-spacing:-.022em;line-height:1.25;margin-bottom:.9rem}
+.claim p{color:var(--txt-dim);max-width:640px}
+.claim-src{margin-top:1.1rem;font-family:var(--mono);font-size:.64rem;letter-spacing:.14em;color:var(--txt-faint)}
+
+/* ============ CH.05 规格（浅色）============ */
+.legend{display:flex;flex-wrap:wrap;gap:1.6rem;margin-bottom:2.2rem;font-family:var(--mono);font-size:.68rem;letter-spacing:.12em;color:var(--paper-dim)}
+.spec-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(235px,1fr));gap:14px}
+.spec{background:#fff;border:1px solid rgba(29,29,31,.1);border-radius:14px;padding:1.4rem 1.5rem;transition:transform .35s cubic-bezier(.2,.7,.2,1),box-shadow .35s}
+.spec:hover{transform:translateY(-4px);box-shadow:0 14px 34px rgba(29,29,31,.1)}
+.spec-v{font-size:clamp(1.3rem,2vw,1.7rem);font-weight:700;letter-spacing:-.02em;line-height:1.25}
+.spec-k{color:var(--paper-dim);font-size:.84rem;margin-top:.35rem}
+.spec-tag{margin-top:1.1rem;font-family:var(--mono);font-size:.62rem;letter-spacing:.14em;color:var(--paper-mute)}
+.spec-note{margin-top:2rem;font-size:.78rem;color:var(--paper-mute);max-width:760px}
+
+/* ============ 结尾 ============ */
+.ending{padding:clamp(6rem,12vw,10rem) 0;text-align:center}
+.q-src{font-size:.62rem;letter-spacing:.28em;color:var(--txt-faint);margin-bottom:2rem}
+.q-en{font-family:var(--mono);font-size:clamp(.85rem,1.5vw,1.05rem);color:var(--txt-dim);letter-spacing:.06em;margin-bottom:1.2rem}
+.q-zh{font-size:clamp(1.5rem,3.4vw,2.7rem);font-weight:600;letter-spacing:-.015em;line-height:1.5;max-width:920px;margin-inline:auto}
+.cta{margin-top:clamp(4rem,8vw,6.5rem)}
+.cta h2{font-size:clamp(1.9rem,4.4vw,3.2rem);font-weight:700;letter-spacing:-.025em}
+.cta>p{margin-top:1rem;color:var(--txt-dim)}
+.cta-btns{margin-top:2.4rem;display:flex;gap:1rem;justify-content:center;flex-wrap:wrap}
+.btn{display:inline-flex;align-items:center;gap:.5em;border-radius:999px;padding:.9em 1.7em;font-size:.92rem;font-weight:600;transition:transform .3s cubic-bezier(.2,.7,.2,1),box-shadow .3s,border-color .3s}
+.btn.solid{background:var(--txt);color:var(--ink)}
+.btn.solid:hover{transform:translateY(-2px);box-shadow:0 12px 30px rgba(245,245,247,.18)}
+.btn.ghost{border:1px solid var(--line);color:var(--txt)}
+.btn.ghost:hover{border-color:rgba(245,245,247,.5)}
+
+/* ============ FOOTER ============ */
+footer{border-top:1px solid var(--line-soft);padding:clamp(3.5rem,7vw,5.5rem) 0 0}
+.f-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2.8rem}
+.f-grid h4{font-family:var(--mono);font-size:.64rem;letter-spacing:.2em;color:var(--txt-faint);margin-bottom:1rem;font-weight:500}
+.f-grid li,.f-grid p{font-size:.82rem;color:var(--txt-dim);line-height:2}
+.f-bottom{text-align:center;font-family:var(--mono);font-size:.6rem;letter-spacing:.24em;color:var(--txt-faint);padding:3rem 0 2.2rem;margin-top:3.2rem;border-top:1px solid var(--line-soft)}
+
+/* ============ REDUCED MOTION 兜底 ============ */
+.rm *,.rm *::before,.rm *::after{animation:none!important;transition:none!important}
+.rm [data-reveal]{opacity:1;transform:none}
+.rm .word{transform:none}
+.rm .tl-fill{transform:scaleY(1)}
+.rm #chipPin{height:auto}
+.rm .chip-sticky{position:static;height:auto;grid-template-columns:1fr;padding:3rem 6vw;gap:3rem}
+.rm .cstage{position:static;opacity:1;transform:none;pointer-events:auto;margin-bottom:2.4rem}
+.rm .stage-box{min-height:0}
+.rm .chip-hint{display:none}
+.rm .era{position:static;margin-bottom:1.4rem}
+html.rm{scroll-behavior:auto}
+
+/* ============ RESPONSIVE ============ */
+@media (max-width:960px){
+  .chip-sticky{grid-template-columns:1fr;align-content:center;gap:1.6rem;overflow:hidden}
+  .chip-svg{width:min(320px,60vw)}
+  .stage-box{min-height:300px}
+  .claim{grid-template-columns:1fr;gap:.6rem}
+}
+@media (max-width:760px){
+  .nav nav{display:none}
+  .era-year{position:static;font-size:3rem;margin-bottom:.4rem}
+  .era{top:calc(var(--nav) + 10px + var(--i)*10px)}
+  .f-grid{grid-template-columns:1fr;gap:2.2rem}
+  .scrollcue{display:none}
+  .slot-frame{aspect-ratio:16/9}
+}
+</style>
+<noscript><style>[data-reveal]{opacity:1;transform:none}.tl-fill{transform:scaleY(1)}.cstage{position:static;opacity:1;transform:none;margin-bottom:2rem}.era{position:static;margin-bottom:1.2rem}.chip-pin{height:auto}.chip-sticky{position:static;height:auto;grid-template-columns:1fr}</style></noscript>
+</head>
+<body>
+<a class="skip" href="#main">跳到主要内容</a>
+
+<header class="nav">
+  <div class="nav-in">
+    <a class="brand" href="#top">AIR<b>/</b>M5</a>
+    <nav aria-label="页面章节">
+      <a href="#story">品牌故事</a>
+      <a href="#lineage">Air 族谱</a>
+      <a href="#chip">M5 芯片</a>
+      <a href="#air5">概念推演</a>
+      <a href="#specs">规格溯源</a>
+    </nav>
+    <span class="pill mono">CONCEPT DEMO</span>
+  </div>
+  <i class="nav-prog" aria-hidden="true"></i>
+</header>
+
+<main id="main">
+
+<!-- ================= HERO ================= -->
+<section class="hero" id="top">
+  <p class="hero-kicker mono" data-reveal="down">独立概念演示 · 非苹果官方 · 真值分层标注</p>
+  <h1 class="hero-title">
+    <span class="line t-air"><span class="word" style="--d:0s">MacBook</span> <span class="word" style="--d:.09s">Air</span></span>
+    <span class="line t-m5"><span class="word">M5<span class="m5-tag">CONCEPT&nbsp;PREVIEW</span></span></span>
+  </h1>
+  <p class="hero-sub" data-reveal="up" style="--d:.5s">熟悉的轻。未曾见的心。</p>
+  <hr class="hairline hero-hair" aria-hidden="true">
+  <p class="hero-fine mono" data-reveal="up" style="--d:.65s">M5 芯片数据源自苹果 2025 年 10 月官方发布（已搭载于 14″ MacBook Pro 与 iPad Pro）。MacBook Air M5 整机尚未发布，本页为概念展示，以官方为准。</p>
+  <div class="scrollcue mono" aria-hidden="true">SCROLL<span class="cue-line"></span></div>
+</section>
+
+<!-- ================= MANIFESTO + FIG.01 ================= -->
+<section class="manifesto">
+  <div class="wrap">
+    <p class="mani">
+      <span data-reveal style="--d:0s"><em>1984</em>Macintosh 开始对“个人”说话。</span>
+      <span data-reveal style="--d:.12s"><em>2008</em>一台笔记本从信封里走出来。</span>
+      <span data-reveal style="--d:.24s"><em>2020</em>一颗芯片改写了性能的规则。</span>
+      <span data-reveal style="--d:.36s"><em>2025</em>故事，来到 M5。</span>
+    </p>
+    <figure class="slot" data-reveal="scale">
+      <div class="slot-frame" role="img" aria-label="占位：MacBook Air M5 官方主视觉图（待官方资产）">
+        <span class="slot-corner tl" aria-hidden="true"></span><span class="slot-corner tr" aria-hidden="true"></span>
+        <span class="slot-corner bl" aria-hidden="true"></span><span class="slot-corner br" aria-hidden="true"></span>
+        <p class="slot-label">Official Asset Slot · MacBook Air M5 官方主视觉 · 待 apple newsroom 资产接入</p>
+      </div>
+      <figcaption>FIG.01 — HERO ASSET PLACEHOLDER · 本页不使用非官方图片</figcaption>
+    </figure>
+  </div>
+</section>
+
+<!-- ================= CH.01 品牌之路 ================= -->
+<section class="chapter light" id="story">
+  <div class="wrap">
+    <header class="ch-head" data-reveal="up">
+      <p class="ch-kicker mono">CHAPTER 01 · THE ROAD TO APPLE</p>
+      <h2>从车库，到自研芯片。</h2>
+      <p class="ch-lede">四十九年。几个关键节点，足以解释一家公司为什么敢把一整颗芯片的野心，放进最薄的笔记本里。</p>
+    </header>
+    <ol class="timeline">
+      <div class="tl-track" aria-hidden="true"></div><div class="tl-fill" aria-hidden="true"></div>
+      <li data-reveal><span class="tl-year">1976</span><h3>车库</h3><p>史蒂夫·乔布斯与史蒂夫·沃兹尼亚克在洛斯阿尔托斯的车库里创立苹果。</p></li>
+      <li data-reveal><span class="tl-year">1977</span><h3>Apple II</h3><p>最早取得商业成功的个人电脑之一，把“个人”二字真正写进计算。</p></li>
+      <li data-reveal><span class="tl-year">1984</span><h3>Macintosh</h3><p>伴随雷德利·斯科特执导的《1984》广告，电脑第一次以图形界面对普通人说话。</p></li>
+      <li data-reveal><span class="tl-year">1997</span><h3>回归</h3><p>乔布斯重返苹果，“Think Different” 战役开启，公司从边缘走回舞台中央。</p></li>
+      <li data-reveal><span class="tl-year">1998</span><h3>iMac G3</h3><p>乔纳森·艾维的工业设计时代由此开始：技术也可以有表情。</p></li>
+      <li data-reveal><span class="tl-year">2001</span><h3>转折之年</h3><p>Mac OS X、iPod、第一批 Apple Store，在同一年落下。</p></li>
+      <li data-reveal><span class="tl-year">2006</span><h3>Intel 时代</h3><p>Mac 全线转向 Intel 平台，完成一次教科书级的架构迁移。</p></li>
+      <li data-reveal><span class="tl-year">2007</span><h3>iPhone</h3><p>重新定义电话，顺便定义了此后二十年的交互。</p></li>
+      <li data-reveal><span class="tl-year">2008</span><h3>MacBook Air</h3><p>“世界最薄笔记本”。从信封走出来的那一刻，轻薄成为信仰。</p></li>
+      <li data-reveal><span class="tl-year">2010</span><h3>iPad</h3><p>开启后 PC 时代——而 Air 的故事，将在十年后与它的芯片重逢。</p></li>
+      <li data-reveal><span class="tl-year">2020</span><h3>Apple Silicon</h3><p>M1 发布。Mac 告别外来处理器，进入自研硅时代。</p></li>
+      <li data-reveal><span class="tl-year">2025</span><h3>M5</h3><p>每颗 GPU 内核内嵌神经加速器。率先搭载于新款 iPad Pro 与 14 英寸 MacBook Pro。</p></li>
+    </ol>
+  </div>
+</section>
+
+<!-- ================= CH.02 AIR 族谱 ================= -->
+<section class="chapter" id="lineage">
+  <div class="wrap">
+    <header class="ch-head" data-reveal="up">
+      <p class="ch-kicker mono">CHAPTER 02 · THE AIR LINEAGE</p>
+      <h2>薄，是怎么一步步变薄的。</h2>
+      <p class="ch-lede">2008 年至今，每一代 Air 只做一件事：从机身里多拿走一点，把更多留给体验。</p>
+    </header>
+  </div>
+  <div class="stack">
+    <article class="era" style="--i:0">
+      <span class="era-year" aria-hidden="true">2008</span>
+      <div class="era-body">
+        <p class="era-tag mono">ORIGIN · THE ENVELOPE</p>
+        <h3>信封时刻</h3>
+        <p>Macworld 舞台上，乔布斯把一台笔记本从公文信封里抽了出来。“世界最薄笔记本”，最薄处仅约 4 毫米。</p>
+        <p class="era-fact mono">13.3″ 显示屏 · 1.36 KG · 最薄处 ≈4 MM</p>
+      </div>
+    </article>
+    <article class="era" style="--i:1">
+      <span class="era-year" aria-hidden="true">2013</span>
+      <div class="era-body">
+        <p class="era-tag mono">ENDURANCE · ALL-DAY</p>
+        <h3>全天候电池</h3>
+        <p>如今理所当然的“从早用到晚”，曾是 Air 最大胆的承诺：一次充电，最长 12 小时无线上网。</p>
+        <p class="era-fact mono">最长 12 小时续航 · 官方数据（2013）</p>
+      </div>
+    </article>
+    <article class="era" style="--i:2">
+      <span class="era-year" aria-hidden="true">2018</span>
+      <div class="era-body">
+        <p class="era-tag mono">RETINA · FINALLY</p>
+        <h3>Retina，终于</h3>
+        <p>Retina 显示屏与 Touch ID 到来，更窄的边框让这台最薄的笔记本，第一次配得上它的屏幕。</p>
+        <p class="era-fact mono">RETINA 显示屏 · TOUCH ID · 窄边框</p>
+      </div>
+    </article>
+    <article class="era" style="--i:3">
+      <span class="era-year" aria-hidden="true">2020</span>
+      <div class="era-body">
+        <p class="era-tag mono">M1 · FANLESS REVOLUTION</p>
+        <h3>无风扇革命</h3>
+        <p>M1 芯片让 Air 第一次拿掉了风扇——性能比上一代提升最高 3.5 倍，而机身安静如初。</p>
+        <p class="era-fact mono">APPLE SILICON M1 · 无风扇设计 · 官方称最高 3.5× 提速</p>
+      </div>
+    </article>
+    <article class="era" style="--i:4">
+      <span class="era-year" aria-hidden="true">2022</span>
+      <div class="era-body">
+        <p class="era-tag mono">M2 · REDESIGN</p>
+        <h3>重新设计</h3>
+        <p>扁平化全新机身、午夜色与星光色、13.6 英寸 Liquid Retina 显示屏，MagSafe 磁吸充电回归。</p>
+        <p class="era-fact mono">13.6″ LIQUID RETINA · MAGSAFE · 双色登场</p>
+      </div>
+    </article>
+    <article class="era" style="--i:5">
+      <span class="era-year" aria-hidden="true">2024–25</span>
+      <div class="era-body">
+        <p class="era-tag mono">M3 / M4 · SKY BLUE</p>
+        <h3>天蓝色，与更聪明的镜头</h3>
+        <p>M3 与 M4 世代：天蓝色加入，1200 万像素 Center Stage 摄像头，视频播放最长可达 18 小时。</p>
+        <p class="era-fact mono">SKY BLUE · 12MP CENTER STAGE · 最长 18 小时视频播放</p>
+      </div>
+    </article>
+  </div>
+</section>
+
+<!-- ================= CH.03 M5 解剖（签名动效） ================= -->
+<section class="chapter chip-section" id="chip" data-stage="0" style="padding-bottom:0">
+  <div class="wrap">
+    <header class="ch-head" data-reveal="up">
+      <p class="ch-kicker mono">CHAPTER 03 · APPLE SILICON</p>
+      <h2>M5，已经来了。</h2>
+      <p class="ch-lede">不是传闻——2025 年 10 月，它已运行在真实设备上。以下解剖基于官方公布数据，随滚动逐层展开。</p>
+    </header>
+  </div>
+  <div class="chip-pin" id="chipPin">
+    <div class="chip-sticky">
+      <div class="chip-visual">
+        <svg class="chip-svg" viewBox="0 0 460 460" role="img" aria-label="M5 芯片结构示意图（概念示意，非实物照片）：CPU 簇、带神经加速器的 GPU 阵列、16 核神经网络引擎与统一内存通道">
+          <defs>
+            <linearGradient id="chipGrad" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0" stop-color="#64d2ff"/><stop offset=".42" stop-color="#bf5af2"/>
+              <stop offset=".72" stop-color="#ff375f"/><stop offset="1" stop-color="#ffd60a"/>
+            </linearGradient>
+          </defs>
+          <rect class="pack" x="12" y="12" width="436" height="436" rx="30"/>
+          <rect class="die" x="50" y="50" width="360" height="360" rx="16"/>
+          <g id="g-cpu" class="cg">
+            <rect class="block" x="74" y="74" width="152" height="112" rx="10"/>
+            <rect class="cell p" x="86" y="90" width="28" height="34" rx="4"/><rect class="cell p" x="120" y="90" width="28" height="34" rx="4"/>
+            <rect class="cell p" x="154" y="90" width="28" height="34" rx="4"/><rect class="cell p" x="188" y="90" width="28" height="34" rx="4"/>
+            <rect class="cell" x="86" y="132" width="18" height="26" rx="3"/><rect class="cell" x="108" y="132" width="18" height="26" rx="3"/>
+            <rect class="cell" x="130" y="132" width="18" height="26" rx="3"/><rect class="cell" x="152" y="132" width="18" height="26" rx="3"/>
+            <rect class="cell" x="174" y="132" width="18" height="26" rx="3"/><rect class="cell" x="196" y="132" width="18" height="26" rx="3"/>
+            <text class="lbl" x="86" y="176">CPU · 4P + 6E</text>
+          </g>
+          <g id="g-gpu" class="cg">
+            <rect class="block" x="74" y="210" width="152" height="140" rx="10"/>
+            <circle class="cell" cx="96" cy="248" r="10"/><circle class="cell" cx="124" cy="248" r="10"/><circle class="cell" cx="152" cy="248" r="10"/><circle class="cell" cx="180" cy="248" r="10"/><circle class="cell" cx="208" cy="248" r="10"/>
+            <circle class="cell" cx="96" cy="290" r="10"/><circle class="cell" cx="124" cy="290" r="10"/><circle class="cell" cx="152" cy="290" r="10"/><circle class="cell" cx="180" cy="290" r="10"/><circle class="cell" cx="208" cy="290" r="10"/>
+            <circle class="na" cx="96" cy="248" r="3.6"/><circle class="na" cx="124" cy="248" r="3.6"/><circle class="na" cx="152" cy="248" r="3.6"/><circle class="na" cx="180" cy="248" r="3.6"/><circle class="na" cx="208" cy="248" r="3.6"/>
+            <circle class="na" cx="96" cy="290" r="3.6"/><circle class="na" cx="124" cy="290" r="3.6"/><circle class="na" cx="152" cy="290" r="3.6"/><circle class="na" cx="180" cy="290" r="3.6"/><circle class="na" cx="208" cy="290" r="3.6"/>
+            <text class="lbl" x="86" y="336">GPU ×10 · 神经加速器</text>
+          </g>
+          <g id="g-ne" class="cg">
+            <rect class="block" x="250" y="74" width="136" height="112" rx="10"/>
+            <line class="tick" x1="262" y1="104" x2="262" y2="150"/><line class="tick" x1="270" y1="104" x2="270" y2="150"/><line class="tick" x1="278" y1="104" x2="278" y2="150"/><line class="tick" x1="286" y1="104" x2="286" y2="150"/>
+            <line class="tick" x1="294" y1="104" x2="294" y2="150"/><line class="tick" x1="302" y1="104" x2="302" y2="150"/><line class="tick" x1="310" y1="104" x2="310" y2="150"/><line class="tick" x1="318" y1="104" x2="318" y2="150"/>
+            <line class="tick" x1="326" y1="104" x2="326" y2="150"/><line class="tick" x1="334" y1="104" x2="334" y2="150"/><line class="tick" x1="342" y1="104" x2="342" y2="150"/><line class="tick" x1="350" y1="104" x2="350" y2="150"/>
+            <line class="tick" x1="358" y1="104" x2="358" y2="150"/><line class="tick" x1="366" y1="104" x2="366" y2="150"/><line class="tick" x1="374" y1="104" x2="374" y2="150"/><line class="tick" x1="382" y1="104" x2="382" y2="150"/>
+            <text class="lbl" x="262" y="176">NEURAL ENGINE · 16</text>
+          </g>
+          <g id="g-mem" class="cg">
+            <rect class="block" x="250" y="210" width="136" height="140" rx="10"/>
+            <line class="flow" x1="264" y1="252" x2="372" y2="252"/>
+            <line class="flow" x1="264" y1="280" x2="372" y2="280"/>
+            <line class="flow" x1="264" y1="308" x2="372" y2="308"/>
+            <text class="lbl" x="262" y="336">统一内存 · 153GB/S</text>
+          </g>
+          <g id="g-m5"><text class="m5w" x="230" y="399" text-anchor="middle">M5</text></g>
+        </svg>
+      </div>
+      <div class="chip-side">
+        <div class="stage-box">
+          <div class="cstage st-0"><p class="cs-idx mono">00 · OVERVIEW</p><h3>首先，它是一颗真实的芯片。</h3><p>2025 年 10 月，苹果正式发布 M5，率先搭载于新款 iPad Pro 与 14 英寸 MacBook Pro。本章所有数据，均来自那次官方发布——没有传闻。</p></div>
+          <div class="cstage st-1"><p class="cs-idx mono">01 · CPU</p><h3>10 核，各司其职。</h3><p>4 个性能核心负责重负载，6 个能效核心照看后台与待机。Air 上那种“随叫随到又长久在线”的底气，从这里来。</p></div>
+          <div class="cstage st-2"><p class="cs-idx mono">02 · GPU</p><h3>每颗 GPU 内核，内嵌神经加速器。</h3><p>这是 M5 最大的架构变化：本地 AI 计算直接住进图形管线。苹果官方称，AI 性能较 M4 最高提升 3.5 倍，并带来第三代硬件光线追踪。</p></div>
+          <div class="cstage st-3"><p class="cs-idx mono">03 · BANDWIDTH</p><h3>管道，决定上限。</h3><p>16 核神经网络引擎，153GB/s 统一内存带宽。端侧大模型、图像理解、实时翻译——都从这条管道经过。</p></div>
+          <div class="cstage st-4"><p class="cs-idx mono">04 · NEXT QUESTION</p><h3>当 M5，走进无风扇的机身。</h3><p>M4 世代的 Air 重 1.24 千克（13 英寸现款）。把 M5 的性能装进这份轻、且不借助风扇——这就是下一页要推演的事。</p></div>
+        </div>
+        <div class="chip-dots" aria-hidden="true"><i class="on"></i><i></i><i></i><i></i><i></i></div>
+      </div>
+    </div>
+    <p class="chip-hint mono" aria-hidden="true">保持滚动 · 正在解剖</p>
+  </div>
+</section>
+
+<!-- ================= 数字条 ================= -->
+<section class="nums" aria-label="M5 关键数字">
+  <div class="wrap nums-grid">
+    <div class="num" data-reveal><strong><span data-count="153">0</span><small>GB/s</small></strong><p>统一内存带宽</p></div>
+    <div class="num" data-reveal style="--d:.1s"><strong>最高&nbsp;<span data-count="3.5" data-dec="1">0</span><small>×</small></strong><p>AI 性能 vs M4（苹果官方口径）</p></div>
+    <div class="num" data-reveal style="--d:.2s"><strong><span data-count="10">0</span><small>核</small></strong><p>GPU · 每核内嵌神经加速器</p></div>
+    <div class="num" data-reveal style="--d:.3s"><strong><span data-count="16">0</span><small>核</small></strong><p>神经网络引擎</p></div>
+  </div>
+</section>
+
+<!-- ================= CH.04 概念推演 ================= -->
+<section class="chapter" id="air5">
+  <div class="wrap">
+    <header class="ch-head" data-reveal="up">
+      <p class="ch-kicker mono">CHAPTER 04 · CONCEPT PREVIEW</p>
+      <h2>当 M5 走进 Air。</h2>
+      <p class="ch-lede">以下为概念推演：基于已验证的芯片数据与 Air 十七年的 lineage 传统。整机规格，以苹果官方发布为准。</p>
+    </header>
+    <div class="claim" data-reveal="left">
+      <p class="claim-idx">01</p>
+      <div><h3>无风扇，是性能的自律。</h3><p>自 M1 世代起，MacBook Air 没有再装过风扇。需要风扇压住的性能是强的，不需要风扇的性能，是克制的。</p><p class="claim-src">AIR 传统 · 自 2020 · 已验证</p></div>
+    </div>
+    <div class="claim" data-reveal="left" style="--d:.08s">
+      <p class="claim-idx">02</p>
+      <div><h3>轻，是系统工程。</h3><p>从 2008 年的信封到现款 1.24 千克*，Air 的轻从来不是单项胜利——它是芯片、结构、电池与屏幕的总和。</p><p class="claim-src">*13 英寸现款（M4 世代）重量 · 新世代以官方为准</p></div>
+    </div>
+    <div class="claim" data-reveal="left" style="--d:.16s">
+      <p class="claim-idx">03</p>
+      <div><h3>全栈一体。</h3><p>自研硅、自研系统、自造整机。三者握在同一家公司手里，性能才敢花到最后一分，而机身敢薄到最后一毫米。</p><p class="claim-src">APPLE SILICON · 自 2020 · 已验证</p></div>
+    </div>
+    <figure class="slot" data-reveal="scale">
+      <div class="slot-frame" role="img" aria-label="占位：MacBook Air M5 概念场景官方渲染图（待官方资产）">
+        <span class="slot-corner tl" aria-hidden="true"></span><span class="slot-corner tr" aria-hidden="true"></span>
+        <span class="slot-corner bl" aria-hidden="true"></span><span class="slot-corner br" aria-hidden="true"></span>
+        <p class="slot-label">Official Asset Slot · MacBook Air M5 场景渲染 · 待官方发布后接入</p>
+      </div>
+      <figcaption>FIG.02 — CONCEPT SCENE PLACEHOLDER</figcaption>
+    </figure>
+  </div>
+</section>
+
+<!-- ================= CH.05 规格溯源 ================= -->
+<section class="chapter light" id="specs">
+  <div class="wrap">
+    <header class="ch-head" data-reveal="up">
+      <p class="ch-kicker mono">CHAPTER 05 · SPEC SHEET</p>
+      <h2>关键参数，以及它们的出处。</h2>
+      <p class="ch-lede">一张诚实的规格表：每一项都标注它来自哪里。这是概念页与官方页的区别，也是它的底线。</p>
+    </header>
+    <div class="legend" data-reveal>
+      <span>● 官方已公布</span><span>◐ 沿用现款（M4 世代 Air）</span><span>○ 概念推演</span>
+    </div>
+    <div class="spec-grid">
+      <div class="spec" data-reveal><p class="spec-v">Apple M5</p><p class="spec-k">芯片 · 2025.10 发布</p><p class="spec-tag">● 官方已公布</p></div>
+      <div class="spec" data-reveal style="--d:.05s"><p class="spec-v">10 核</p><p class="spec-k">CPU · 4 性能核 + 6 能效核</p><p class="spec-tag">● 官方已公布</p></div>
+      <div class="spec" data-reveal style="--d:.1s"><p class="spec-v">10 核 GPU</p><p class="spec-k">每核内嵌神经加速器</p><p class="spec-tag">● 官方已公布</p></div>
+      <div class="spec" data-reveal style="--d:.15s"><p class="spec-v">16 核</p><p class="spec-k">神经网络引擎</p><p class="spec-tag">● 官方已公布</p></div>
+      <div class="spec" data-reveal style="--d:.2s"><p class="spec-v">153GB/s</p><p class="spec-k">统一内存带宽</p><p class="spec-tag">● 官方已公布</p></div>
+      <div class="spec" data-reveal style="--d:.25s"><p class="spec-v">第三代 3nm</p><p class="spec-k">制程工艺</p><p class="spec-tag">● 官方已公布</p></div>
+      <div class="spec" data-reveal style="--d:.3s"><p class="spec-v">最高 3.5×</p><p class="spec-k">AI 性能 vs M4 · 官方口径</p><p class="spec-tag">● 官方已公布</p></div>
+      <div class="spec" data-reveal style="--d:.35s"><p class="spec-v">13.6″ / 15.3″</p><p class="spec-k">Liquid Retina 显示屏</p><p class="spec-tag">◐ 沿用现款</p></div>
+      <div class="spec" data-reveal style="--d:.4s"><p class="spec-v">1.24kg 起</p><p class="spec-k">13 英寸现款重量</p><p class="spec-tag">◐ 沿用现款</p></div>
+      <div class="spec" data-reveal style="--d:.45s"><p class="spec-v">无风扇</p><p class="spec-k">自 M1 世代的设计传统</p><p class="spec-tag">◐ AIR 传统</p></div>
+      <div class="spec" data-reveal style="--d:.5s"><p class="spec-v">Air × M5</p><p class="spec-k">整机整合形态</p><p class="spec-tag">○ 概念推演 · 待官方</p></div>
+    </div>
+    <p class="spec-note">注：标注「沿用现款」的参数来自当前在售 MacBook Air（M4 世代）官方规格，新世代是否继承以苹果官方发布为准；本页不提供任何价格与购买入口。</p>
+  </div>
+</section>
+
+<!-- ================= 结尾 ================= -->
+<hr class="hairline" aria-hidden="true">
+<section class="ending">
+  <div class="wrap">
+    <blockquote data-reveal="scale">
+      <p class="q-src mono">THINK DIFFERENT · CUPERTINO · 1997</p>
+      <p class="q-en">“Here's to the crazy ones.”</p>
+      <p class="q-zh">向疯狂的人致敬。……因为只有那些疯狂到以为自己能够改变世界的人，才是真正改变世界的人。</p>
+    </blockquote>
+    <div class="cta" data-reveal="up">
+      <h2>等它来时，值得。</h2>
+      <p>MacBook Air M5 尚未由苹果官方发布。留意苹果官网，第一时间见证。</p>
+      <div class="cta-btns">
+        <a class="btn solid" href="https://www.apple.com.cn/macbook-air/" target="_blank" rel="noopener">前往苹果官网 MacBook Air ↗</a>
+        <a class="btn ghost" href="#colophon">阅读本页概念说明</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- ================= FOOTER / 概念说明 ================= -->
+<footer id="colophon">
+  <div class="wrap f-grid">
+    <div>
+      <h4>数据来源 · 真值分层</h4>
+      <ul>
+        <li>【已验证】苹果 2025 年 10 月 M5 芯片官方发布（14″ MacBook Pro / iPad Pro）</li>
+        <li>【已验证】MacBook Air 历代官方发布资料（2008–2025）</li>
+        <li>【已验证】苹果品牌史公开资料（1976–2025）</li>
+        <li>【概念】“MacBook Air M5”整机形态未发布，相关表述为推演</li>
+      </ul>
+    </div>
+    <div>
+      <h4>图片位说明</h4>
+      <p>本页所有产品图位均为官方资产占位槽（FIG.01 / FIG.02）。因当前环境无法获取并验证苹果官方图片，未使用任何非官方图片，亦未用生成图伪造产品外观。</p>
+    </div>
+    <div>
+      <h4>声明</h4>
+      <p>独立前端技术演示，仅用于设计交流，非商业用途，与 Apple Inc. 无关。因 MacBook Air M5 尚未正式发布，本页不提供价格与购买入口。</p>
+    </div>
+  </div>
+  <p class="f-bottom">CONCEPT DEMO · DESIGN TASTE PROJECT · 2026</p>
+</footer>
+
+<script>
+(() => {
+  const rm = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (rm) document.documentElement.classList.add('rm');
+
+  /* ---- 可重播视口揭示（A2 生命周期：回滚后重新入场会重播） ---- */
+  const items = [...document.querySelectorAll('[data-reveal]')];
+  if (rm) { items.forEach(el => el.classList.add('is-on')); }
+  else {
+    const exitT = new WeakMap();
+    const io = new IntersectionObserver(es => {
+      for (const e of es) {
+        const el = e.target, t = exitT.get(el);
+        if (t) { clearTimeout(t); exitT.delete(el); }
+        if (e.intersectionRatio >= 0.15) { el.classList.add('is-on'); continue; }
+        if (e.intersectionRatio === 0) {
+          const timer = setTimeout(() => {
+            const r = el.getBoundingClientRect();
+            if (r.bottom <= 0 || r.top >= innerHeight) el.classList.remove('is-on');
+            exitT.delete(el);
+          }, 350);
+          exitT.set(el, timer);
+        }
+      }
+    }, { threshold: [0, 0.15, 1] });
+    items.forEach(el => io.observe(el));
+  }
+
+  /* ---- 数字滚动（一次性，语义性状态） ---- */
+  const counters = [...document.querySelectorAll('[data-count]')];
+  const fmt = (el, v) => { el.textContent = el.dataset.dec ? v.toFixed(1) : String(Math.round(v)); };
+  if (rm) { counters.forEach(el => fmt(el, +el.dataset.count)); }
+  else {
+    const cio = new IntersectionObserver(es => {
+      es.forEach(e => {
+        if (!e.isIntersecting) return;
+        cio.unobserve(e.target);
+        const el = e.target, end = +el.dataset.count, t0 = performance.now(), dur = 1500;
+        const tick = t => {
+          const p = Math.min(1, (t - t0) / dur), ease = 1 - Math.pow(1 - p, 3);
+          fmt(el, end * ease);
+          if (p < 1) requestAnimationFrame(tick);
+        };
+        requestAnimationFrame(tick);
+      });
+    }, { threshold: 0.4 });
+    counters.forEach(el => cio.observe(el));
+  }
+
+  /* ---- 滚动驱动：导航进度 / 时间线描线 / M5 解剖分级 ---- */
+  const navProg = document.querySelector('.nav-prog');
+  const tlWrap  = document.querySelector('.timeline');
+  const tlFill  = document.querySelector('.tl-fill');
+  const chip    = document.getElementById('chip');
+  const chipPin = document.getElementById('chipPin');
+  const dots    = [...document.querySelectorAll('.chip-dots i')];
+  let curStage = -1, ticking = false;
+
+  function setStage(s) {
+    if (s === curStage) return;
+    curStage = s;
+    chip.dataset.stage = s;
+    dots.forEach((d, i) => d.classList.toggle('on', i <= s));
+  }
+
+  function onScroll() {
+    const y = scrollY, dh = document.documentElement.scrollHeight - innerHeight;
+    if (navProg) navProg.style.transform = 'scaleX(' + (dh ? y / dh : 0) + ')';
+    if (tlWrap && tlFill) {
+      if (rm) tlFill.style.transform = 'scaleY(1)';
+      else {
+        const r = tlWrap.getBoundingClientRect(), anchor = innerHeight * 0.7;
+        const p = Math.min(1, Math.max(0, (anchor - r.top) / r.height));
+        tlFill.style.transform = 'scaleY(' + p + ')';
+      }
+    }
+    if (chipPin && !rm) {
+      const r = chipPin.getBoundingClientRect();
+      const total = chipPin.offsetHeight - innerHeight;
+      const p = Math.min(0.999, Math.max(0, -r.top / total));
+      setStage(Math.min(4, Math.floor(p * 5)));
+    }
+    ticking = false;
+  }
+
+  if (rm) setStage(4); /* 减少动态：直接展示全部解剖层 */
+  addEventListener('scroll', () => { if (!ticking) { ticking = true; requestAnimationFrame(onScroll); } }, { passive: true });
+  addEventListener('resize', onScroll);
+  onScroll();
+})();
+</script>
+</body>
+</html>

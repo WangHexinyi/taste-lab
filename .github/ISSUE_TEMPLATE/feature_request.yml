@@ -1,0 +1,38 @@
+name: Decision-rule proposal
+description: Propose a new capability or a narrowly justified change.
+title: "[Proposal]: "
+labels:
+  - enhancement
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem
+      description: What repeatable failure or missing decision does this address?
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Evidence
+      description: Provide briefs, rendered examples or category conventions.
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed change
+      description: Explain the smallest useful intervention and its trade-offs.
+    validations:
+      required: true
+  - type: dropdown
+    id: scope
+    attributes:
+      label: Scope
+      options:
+        - Current Skill
+        - Demo gallery
+        - Installation or compatibility
+        - Documentation
+    validations:
+      required: true

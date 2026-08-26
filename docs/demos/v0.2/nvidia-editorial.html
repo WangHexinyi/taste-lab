@@ -1,0 +1,728 @@
+<!DOCTYPE html>
+<html lang="zh-CN" style="color-scheme:dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NVIDIA | 智能时代的引擎</title>
+<meta name="description" content="NVIDIA 企业宣传页:历史、文化、产品性能、竞争力、财务与股价。设计演示,非投资建议。">
+<!-- z-index 体系: nav 50 / tooltip 45 / grain 60(固定、不随滚动重绘) -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;0,900;1,500;1,600&family=Noto+Serif+SC:wght@500;700;900&family=Noto+Sans+SC:wght@300;400;500;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+/* ============ Morandi 绿灰 · 暗色单主题 ============ */
+:root{
+  --bg0:hsl(84 14% 6%);      /* 页面底 */
+  --bg1:hsl(82 12% 9%);      /* 面板 */
+  --bg2:hsl(80 11% 12%);     /* 抬升面板 */
+  --bg3:hsl(78 10% 16%);     /* hover */
+  --line:hsl(80 12% 24%);    /* 发丝线 */
+  --ink:hsl(80 14% 90%);
+  --dim:hsl(80 10% 62%);
+  --faint:hsl(80 10% 48%);
+  --green:hsl(76 88% 40%);   /* 舞台色相: NVIDIA 绿,降饱和执行 */
+  --green-soft:hsl(76 55% 52%);
+  --serif:'Playfair Display','Noto Serif SC',serif;
+  --sans:'Noto Sans SC',-apple-system,'PingFang SC',sans-serif;
+  --mono:'JetBrains Mono','Noto Sans SC',monospace;
+  --ease:cubic-bezier(.16,1,.3,1);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  background:var(--bg0);color:var(--ink);
+  font:400 16px/1.75 var(--sans);
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+::selection{background:var(--green);color:#10120a}
+a{color:inherit;text-decoration:none}
+img{display:block;max-width:100%}
+a:focus-visible,button:focus-visible{outline:2px solid var(--green);outline-offset:3px}
+.mono{font-family:var(--mono)}
+.g{color:var(--green)}
+.dim{color:var(--dim)}
+
+/* 颗粒:固定层,不贴滚动容器 */
+.grain{
+  position:fixed;inset:0;z-index:60;pointer-events:none;opacity:.055;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/><feColorMatrix type='saturate' values='0'/></filter><rect width='240' height='240' filter='url(%23n)' opacity='0.6'/></svg>");
+}
+
+/* ============ 导航:单行 ≤80px ============ */
+.nav{
+  position:fixed;top:0;left:0;right:0;z-index:50;height:68px;
+  background:hsl(84 14% 6% / .82);backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--line);
+}
+.nav-in{max-width:1400px;height:100%;margin:0 auto;padding:0 clamp(1.25rem,4vw,3rem);
+  display:flex;align-items:center;justify-content:space-between;gap:2rem}
+.brand{display:flex;align-items:center;gap:.7rem;font:700 1rem var(--sans);letter-spacing:.22em}
+.brand i{width:11px;height:11px;background:var(--green);flex:none}
+.nav-links{display:flex;gap:clamp(1.2rem,2.5vw,2.4rem);font-size:.85rem;letter-spacing:.12em}
+.nav-links a{color:var(--dim);transition:color .3s}
+.nav-links a:hover{color:var(--green-soft)}
+@media(max-width:767px){.nav-links a:not(.keep){display:none}}
+
+/* ============ 通用 ============ */
+.sec{padding:clamp(5rem,10vw,8.5rem) clamp(1.25rem,4vw,3rem)}
+.wrap{max-width:1400px;margin:0 auto}
+.kicker{font:500 11px/1 var(--mono);letter-spacing:.32em;color:var(--green);text-transform:uppercase;margin-bottom:1.4rem}
+h2{font:700 clamp(2rem,4.5vw,3.4rem)/1.2 var(--serif);letter-spacing:.01em}
+.sec-head{margin-bottom:clamp(2.5rem,6vw,4.5rem);max-width:760px}
+.sec-head p{margin-top:1.1rem;color:var(--dim);max-width:62ch}
+
+/* 可重播揭示系统(滚出 400ms 后重置) */
+.rv{opacity:0;transform:translateY(28px);
+  transition:opacity .8s ease var(--d,0s),transform 1s var(--ease) var(--d,0s)}
+.rv-l{transform:translateX(-34px)}
+.rv.in-view{opacity:1;transform:none}
+
+/* ============ Hero:非对称分割,字骑摄影 ============ */
+.hero{min-height:100dvh;display:flex;align-items:center;padding-top:6rem;position:relative}
+.hero-grid{display:grid;grid-template-columns:minmax(0,7fr) minmax(0,5fr);gap:clamp(2rem,4vw,4rem);width:100%;align-items:center}
+.hero-copy{position:relative;z-index:2}
+.hero h1{
+  font:900 clamp(3rem,8vw,6.2rem)/1.12 var(--serif);
+  letter-spacing:.02em;margin:1.2rem 0 1.6rem;
+}
+.hero h1 em{font-style:normal;color:var(--green-soft)}
+.hero-sub{color:var(--dim);font-size:clamp(1rem,1.4vw,1.15rem);max-width:34em;margin-bottom:2.4rem}
+.cta-row{display:flex;gap:1rem;flex-wrap:wrap}
+.btn{display:inline-flex;align-items:center;padding:.95rem 1.9rem;font:500 .92rem/1 var(--sans);
+  letter-spacing:.1em;transition:transform .25s var(--ease),background .3s,color .3s,border-color .3s;cursor:pointer}
+.btn:active{transform:translateY(1px)}
+.btn-solid{background:var(--green);color:#10120a}
+.btn-solid:hover{background:var(--green-soft)}
+.btn-ghost{border:1px solid var(--line);color:var(--ink)}
+.btn-ghost:hover{border-color:var(--green);color:var(--green-soft)}
+
+.hero-media{position:relative;margin-left:-3.5rem}
+.hero-media .frame{overflow:hidden;border:1px solid var(--line)}
+.hero-media img{width:100%;aspect-ratio:4/5;object-fit:cover;
+  filter:grayscale(1) contrast(1.06) brightness(.72);
+  transition:transform 6s var(--ease)}
+.hero-media:hover img{transform:scale(1.04)}
+.hero-media .frame::after{content:"";position:absolute;inset:0;
+  background:linear-gradient(160deg,hsl(76 88% 40% / .10),transparent 45%,hsl(84 14% 4% / .55))}
+/* 拉丁斜体大字骑在摄影上;含 g/y 降部,行高 1.15 + 底部预留 */
+.hero-latin{
+  position:absolute;top:9%;left:-16%;z-index:3;
+  font:italic 600 clamp(1.9rem,4.2vw,3.6rem)/1.15 var(--serif);
+  color:var(--ink);padding-bottom:.14em;
+  text-shadow:0 2px 30px hsl(84 14% 4% / .8);
+}
+.metrics{
+  position:absolute;left:-3.2rem;bottom:2.4rem;z-index:3;
+  background:var(--bg1);border:1px solid var(--line);
+  padding:1.4rem 1.7rem;min-width:270px;
+}
+.metrics .m{display:flex;justify-content:space-between;align-items:baseline;gap:2rem;padding:.55rem 0}
+.metrics .m+.m{border-top:1px solid hsl(80 12% 24% / .55)}
+.metrics .m b{font:500 1.25rem var(--mono);color:var(--ink);white-space:nowrap}
+.metrics .m span{font-size:.78rem;color:var(--faint);letter-spacing:.06em}
+@media(max-width:900px){
+  .hero{padding-top:7rem;align-items:flex-start}
+  .hero-grid{grid-template-columns:1fr}
+  .hero-media{margin-left:0}
+  .hero-latin{position:static;display:block;margin-bottom:1rem;left:0;text-shadow:none}
+  .metrics{position:static;margin-top:1.2rem;width:100%}
+}
+
+/* ============ 历史:垂直时间线 ============ */
+.tl{position:relative}
+.tl::before{content:"";position:absolute;left:139px;top:8px;bottom:8px;width:1px;background:var(--line)}
+.tl-item{display:grid;grid-template-columns:120px 1fr;gap:2.6rem;padding:2rem 0;position:relative}
+.tl-item:nth-child(even) .tl-body{margin-left:11%}
+.tl-item:nth-child(3n) .tl-body{margin-left:4%;max-width:56ch}
+.tl-year{font:500 1.15rem var(--mono);color:var(--green);text-align:right;padding-top:.2rem;transition:text-shadow .3s}
+.tl-item:hover .tl-year{text-shadow:0 0 24px hsl(76 88% 40% / .5)}
+.tl-node{position:absolute;left:136px;top:2.55rem;width:7px;height:7px;background:var(--green)}
+.tl-body h3{font:700 1.35rem/1.4 var(--serif);margin-bottom:.4rem}
+.tl-body p{color:var(--dim);font-size:.95rem;max-width:58ch}
+@media(max-width:767px){
+  .tl::before{left:3px}
+  .tl-item{grid-template-columns:1fr;gap:.5rem;padding-left:1.6rem}
+  .tl-year{text-align:left}
+  .tl-node{left:0;top:2.6rem}
+  .tl-item:nth-child(even) .tl-body,.tl-item:nth-child(3n) .tl-body{margin-left:0}
+}
+
+/* ============ 文化:引言带 + 非对称原则格 ============ */
+.band{position:relative;min-height:62vh;display:flex;align-items:center;overflow:hidden;
+  padding:clamp(4rem,8vw,7rem) clamp(1.25rem,4vw,3rem)}
+.band>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
+  filter:grayscale(1) contrast(1.05) brightness(.5)}
+.band::after{content:"";position:absolute;inset:0;
+  background:linear-gradient(90deg,hsl(84 14% 5% / .92) 20%,hsl(84 14% 5% / .45))}
+.band .wrap{position:relative;z-index:2}
+.band blockquote{font:700 clamp(1.9rem,4.6vw,3.6rem)/1.35 var(--serif);max-width:22ch}
+.band .latin{font:italic 600 clamp(1.6rem,3.6vw,2.8rem)/1.15 var(--serif);color:var(--green-soft);
+  display:block;margin-bottom:1.2rem;padding-bottom:.1em}
+.band cite{display:block;margin-top:2rem;font:400 .9rem var(--mono);color:var(--dim);font-style:normal;letter-spacing:.1em}
+.culture-grid{display:grid;grid-template-columns:1.55fr 1fr;gap:1.4rem;margin-top:clamp(3rem,6vw,5rem)}
+.culture-grid .c{border:1px solid var(--line);background:var(--bg1);padding:2.2rem 2rem;
+  transition:border-color .35s,transform .5s var(--ease)}
+.culture-grid .c:hover{border-color:hsl(76 88% 40% / .55);transform:translateY(-4px)}
+.culture-grid .c.big{grid-row:span 2;display:flex;flex-direction:column;justify-content:space-between;min-height:340px}
+.c .tag{font:500 11px var(--mono);letter-spacing:.26em;color:var(--green);text-transform:uppercase}
+.c h3{font:700 1.5rem/1.35 var(--serif);margin:.9rem 0 .7rem}
+.c p{color:var(--dim);font-size:.93rem;max-width:52ch}
+.c .fact{margin-top:1.6rem;font:500 1.05rem var(--mono);color:var(--ink)}
+.c .fact small{display:block;color:var(--faint);font-size:.72rem;margin-top:.3rem;letter-spacing:.05em}
+@media(max-width:900px){.culture-grid{grid-template-columns:1fr}.culture-grid .c.big{min-height:0;grid-row:auto}}
+
+/* ============ 跑马灯(全页唯一) ============ */
+.mq{overflow:hidden;border-block:1px solid var(--line);padding:1.15rem 0;background:var(--bg1)}
+.mq-track{display:flex;width:max-content;animation:mq 38s linear infinite}
+.mq ul{display:flex;gap:3.2rem;padding-right:3.2rem;list-style:none;
+  font:500 .82rem var(--mono);letter-spacing:.26em;color:var(--dim);white-space:nowrap}
+.mq li b{color:var(--green);font-weight:500;margin-left:3.2rem}
+@keyframes mq{to{transform:translateX(-50%)}}
+
+/* ============ 产品:旗舰横幅 + 双列规格格 ============ */
+.feature{border:1px solid var(--line);background:var(--bg1);padding:clamp(2rem,4vw,3.4rem);margin-bottom:1.4rem}
+.feature-top{display:flex;justify-content:space-between;align-items:baseline;gap:2rem;flex-wrap:wrap;margin-bottom:2.4rem}
+.feature-top h3{font:700 clamp(1.7rem,3.4vw,2.6rem)/1.2 var(--serif)}
+.feature-top .note{font:400 .8rem var(--mono);color:var(--faint);letter-spacing:.08em}
+.spec-row{display:grid;grid-template-columns:repeat(6,1fr);gap:1px;background:var(--line);border:1px solid var(--line)}
+.spec{background:var(--bg0);padding:1.5rem 1.3rem}
+.spec b{display:block;font:500 clamp(1.25rem,2vw,1.7rem)/1.2 var(--mono);color:var(--ink);white-space:nowrap}
+.spec b i{font-style:normal;color:var(--green-soft);font-size:.7em;margin-left:.15em}
+.spec span{display:block;margin-top:.55rem;font-size:.75rem;color:var(--faint);letter-spacing:.05em}
+@media(max-width:1000px){.spec-row{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:640px){.spec-row{grid-template-columns:repeat(2,1fr)}}
+
+.bento{display:grid;grid-template-columns:1fr 1fr;gap:1.4rem}
+.cell{border:1px solid var(--line);background:var(--bg1);padding:2.2rem 2rem;min-height:300px;
+  display:flex;flex-direction:column;justify-content:flex-end;position:relative;overflow:hidden;
+  transition:border-color .35s}
+.cell:hover{border-color:hsl(76 88% 40% / .55)}
+.cell .tag{font:500 11px var(--mono);letter-spacing:.26em;color:var(--green);text-transform:uppercase;margin-bottom:1rem}
+.cell h3{font:700 1.5rem/1.3 var(--serif);margin-bottom:.9rem}
+.cell ul{list-style:none}
+.cell li{font:400 .92rem var(--mono);color:var(--dim);padding:.4rem 0}
+.cell li b{color:var(--ink);font-weight:500}
+.cell .why{margin-top:1.2rem;font-size:.85rem;color:var(--faint);font-style:italic}
+.cell.img-cell{padding:0;justify-content:flex-end}
+.cell.img-cell img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
+  filter:grayscale(1) brightness(.5) contrast(1.05);transition:transform 5s var(--ease)}
+.cell.img-cell:hover img{transform:scale(1.05)}
+.cell.img-cell .inner{position:relative;z-index:2;padding:2.2rem 2rem;
+  background:linear-gradient(transparent,hsl(84 14% 4% / .9) 35%)}
+.cell.tint{background:linear-gradient(165deg,hsl(76 32% 14%),var(--bg1) 70%)}
+@media(max-width:860px){.bento{grid-template-columns:1fr}}
+
+/* ============ 竞争力:粘性双栏 ============ */
+.duo{display:grid;grid-template-columns:5fr 7fr;gap:clamp(2.5rem,6vw,5.5rem);align-items:start}
+.duo-left{position:sticky;top:110px}
+.duo-left .latin{font:italic 500 1.15rem/1.3 var(--serif);color:var(--faint);margin-top:1.4rem;display:block;padding-bottom:.1em}
+.moat{padding:2.4rem 0;border-top:1px solid var(--line)}
+.moat:last-child{border-bottom:1px solid var(--line)}
+.moat .tag{font:500 11px var(--mono);letter-spacing:.26em;color:var(--green);text-transform:uppercase}
+.moat h3{font:700 1.45rem/1.35 var(--serif);margin:.8rem 0 .7rem}
+.moat p{color:var(--dim);font-size:.95rem;max-width:60ch}
+.moat .fact{margin-top:1rem;font:500 .88rem var(--mono);color:var(--green-soft)}
+@media(max-width:900px){.duo{grid-template-columns:1fr}.duo-left{position:static}}
+
+/* ============ 财务:统计块 + 柱状图 ============ */
+.tiles{display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr;gap:1px;background:var(--line);border:1px solid var(--line);margin-bottom:clamp(3rem,6vw,5rem)}
+.tile{background:var(--bg1);padding:2rem 1.8rem}
+.tile span{display:block;font-size:.78rem;color:var(--faint);letter-spacing:.08em;margin-bottom:.9rem}
+.tile b{font:500 clamp(1.9rem,3.4vw,2.9rem)/1 var(--mono);color:var(--ink);white-space:nowrap}
+.tile b i{font-style:normal;font-size:.45em;color:var(--dim);margin-left:.2em}
+.tile em{display:block;font:400 .78rem var(--mono);color:var(--green);font-style:normal;margin-top:.8rem}
+@media(max-width:900px){.tiles{grid-template-columns:1fr 1fr}}
+@media(max-width:560px){.tiles{grid-template-columns:1fr}}
+
+.chart-panel{border:1px solid var(--line);background:var(--bg1);padding:clamp(1.8rem,4vw,3rem)}
+.bars{display:flex;align-items:flex-end;gap:clamp(.9rem,3vw,2.6rem);height:320px;border-bottom:1px solid var(--line);padding:0 .5rem}
+.bar{flex:1;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;height:100%;position:relative}
+.bar .val{font:500 .82rem var(--mono);color:var(--ink);margin-bottom:.6rem}
+.bar .val em{font-style:normal;color:var(--green);font-size:.85em;margin-left:.3em}
+.bar .fill{width:100%;height:var(--h);background:hsl(76 88% 40% / .34);
+  transform:scaleY(0);transform-origin:bottom;
+  transition:transform 1.2s var(--ease) var(--d,0s)}
+.bar:last-child .fill{background:linear-gradient(180deg,var(--green),hsl(76 88% 32%))}
+.rv.in-view .fill{transform:scaleY(1)}
+.bar-x{display:flex;gap:clamp(.9rem,3vw,2.6rem);padding:.8rem .5rem 0}
+.bar-x span{flex:1;text-align:center;font:400 .75rem var(--mono);color:var(--faint)}
+.fin-note{margin-top:1.6rem;font-size:.78rem;color:var(--faint)}
+.qrow{display:flex;gap:1px;background:var(--line);border:1px solid var(--line);margin-top:1.4rem}
+.qrow div{flex:1;background:var(--bg0);padding:1.1rem 1rem;text-align:center}
+.qrow b{display:block;font:500 1.15rem var(--mono)}
+.qrow span{font-size:.72rem;color:var(--faint);letter-spacing:.06em}
+.qrow .est b{color:var(--green-soft)}
+@media(max-width:640px){.qrow{flex-wrap:wrap}.qrow div{flex:1 1 48%}}
+
+/* ============ 股价:折线图 + 里程碑 ============ */
+.chart-wrap{position:relative;border:1px solid var(--line);background:var(--bg1);padding:clamp(1.5rem,3vw,2.6rem)}
+.chart-wrap svg{width:100%;height:auto;display:block;cursor:crosshair}
+.grid-line{stroke:hsl(80 12% 24% / .7);stroke-width:1}
+.axis-t{font:400 13px var(--mono);fill:var(--faint)}
+#stockPath{fill:none;stroke:var(--green);stroke-width:2.5;stroke-linejoin:round;
+  stroke-dasharray:1;stroke-dashoffset:1;transition:stroke-dashoffset 2.4s cubic-bezier(.4,0,.2,1) .2s}
+.rv.in-view #stockPath{stroke-dashoffset:0}
+#stockArea{opacity:0;transition:opacity 1.2s ease 1.2s}
+.rv.in-view #stockArea{opacity:1}
+.pt{fill:var(--bg0);stroke:var(--green);stroke-width:2;opacity:0;transition:opacity .5s ease var(--d,0s)}
+.rv.in-view .pt{opacity:1}
+.anno{font:400 12.5px var(--mono);fill:var(--dim)}
+.anno-line{stroke:hsl(80 12% 36%);stroke-dasharray:3 4}
+#xhair{stroke:hsl(76 55% 52% / .6);stroke-width:1;opacity:0;transition:opacity .15s}
+#focusDot{fill:var(--green);stroke:var(--bg0);stroke-width:2;opacity:0;transition:opacity .15s}
+.tip{position:absolute;z-index:45;pointer-events:none;opacity:0;transform:translate(-50%,-130%);
+  background:var(--bg2);border:1px solid var(--line);padding:.55rem .8rem;
+  font:500 .78rem var(--mono);white-space:nowrap;transition:opacity .15s}
+.tip b{color:var(--green-soft)}
+.mstones{display:flex;flex-wrap:wrap;gap:1rem;margin-top:1.6rem}
+.mstone{border:1px solid var(--line);background:var(--bg0);padding:.85rem 1.2rem;
+  display:flex;flex-direction:column;gap:.25rem;transition:border-color .3s,transform .4s var(--ease)}
+.mstone:hover{border-color:hsl(76 88% 40% / .55);transform:translateY(-3px)}
+.mstone b{font:500 .95rem var(--mono);color:var(--green-soft)}
+.mstone span{font-size:.76rem;color:var(--dim)}
+
+/* ============ 页脚 ============ */
+footer{border-top:1px solid var(--line);padding:3.5rem clamp(1.25rem,4vw,3rem) 2.5rem;background:var(--bg1)}
+.foot-grid{max-width:1400px;margin:0 auto;display:grid;grid-template-columns:1.4fr 1fr;gap:3rem}
+.foot-grid .brand{margin-bottom:1.2rem}
+.foot-note{font-size:.78rem;color:var(--faint);max-width:64ch;line-height:1.9}
+.foot-links{display:flex;flex-direction:column;gap:.7rem;font-size:.85rem;color:var(--dim);align-items:flex-start}
+.foot-links a:hover{color:var(--green-soft)}
+@media(max-width:767px){.foot-grid{grid-template-columns:1fr}}
+
+/* ============ 减弱动效 ============ */
+@media(prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{animation:none!important;transition:none!important}
+  .rv{opacity:1;transform:none}
+  .fill{transform:scaleY(1)}
+  #stockPath{stroke-dashoffset:0}
+  #stockArea,.pt{opacity:1}
+  .mq-track{animation:none}
+}
+</style>
+</head>
+<body>
+
+<div class="grain" aria-hidden="true"></div>
+
+<nav class="nav" aria-label="主导航">
+  <div class="nav-in">
+    <a class="brand" href="#top"><i aria-hidden="true"></i>NVIDIA</a>
+    <div class="nav-links">
+      <a href="#history" class="keep">历史</a>
+      <a href="#culture">文化</a>
+      <a href="#products" class="keep">产品</a>
+      <a href="#edge">竞争力</a>
+      <a href="#finance" class="keep">财务</a>
+      <a href="#stock">股价</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ============ HERO ============ -->
+<header class="hero" id="top">
+  <div class="wrap hero-grid">
+    <div class="hero-copy rv">
+      <h1>智能时代的引擎,<br><em>正在加速一切</em></h1>
+      <p class="hero-sub">从一块 GPU 到整柜超级计算机。三十二年,只做一件事:把算力推到物理极限。</p>
+      <div class="cta-row">
+        <a class="btn btn-solid" href="#products">探索产品</a>
+        <a class="btn btn-ghost" href="#finance">财务速览</a>
+      </div>
+    </div>
+    <div class="hero-media rv" style="--d:.15s">
+      <span class="hero-latin" lang="en">Accelerating<br>everything.</span>
+      <div class="frame">
+        <img src="https://picsum.photos/seed/nvidia-datacenter-dark/900/1125?grayscale" alt="数据中心机房(示意图片)">
+      </div>
+      <div class="metrics" role="table" aria-label="关键指标">
+        <div class="m"><span>市值(约)</span><b>$<span class="count" data-to="4.5" data-dec="1">0.0</span>T</b></div>
+        <div class="m"><span>FY2025 营收</span><b>$<span class="count" data-to="130.5" data-dec="1">0.0</span>B</b></div>
+        <div class="m"><span>数据中心占比</span><b><span class="count" data-to="88" data-dec="0">0</span>%</b></div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- ============ 历史 ============ -->
+<section class="sec" id="history">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <p class="kicker">History &amp; Milestones</p>
+      <h2>从餐厅会议室到五万亿美元</h2>
+      <p>1993 年,三个工程师在硅谷一间餐厅里决定赌上图形芯片。此后每一个十年,它都恰好站在下一次计算范式转移的正中央。</p>
+    </div>
+    <div class="tl">
+      <div class="tl-item rv"><span class="tl-year">1993</span><i class="tl-node" aria-hidden="true"></i>
+        <div class="tl-body"><h3>创立</h3><p>黄仁勋、Chris Malachowsky、Curtis Priem 于 Sunnyvale 创立公司,主攻图形芯片。彼时全球还没有"GPU"这个词。</p></div></div>
+      <div class="tl-item rv"><span class="tl-year">1999</span><i class="tl-node" aria-hidden="true"></i>
+        <div class="tl-body"><h3>GeForce 256 与 IPO</h3><p>推出 GeForce 256,官方称其为"世界上第一块 GPU";同年在纳斯达克上市,股票代码 NVDA。</p></div></div>
+      <div class="tl-item rv"><span class="tl-year">2006</span><i class="tl-node" aria-hidden="true"></i>
+        <div class="tl-body"><h3>CUDA 发布</h3><p>开放通用 GPU 计算架构 CUDA。当时华尔街认为这是浪费利润的副业,它后来成为最深的护城河。</p></div></div>
+      <div class="tl-item rv"><span class="tl-year">2012</span><i class="tl-node" aria-hidden="true"></i>
+        <div class="tl-body"><h3>AlexNet 时刻</h3><p>Alex Krizhevsky 团队用两块 GeForce GPU 训练 AlexNet,以巨大优势赢得 ImageNet 竞赛,深度学习拐点就此出现。</p></div></div>
+      <div class="tl-item rv"><span class="tl-year">2016</span><i class="tl-node" aria-hidden="true"></i>
+        <div class="tl-body"><h3>第一台 DGX-1</h3><p>全球第一台 DGX-1 AI 超级计算机由黄仁勋亲手交付给 OpenAI 办公室。</p></div></div>
+      <div class="tl-item rv"><span class="tl-year">2020</span><i class="tl-node" aria-hidden="true"></i>
+        <div class="tl-body"><h3>收购 Mellanox</h3><p>以约 69 亿美元完成对 Mellanox 的收购,补齐 InfiniBand 高速互连,从"卖芯片"走向"卖整柜系统"。</p></div></div>
+      <div class="tl-item rv"><span class="tl-year">2023</span><i class="tl-node" aria-hidden="true"></i>
+        <div class="tl-body"><h3>市值破 $1T</h3><p>2023 年 6 月成为首家市值突破一万亿美元的芯片公司。</p></div></div>
+      <div class="tl-item rv"><span class="tl-year">2025</span><i class="tl-node" aria-hidden="true"></i>
+        <div class="tl-body"><h3>Blackwell 全面出货</h3><p>GB200 NVL72 机架级系统开始规模交付;7 月市值成为全球首个 $4T,10 月首个 $5T。</p></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 文化 ============ -->
+<section id="culture" style="padding:0">
+  <div class="band rv">
+    <img src="https://picsum.photos/seed/silicon-wafer-fab/1920/1080?grayscale" alt="晶圆厂(示意图片)" >
+    <div class="wrap">
+      <blockquote>
+        <span class="latin" lang="en">"Run, don't walk."</span>
+        奔跑,不要漫步。要么为寻找食物而跑,要么为不被当作食物而跑。
+        <cite>黄仁勋 · NVIDIA 创始人兼 CEO,2023 年访谈</cite>
+      </blockquote>
+    </div>
+  </div>
+  <div class="wrap">
+    <div class="culture-grid">
+      <div class="c big rv">
+        <div>
+          <span class="tag" lang="en">Speed of Light</span>
+          <h3>把每个季度的交付节奏,逼近物理极限</h3>
+          <p>"光速"是 NVIDIA 内部沿用多年的工作语言:产品路线图以尽可能接近物理与工程极限的速度推进。从 GeForce 256 到 Blackwell,四代架构之间的间隔被一再压缩,近两年进入一年一代的节奏。</p>
+        </div>
+        <div class="fact">一年一代架构节奏(2024 起)<small>Blackwell → Blackwell Ultra → Rubin,据历年 GTC 公开路线图</small></div>
+      </div>
+      <div class="c rv" style="--d:.12s">
+        <span class="tag">扁平组织</span>
+        <h3>CEO 直通一线</h3>
+        <p>不设传统层级隔墙,重大决策在极短的链路内完成。</p>
+        <div class="fact">约 50 名直接汇报者<small>据黄仁勋公开访谈,约数</small></div>
+      </div>
+      <div class="c rv" style="--d:.24s">
+        <span class="tag">长期主义</span>
+        <h3>三十二年,一位 CEO</h3>
+        <p>CUDA 在连亏多年时被坚持投入,是这种时间尺度的注脚。</p>
+        <div class="fact">约 36,000 名员工<small>FY2025 年报(10-K),约数</small></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 跑马灯 ============ -->
+<div class="mq" aria-hidden="true">
+  <div class="mq-track">
+    <ul><li>BLACKWELL<b>/</b></li><li>CUDA<b>/</b></li><li>NVLINK<b>/</b></li><li>GEFORCE RTX<b>/</b></li><li>GB200 NVL72<b>/</b></li><li>OMNIVERSE<b>/</b></li><li>INFINIBAND<b>/</b></li><li>SPECTRUM-X<b>/</b></li></ul>
+    <ul><li>BLACKWELL<b>/</b></li><li>CUDA<b>/</b></li><li>NVLINK<b>/</b></li><li>GEFORCE RTX<b>/</b></li><li>GB200 NVL72<b>/</b></li><li>OMNIVERSE<b>/</b></li><li>INFINIBAND<b>/</b></li><li>SPECTRUM-X<b>/</b></li></ul>
+  </div>
+</div>
+
+<!-- ============ 产品性能 ============ -->
+<section class="sec" id="products">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <h2>性能,是唯一通用语言</h2>
+      <p>消费级旗舰与数据中心机架,共用同一套 Blackwell 架构血统。以下规格均来自 NVIDIA 官方发布。</p>
+    </div>
+
+    <div class="feature rv">
+      <div class="feature-top">
+        <h3>GeForce RTX 5090</h3>
+        <span class="note">Blackwell 消费旗舰 · CES 2025 发布</span>
+      </div>
+      <div class="spec-row">
+        <div class="spec"><b>21,760</b><span>CUDA 核心</span></div>
+        <div class="spec"><b>32<i>GB</i></b><span>GDDR7 显存</span></div>
+        <div class="spec"><b>1,792<i>GB/s</i></b><span>显存带宽</span></div>
+        <div class="spec"><b>3,352<i>TOPS</i></b><span>AI 算力 (FP4)</span></div>
+        <div class="spec"><b>575<i>W</i></b><span>整机功耗</span></div>
+        <div class="spec"><b>$1,999</b><span>建议零售价</span></div>
+      </div>
+    </div>
+
+    <div class="bento">
+      <div class="cell tint rv">
+        <div>
+          <span class="tag" lang="en">B200 Tensor Core GPU</span>
+          <h3>数据中心的心脏</h3>
+          <ul>
+            <li>晶体管 <b>2,080 亿</b>(双裸片互联)</li>
+            <li>FP4 算力 <b>20 PFLOPS</b>(稀疏,官方口径)</li>
+            <li>HBM3e <b>192 GB</b> · 带宽 8 TB/s</li>
+          </ul>
+          <p class="why">单芯片即可承载万亿参数模型的一个分片。</p>
+        </div>
+      </div>
+      <div class="cell img-cell rv" style="--d:.12s">
+        <img src="https://picsum.photos/seed/gpu-rack-night/1000/750?grayscale" alt="服务器机架(示意图片)">
+        <div class="inner">
+          <span class="tag" lang="en">GB200 NVL72</span>
+          <h3>一台机架 = 一台超级计算机</h3>
+          <ul>
+            <li><b>72</b> 块 Blackwell GPU + <b>36</b> 颗 Grace CPU</li>
+            <li>LLM 推理速度 <b>约 30 倍</b> 于 H100(官方发布口径)</li>
+          </ul>
+          <p class="why">交付单位从"卡"变成"柜",竞争对手仍在卖零件。</p>
+        </div>
+      </div>
+      <div class="cell rv" style="--d:.18s">
+        <div>
+          <span class="tag" lang="en">NVLink 5</span>
+          <h3>让 72 块 GPU 像一块那样思考</h3>
+          <ul>
+            <li>单 GPU 双向带宽 <b>1.8 TB/s</b></li>
+            <li>NVL72 机架总互连 <b>130 TB/s</b></li>
+          </ul>
+          <p class="why">大模型训练的瓶颈早就不在算力,而在互连。</p>
+        </div>
+      </div>
+      <div class="cell rv" style="--d:.24s">
+        <div>
+          <span class="tag" lang="en">CUDA 生态</span>
+          <h3>十九年写成的护城河</h3>
+          <ul>
+            <li>2006 年发布,持续迭代至今</li>
+            <li>开发者 <b>400 万+</b>(2024 GTC 口径)</li>
+            <li>PyTorch / TensorRT / NCCL 原生深度优化</li>
+          </ul>
+          <p class="why">换硬件容易,换掉十几年积累的代码与习惯很难。</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 竞争力 ============ -->
+<section class="sec" id="edge">
+  <div class="wrap duo">
+    <div class="duo-left rv rv-l">
+      <h2>为什么 AI 集群最终都跑在 NVIDIA 上</h2>
+      <span class="latin" lang="en">The moat is not the chip.</span>
+    </div>
+    <div class="duo-right">
+      <div class="moat rv">
+        <span class="tag" lang="en">Ecosystem</span>
+        <h3>CUDA 生态:十九年,四百万开发者</h3>
+        <p>所有主流训练框架与推理栈都在 CUDA 上做了最深度优化。迁移到其他平台意味着重写内核、重调性能、重训团队,迁移成本本身就是护城河。</p>
+        <p class="fact">CUDA 2006 年发布 · 开发者 400 万+(2024 GTC 口径)</p>
+      </div>
+      <div class="moat rv">
+        <span class="tag" lang="en">Full Stack</span>
+        <h3>全栈垂直整合:从晶体管到机架</h3>
+        <p>芯片、NVLink 互连、InfiniBand 网络、CUDA 软件、Omniverse 仿真。对手卖芯片,它卖的是通电即用的机架级超级计算机,交付周期与调优成本整体下降。</p>
+        <p class="fact">GB200 NVL72:72 GPU 整机架交付</p>
+      </div>
+      <div class="moat rv">
+        <span class="tag" lang="en">Interconnect</span>
+        <h3>网络即标准</h3>
+        <p>2020 年收购 Mellanox 后,InfiniBand 与 NVLink 覆盖大规模 AI 集群的互连层,超大规模训练集群的后端网络以 InfiniBand 为主流选择。</p>
+        <p class="fact">InfiniBand NDR / XDR 800G · NVLink 5: 1.8 TB/s</p>
+      </div>
+      <div class="moat rv">
+        <span class="tag" lang="en">Customers</span>
+        <h3>客户结构:超大云与前沿实验室全在场</h3>
+        <p>Microsoft、Meta、Google、Amazon、Oracle,以及 OpenAI、xAI、Tesla 等前沿实验室的资本开支,构成持续的需求侧。集中度同时被写进风险披露。</p>
+        <p class="fact">FY2025 年报:两大直接客户分别占营收 39% 与 14%</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 营业额 ============ -->
+<section class="sec" id="finance">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <p class="kicker">Financials</p>
+      <h2>$130.5B,以及它是怎么来的</h2>
+      <p>数据来源:NVIDIA FY2025 年报(10-K)与 FY2026 各季度公开财报。财年截止于每年一月底。</p>
+    </div>
+
+    <div class="tiles rv">
+      <div class="tile"><span>FY2025 总营收</span><b>$<span class="count" data-to="130.5" data-dec="1">0.0</span><i>B</i></b><em>+114% 同比</em></div>
+      <div class="tile"><span>数据中心营收</span><b>$<span class="count" data-to="115.2" data-dec="1">0.0</span><i>B</i></b><em>占总营收 88%</em></div>
+      <div class="tile"><span>净利润</span><b>$<span class="count" data-to="72.9" data-dec="1">0.0</span><i>B</i></b><em>GAAP</em></div>
+      <div class="tile"><span>毛利率</span><b><span class="count" data-to="75.0" data-dec="1">0.0</span><i>%</i></b><em>GAAP</em></div>
+    </div>
+
+    <div class="chart-panel rv">
+      <div class="bars" aria-label="近五个财年营收柱状图">
+        <div class="bar"><span class="val">$16.7B</span><div class="fill" style="--h:12.4%;--d:.05s"></div></div>
+        <div class="bar"><span class="val">$26.9B</span><div class="fill" style="--h:20%;--d:.15s"></div></div>
+        <div class="bar"><span class="val">$27.0B</span><div class="fill" style="--h:20.1%;--d:.25s"></div></div>
+        <div class="bar"><span class="val">$60.9B</span><div class="fill" style="--h:45.1%;--d:.35s"></div></div>
+        <div class="bar"><span class="val">$130.5B<em>+114%</em></span><div class="fill" style="--h:96.7%;--d:.45s"></div></div>
+      </div>
+      <div class="bar-x" aria-hidden="true"><span>FY21</span><span>FY22</span><span>FY23</span><span>FY24</span><span>FY25</span></div>
+      <div class="qrow" aria-label="FY2026 季度营收">
+        <div><b>$44.1B</b><span>FY26 Q1</span></div>
+        <div><b>$46.7B</b><span>FY26 Q2</span></div>
+        <div><b>$57.0B</b><span>FY26 Q3</span></div>
+        <div class="est"><b>≈$65.0B</b><span>FY26 Q4 公司指引</span></div>
+      </div>
+      <p class="fin-note">注:柱高按营收数值线性映射;Q4 为公司给出的指引中值,非实际财报数。</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 股价 ============ -->
+<section class="sec" id="stock">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <h2>一条不平静的曲线</h2>
+      <p>2025 年,NVDA 经历深跌、收复、新高。下方曲线为基于公开行情的近似月度收盘,仅作示意;悬停或点按查看数值。</p>
+    </div>
+
+    <div class="chart-wrap rv">
+      <svg viewBox="0 0 1000 420" role="img" aria-label="NVDA 2025 年近似股价走势" id="stockSvg">
+        <defs>
+          <linearGradient id="areaG" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="hsl(76 88% 40%)" stop-opacity=".28"/>
+            <stop offset="1" stop-color="hsl(76 88% 40%)" stop-opacity="0"/>
+          </linearGradient>
+        </defs>
+        <line class="grid-line" x1="40" y1="88.6" x2="960" y2="88.6"/>
+        <line class="grid-line" x1="40" y1="210" x2="960" y2="210"/>
+        <line class="grid-line" x1="40" y1="331.4" x2="960" y2="331.4"/>
+        <text class="axis-t" x="8" y="93">$200</text>
+        <text class="axis-t" x="8" y="215">$150</text>
+        <text class="axis-t" x="8" y="336">$100</text>
+        <text class="axis-t" x="34" y="410">25-01</text>
+        <text class="axis-t" x="256" y="410">25-04</text>
+        <text class="axis-t" x="486" y="410">25-07</text>
+        <text class="axis-t" x="716" y="410">25-10</text>
+        <text class="axis-t" x="932" y="410">26-01</text>
+
+        <path id="stockArea" fill="url(#areaG)" d="M40,287.7 L116.7,263.4 L193.3,307.1 L270,343.6 L346.7,246.4 L423.3,214.9 L500,166.3 L576.7,149.3 L653.3,129.9 L730,86.2 L806.7,142 L883.3,127.4 L960,122.6 L960,380 L40,380 Z"/>
+        <path id="stockPath" pathLength="1" d="M40,287.7 L116.7,263.4 L193.3,307.1 L270,343.6 L346.7,246.4 L423.3,214.9 L500,166.3 L576.7,149.3 L653.3,129.9 L730,86.2 L806.7,142 L883.3,127.4 L960,122.6"/>
+
+        <line class="anno-line" x1="270" y1="343.6" x2="270" y2="386"/>
+        <text class="anno" x="212" y="400">4月 · 年内低点 $95</text>
+        <line class="anno-line" x1="730" y1="86.2" x2="730" y2="42"/>
+        <text class="anno" x="650" y="32">10月 · 历史新高 $201</text>
+
+        <circle class="pt" style="--d:.6s" cx="40" cy="287.7" r="3.5"/><circle class="pt" style="--d:.72s" cx="116.7" cy="263.4" r="3.5"/><circle class="pt" style="--d:.84s" cx="193.3" cy="307.1" r="3.5"/><circle class="pt" style="--d:.96s" cx="270" cy="343.6" r="3.5"/><circle class="pt" style="--d:1.08s" cx="346.7" cy="246.4" r="3.5"/><circle class="pt" style="--d:1.2s" cx="423.3" cy="214.9" r="3.5"/><circle class="pt" style="--d:1.32s" cx="500" cy="166.3" r="3.5"/><circle class="pt" style="--d:1.44s" cx="576.7" cy="149.3" r="3.5"/><circle class="pt" style="--d:1.56s" cx="653.3" cy="129.9" r="3.5"/><circle class="pt" style="--d:1.68s" cx="730" cy="86.2" r="3.5"/><circle class="pt" style="--d:1.8s" cx="806.7" cy="142" r="3.5"/><circle class="pt" style="--d:1.92s" cx="883.3" cy="127.4" r="3.5"/><circle class="pt" style="--d:2.04s" cx="960" cy="122.6" r="3.5"/>
+
+        <line id="xhair" x1="0" y1="30" x2="0" y2="390"/>
+        <circle id="focusDot" r="6" cx="-20" cy="-20"/>
+      </svg>
+      <div class="tip" id="tip"></div>
+    </div>
+
+    <div class="mstones">
+      <div class="mstone rv"><b>$1T</b><span>2023-06 · 首家破万亿的芯片公司</span></div>
+      <div class="mstone rv" style="--d:.08s"><b>$2T</b><span>2024-02 · 用时仅约 8 个月</span></div>
+      <div class="mstone rv" style="--d:.16s"><b>10:1</b><span>2024-06 · 股票拆分</span></div>
+      <div class="mstone rv" style="--d:.24s"><b>$3T</b><span>2024-06 · 超越苹果</span></div>
+      <div class="mstone rv" style="--d:.32s"><b>$4T</b><span>2025-07-09 · 全球首个</span></div>
+      <div class="mstone rv" style="--d:.4s"><b>$5T</b><span>2025-10-29 · 全球首个</span></div>
+    </div>
+    <p class="fin-note" style="margin-top:1.6rem">注:曲线为近似月度收盘(拆股调整后,四舍五入),非逐日行情;市值里程碑日期为公开报道口径。本页不构成任何投资建议。</p>
+  </div>
+</section>
+
+<footer>
+  <div class="foot-grid">
+    <div>
+      <div class="brand"><i aria-hidden="true"></i>NVIDIA</div>
+      <p class="foot-note">本页面为前端设计演示,非 NVIDIA 官方页面,不用于商业用途。财务数据整理自 NVIDIA FY2025 年报(10-K)及 FY2026 公开季度财报;股价曲线为基于公开行情的近似示意数据。标注"约""指引""口径"处以原始披露为准。NVIDIA、GeForce、CUDA、Blackwell 等为 NVIDIA Corporation 商标。</p>
+    </div>
+    <div class="foot-links">
+      <a href="#history">历史</a><a href="#products">产品</a><a href="#edge">竞争力</a><a href="#finance">财务</a><a href="#stock">股价</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  "use strict";
+  var RM = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  /* ---- 计数器 ---- */
+  function runCount(el){
+    var to = parseFloat(el.dataset.to) || 0;
+    var dec = +(el.dataset.dec || 0);
+    if (RM) { el.textContent = to.toFixed(dec); return; }
+    var dur = 1400, t0 = performance.now();
+    if (el._raf) cancelAnimationFrame(el._raf);
+    (function tick(t){
+      var p = Math.min(1, (t - t0) / dur);
+      var e = 1 - Math.pow(1 - p, 3);
+      el.textContent = (to * e).toFixed(dec);
+      if (p < 1) el._raf = requestAnimationFrame(tick);
+    })(t0);
+  }
+  function resetCount(el){
+    if (RM) return;
+    el.textContent = (0).toFixed(+(el.dataset.dec || 0));
+  }
+
+  /* ---- 揭示系统:ratio>=0.15 进入;完全离开 400ms 后移除(可重播) ---- */
+  var seen = new WeakMap();
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      var el = e.target;
+      seen.set(el, e.isIntersecting);
+      if (e.isIntersecting && e.intersectionRatio >= 0.15) {
+        clearTimeout(el._ht);
+        el.classList.add("in-view");
+        el.querySelectorAll(".count").forEach(runCount);
+      } else if (!e.isIntersecting) {
+        clearTimeout(el._ht);
+        el._ht = setTimeout(function(){
+          if (!seen.get(el)) {
+            el.classList.remove("in-view");
+            el.querySelectorAll(".count").forEach(resetCount);
+          }
+        }, 400);
+      }
+    });
+  }, { threshold: [0, 0.15, 0.35] });
+  document.querySelectorAll(".rv").forEach(function(el){ io.observe(el); });
+
+  /* ---- 股价图交互:悬停/点按十字线 ---- */
+  var DATA = [
+    ["25-01",118,40],["25-02",128,116.7],["25-03",110,193.3],["25-04",95,270],
+    ["25-05",135,346.7],["25-06",148,423.3],["25-07",168,500],["25-08",175,576.7],
+    ["25-09",183,653.3],["25-10",201,730],["25-11",178,806.7],["25-12",184,883.3],["26-01",186,960]
+  ];
+  var Y = {118:287.7,128:263.4,110:307.1,95:343.6,135:246.4,148:214.9,168:166.3,175:149.3,183:129.9,201:86.2,178:142,184:127.4,186:122.6};
+  var svg = document.getElementById("stockSvg");
+  var xhair = document.getElementById("xhair");
+  var focusDot = document.getElementById("focusDot");
+  var tip = document.getElementById("tip");
+  var wrap = document.querySelector(".chart-wrap");
+  if (svg && tip && wrap) {
+    function nearest(px){
+      var best = 0, bd = Infinity;
+      DATA.forEach(function(d, i){
+        var dist = Math.abs(d[2] - px);
+        if (dist < bd) { bd = dist; best = i; }
+      });
+      return best;
+    }
+    svg.addEventListener("pointermove", function(ev){
+      var r = svg.getBoundingClientRect();
+      var vx = (ev.clientX - r.left) / r.width * 1000;
+      var i = nearest(vx);
+      var d = DATA[i], y = Y[d[1]];
+      xhair.setAttribute("x1", d[2]); xhair.setAttribute("x2", d[2]);
+      xhair.style.opacity = 1;
+      focusDot.setAttribute("cx", d[2]); focusDot.setAttribute("cy", y);
+      focusDot.style.opacity = 1;
+      tip.innerHTML = d[0] + " · 约 <b>$" + d[1] + "</b>";
+      tip.style.left = (d[2] / 1000 * r.width) + "px";
+      tip.style.top = (y / 420 * r.height + (wrap.clientHeight - r.height) / 2) + "px";
+      tip.style.opacity = 1;
+    });
+    svg.addEventListener("pointerleave", function(){
+      xhair.style.opacity = 0; focusDot.style.opacity = 0; tip.style.opacity = 0;
+    });
+  }
+})();
+</script>
+</body>
+</html>

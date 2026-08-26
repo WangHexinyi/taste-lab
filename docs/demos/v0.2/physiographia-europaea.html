@@ -1,0 +1,958 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Physiographia Europaea | European Natural Landscapes & Tectonic Atlas</title>
+  
+  <!-- Typography -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  
+  <!-- Phosphor Icons -->
+  <script src="https://unpkg.com/@phosphor-icons/web"></script>
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            morandi: {
+              50: '#F4F7F6',
+              100: '#E7ECE9',
+              200: '#D5DFDC',
+              300: '#B6C5C1',
+              400: '#8E9F9B',
+              500: '#6E7F7B',
+              600: '#556360',
+              700: '#414C4A',
+              800: '#2F3735',
+              900: '#1F2423',
+              950: '#141817',
+            },
+            glacier: '#4B6866',
+            spruce: '#2E433E',
+            chalk: '#ECEFEA',
+            stone: '#838D8A',
+            lichen: '#8B9A89',
+          },
+          fontFamily: {
+            serif: ['"Cormorant Garamond"', 'Georgia', 'serif'],
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace'],
+          },
+        },
+      },
+    };
+  </script>
+
+  <style>
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #141817;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #414C4A;
+      border-radius: 3px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #6E7F7B;
+    }
+
+    /* Reveal Hysteresis Classes */
+    .reveal-item {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.85s cubic-bezier(0.16, 1, 0.3, 1), transform 0.85s cubic-bezier(0.16, 1, 0.3, 1);
+      will-change: opacity, transform;
+    }
+    .reveal-item.in-view {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Stagger Delays */
+    .delay-1 { transition-delay: 80ms; }
+    .delay-2 { transition-delay: 160ms; }
+    .delay-3 { transition-delay: 240ms; }
+    .delay-4 { transition-delay: 320ms; }
+
+    /* Parallax Image Scale on Hover */
+    .img-zoom-container {
+      overflow: hidden;
+    }
+    .img-zoom-container img {
+      transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .img-zoom-container:hover img {
+      transform: scale(1.04);
+    }
+
+    /* Tab Button Active State */
+    .tab-btn.active {
+      background-color: #2F3735;
+      color: #F4F7F6;
+      border-color: #6E7F7B;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .reveal-item {
+        opacity: 1 !important;
+        transform: none !important;
+        transition: none !important;
+      }
+      .img-zoom-container img {
+        transition: none !important;
+        transform: none !important;
+      }
+    }
+  </style>
+</head>
+<body class="bg-morandi-950 text-morandi-100 font-sans antialiased selection:bg-glacier selection:text-white">
+
+  <!-- Desktop & Mobile Unified Header -->
+  <header class="fixed top-0 left-0 w-full h-16 md:h-20 z-50 bg-morandi-950/85 backdrop-blur-md border-b border-morandi-800/80 transition-all duration-300">
+    <div class="max-w-[1400px] h-full mx-auto px-6 md:px-12 flex items-center justify-between">
+      <div class="flex items-center gap-4">
+        <span class="w-2.5 h-2.5 rounded-full bg-lichen ring-4 ring-lichen/20"></span>
+        <a href="#hero" class="font-serif text-xl md:text-2xl font-bold tracking-tight text-chalk hover:text-white transition-colors">
+          PHYSIOGRAPHIA
+        </a>
+        <span class="text-xs font-mono text-morandi-400 hidden sm:inline-block border-l border-morandi-800 pl-4">
+          EUR-GEODATA v4.8
+        </span>
+      </div>
+
+      <nav class="hidden md:flex items-center gap-8 text-xs font-medium uppercase tracking-widest text-morandi-300">
+        <a href="#biomes" class="hover:text-chalk transition-colors">Geographic Zones</a>
+        <a href="#alpine" class="hover:text-chalk transition-colors">Alpine Orogeny</a>
+        <a href="#hydrology" class="hover:text-chalk transition-colors">Hydrological Systems</a>
+        <a href="#specifications" class="hover:text-chalk transition-colors">Geological Index</a>
+        <a href="#seasonal" class="hover:text-chalk transition-colors">Field Survey</a>
+      </nav>
+
+      <div class="flex items-center gap-4">
+        <a href="#specifications" class="inline-flex items-center gap-2 px-4 py-2 text-xs font-mono font-medium rounded-full bg-morandi-800 hover:bg-morandi-700 text-chalk border border-morandi-700 transition-all duration-200">
+          <i class="ph ph-compass text-sm"></i>
+          <span>Data Terminal</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content Container -->
+  <main class="relative z-10">
+
+    <!-- 1. Hero Section (Strict Viewport Discipline: fits in 100dvh, pt-20, max 4 text elements) -->
+    <section id="hero" class="min-h-[100dvh] pt-20 pb-12 flex items-center relative border-b border-morandi-800 overflow-hidden">
+      <div class="max-w-[1400px] w-full mx-auto px-6 md:px-12 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+        
+        <div class="lg:col-span-7 flex flex-col justify-center reveal-item">
+          <!-- Text Element 1: Eyebrow -->
+          <span class="font-mono text-xs uppercase tracking-widest text-lichen mb-4 flex items-center gap-2">
+            <span class="inline-block w-6 h-[1px] bg-lichen"></span>
+            Continental Cartography Archive
+          </span>
+
+          <!-- Text Element 2: Headline (Max 2 lines desktop) -->
+          <h1 class="font-serif text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-bold tracking-tight text-chalk leading-[1.08] mb-6">
+            European Physiography &amp; <span class="italic font-normal text-morandi-300 pb-1 inline-block">Geological</span> Wilderness
+          </h1>
+
+          <!-- Text Element 3: Subtext (18 words, <=20 words rule) -->
+          <p class="text-base sm:text-lg text-morandi-300 leading-relaxed max-w-[54ch] mb-8">
+            A systematic survey of tectonic massifs, ancient glacial corridors, and karst hydrology spanning thirty-two bio-geographical provinces.
+          </p>
+
+          <!-- Text Element 4: Action Row (Max 2 CTAs) -->
+          <div class="flex flex-wrap items-center gap-4">
+            <a href="#biomes" class="px-6 py-3.5 text-xs uppercase tracking-wider font-semibold rounded-full bg-chalk text-morandi-950 hover:bg-white transition-all shadow-md">
+              Explore Biome Atlas
+            </a>
+            <a href="#specifications" class="px-6 py-3.5 text-xs uppercase tracking-wider font-semibold rounded-full bg-morandi-900 text-chalk hover:bg-morandi-800 border border-morandi-700 transition-all">
+              Geological Metrics
+            </a>
+          </div>
+        </div>
+
+        <div class="lg:col-span-5 reveal-item delay-2">
+          <div class="relative rounded-2xl p-2 bg-morandi-900 border border-morandi-800/80 shadow-2xl">
+            <div class="img-zoom-container rounded-xl aspect-[4/5] bg-morandi-900 relative">
+              <img 
+                src="https://picsum.photos/seed/dolomites-peaks/800/1000" 
+                alt="Tre Cime di Lavaredo vertical dolomite towers in the Italian Alps" 
+                class="w-full h-full object-cover object-center rounded-xl filter contrast-[1.05] brightness-95"
+              />
+              <div class="absolute inset-0 bg-gradient-to-t from-morandi-950/80 via-transparent to-transparent rounded-xl"></div>
+              <div class="absolute bottom-4 left-4 right-4 p-4 rounded-lg bg-morandi-950/80 backdrop-blur-md border border-morandi-800/80 text-xs">
+                <div class="flex justify-between items-center text-morandi-300 font-mono">
+                  <span>Dolomiti Massif (Italy)</span>
+                  <span>46.6180° N, 12.2982° E</span>
+                </div>
+                <div class="text-chalk font-serif text-sm mt-1 font-semibold">
+                  Upper Triassic Marine Carbonate Formations
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- 2. Bento Biome Exploration (Diverse backgrounds, no 3 identical cards) -->
+    <section id="biomes" class="py-24 bg-morandi-900 border-b border-morandi-800">
+      <div class="max-w-[1400px] mx-auto px-6 md:px-12">
+        
+        <!-- Section Header (Stacked vertically per Split-Header Ban) -->
+        <div class="max-w-2xl mb-16 reveal-item">
+          <h2 class="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold text-chalk tracking-tight mb-4">
+            Primary Continental Bioregions
+          </h2>
+          <p class="text-morandi-300 text-sm sm:text-base leading-relaxed">
+            Europe encompasses five fundamental morphological domains, ranging from Precambrian crystalline shields to post-alpine limestone plateaus.
+          </p>
+        </div>
+
+        <!-- Bento Grid: 5 cells total (Hero 2-span + 3 diverse tiles) -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-6">
+          
+          <!-- Bento Tile 1: Nordic Fennoscandia (Spans 7 cols on LG) -->
+          <div class="lg:col-span-7 bg-morandi-800/50 border border-morandi-700/60 rounded-2xl overflow-hidden p-6 sm:p-8 flex flex-col justify-between reveal-item">
+            <div>
+              <div class="flex items-center justify-between font-mono text-xs text-lichen mb-4">
+                <span>Fennoscandian Shield</span>
+                <span>Sub-Arctic Taiga</span>
+              </div>
+              <h3 class="font-serif text-2xl sm:text-3xl font-bold text-chalk mb-3">
+                Glacial Fjords &amp; Precambrian Cratons
+              </h3>
+              <p class="text-morandi-300 text-sm leading-relaxed mb-6 max-w-xl">
+                Formed 3.1 billion years ago, the Baltic Shield features deep fjord incisions created during the Weichselian glaciation. Sognefjord descends to a depth of 1,308 meters below sea level with vertical granitic escarpments exceeding 1,000 meters.
+              </p>
+            </div>
+            
+            <div class="img-zoom-container rounded-xl aspect-[16/9] w-full overflow-hidden bg-morandi-900 border border-morandi-700/50">
+              <img 
+                src="https://picsum.photos/seed/norway-fjords/1000/600" 
+                alt="Norwegian fjord landscape with sheer granite cliffs and mirror-like water" 
+                class="w-full h-full object-cover"
+              />
+            </div>
+          </div>
+
+          <!-- Bento Tile 2: Alpine Orogenic Arc (Spans 5 cols on LG, Dark Spruce Tint) -->
+          <div class="lg:col-span-5 bg-spruce/40 border border-morandi-700/60 rounded-2xl p-6 sm:p-8 flex flex-col justify-between reveal-item delay-1">
+            <div>
+              <div class="flex items-center justify-between font-mono text-xs text-lichen mb-4">
+                <span>Cenozoic Folding</span>
+                <span>Cryosphere</span>
+              </div>
+              <h3 class="font-serif text-2xl sm:text-3xl font-bold text-chalk mb-3">
+                High Alpine Massifs &amp; Valley Glaciers
+              </h3>
+              <p class="text-morandi-300 text-sm leading-relaxed mb-6">
+                The Alpine belt stretches 1,200 km across eight countries, elevated by collision between the African and Eurasian plates. Over 4,000 distinct glaciers currently hold 100 cubic kilometers of freshwater reserves.
+              </p>
+            </div>
+
+            <div class="grid grid-cols-2 gap-3 pt-4 border-t border-morandi-700/50 font-mono text-xs">
+              <div>
+                <span class="text-morandi-400 block">Peak Elevation</span>
+                <span class="text-chalk text-base font-bold font-sans">4,809 m</span>
+                <span class="text-morandi-400 text-[11px] block">Mont Blanc massif</span>
+              </div>
+              <div>
+                <span class="text-morandi-400 block">Longest Ice Stream</span>
+                <span class="text-chalk text-base font-bold font-sans">22.6 km</span>
+                <span class="text-morandi-400 text-[11px] block">Great Aletsch Glacier</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Bento Tile 3: Mediterranean Karst (Spans 4 cols on LG) -->
+          <div class="lg:col-span-4 bg-morandi-800/40 border border-morandi-700/60 rounded-2xl p-6 flex flex-col justify-between reveal-item delay-2">
+            <div>
+              <span class="font-mono text-xs text-morandi-400 block mb-2">Dinaric &amp; Hellenic Karst</span>
+              <h3 class="font-serif text-xl sm:text-2xl font-bold text-chalk mb-3">
+                Travertine Barriers &amp; Subterranean Canyons
+              </h3>
+              <p class="text-morandi-300 text-xs sm:text-sm leading-relaxed mb-4">
+                Carbonate dissolution across the Western Balkans has yielded the world's most extensive classical karst topography, featuring poljes, ponors, and deep subterranean river systems.
+              </p>
+            </div>
+            <div class="rounded-lg bg-morandi-900/70 p-3.5 border border-morandi-700/40 text-xs font-mono text-morandi-300">
+              <span class="text-lichen block font-semibold mb-1">Key Formation:</span>
+              Plitvice 16-lake terraced cascade via biogenic tufa barriers (CaCO3 growth at 12 mm/yr).
+            </div>
+          </div>
+
+          <!-- Bento Tile 4: Atlantic Volcanic Rift (Spans 4 cols on LG) -->
+          <div class="lg:col-span-4 bg-morandi-800/40 border border-morandi-700/60 rounded-2xl p-6 flex flex-col justify-between reveal-item delay-3">
+            <div>
+              <span class="font-mono text-xs text-morandi-400 block mb-2">Mid-Atlantic Ridge</span>
+              <h3 class="font-serif text-xl sm:text-2xl font-bold text-chalk mb-3">
+                Basalt Rifts &amp; Subglacial Volcanism
+              </h3>
+              <p class="text-morandi-300 text-xs sm:text-sm leading-relaxed mb-4">
+                Iceland marks the aerial exposure of the tectonic boundary between the North American and Eurasian plates, pulling apart at a constant rate of 2.5 centimeters per annum.
+              </p>
+            </div>
+            <div class="rounded-lg bg-morandi-900/70 p-3.5 border border-morandi-700/40 text-xs font-mono text-morandi-300">
+              <span class="text-lichen block font-semibold mb-1">Key Formation:</span>
+              Thingvellir tectonic graben with columnar basalt cooling joints and active fissure swarms.
+            </div>
+          </div>
+
+          <!-- Bento Tile 5: Iberian Highlands & Meseta (Spans 4 cols on LG) -->
+          <div class="lg:col-span-4 bg-morandi-800/40 border border-morandi-700/60 rounded-2xl p-6 flex flex-col justify-between reveal-item delay-4">
+            <div>
+              <span class="font-mono text-xs text-morandi-400 block mb-2">Hercynian Orogeny</span>
+              <h3 class="font-serif text-xl sm:text-2xl font-bold text-chalk mb-3">
+                Granitic Horsts &amp; Endemic Refugia
+              </h3>
+              <p class="text-morandi-300 text-xs sm:text-sm leading-relaxed mb-4">
+                The Iberian central plateau features ancient Paleozoic basement rocks surrounded by alpine mountain rims, preserving glacial relict flora and fauna during Quaternary cycles.
+              </p>
+            </div>
+            <div class="rounded-lg bg-morandi-900/70 p-3.5 border border-morandi-700/40 text-xs font-mono text-morandi-300">
+              <span class="text-lichen block font-semibold mb-1">Key Formation:</span>
+              Sierra Nevada periglacial scree talus and Cirque de Gavarnie 422 m vertical waterfall wall.
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. In-Depth Glaciology & Geomorphology (Distinct 2-Column Focus Layout) -->
+    <section id="alpine" class="py-24 bg-morandi-950 border-b border-morandi-800">
+      <div class="max-w-[1400px] mx-auto px-6 md:px-12">
+        
+        <div class="max-w-3xl mb-16 reveal-item">
+          <h2 class="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold text-chalk tracking-tight mb-4">
+            Glaciological Equilibrium in the European Cryosphere
+          </h2>
+          <p class="text-morandi-300 text-sm sm:text-base leading-relaxed">
+            Detailed field measurements on ice thickness, ablation rates, and moraine deposition across Western European glaciers from 1850 baseline to current observations.
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+          
+          <!-- Left: Detailed Graphic & Geographic Spec -->
+          <div class="lg:col-span-6 space-y-6 reveal-item">
+            <div class="img-zoom-container rounded-2xl border border-morandi-800 overflow-hidden bg-morandi-900 aspect-[4/3]">
+              <img 
+                src="https://picsum.photos/seed/iceland-glacier/900/675" 
+                alt="Glacial ice tongues and moraine ridges in the European Alps" 
+                class="w-full h-full object-cover"
+              />
+            </div>
+
+            <!-- Spec Grid Cards (No hairline-per-row tables, using 2-col cards per rule) -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 font-mono">
+              <div class="p-4 rounded-xl bg-morandi-900 border border-morandi-800">
+                <span class="text-xs text-morandi-400 block mb-1">Glacier Area (Aletsch)</span>
+                <span class="text-xl font-bold text-chalk font-sans">81.7 km²</span>
+                <p class="text-[11px] text-morandi-400 mt-1">Total ice volume calculated at 15.4 billion cubic meters.</p>
+              </div>
+              <div class="p-4 rounded-xl bg-morandi-900 border border-morandi-800">
+                <span class="text-xs text-morandi-400 block mb-1">Max Ice Thickness</span>
+                <span class="text-xl font-bold text-chalk font-sans">890 m</span>
+                <p class="text-[11px] text-morandi-400 mt-1">Measured via radar sounding at Konkordiaplatz junction.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right: Deep Analytical Text Blocks -->
+          <div class="lg:col-span-6 flex flex-col justify-between space-y-8 reveal-item delay-2">
+            <div class="p-6 rounded-2xl bg-morandi-900/60 border border-morandi-800">
+              <h3 class="font-serif text-2xl font-bold text-chalk mb-3">
+                Mechanisms of Cirque Erosion and Valley Sculpting
+              </h3>
+              <p class="text-sm text-morandi-300 leading-relaxed mb-4">
+                Subglacial quarrying and abrasion under rotational ice movement have carved the characteristic U-shaped valleys of the Bernese Oberland and Hohe Tauern. Basal sliding velocities average between 15 to 180 meters per year, lubricated by pressurized subglacial meltwater streams.
+              </p>
+              <div class="flex items-center gap-3 text-xs font-mono text-lichen">
+                <i class="ph ph-check-circle text-base"></i>
+                <span>Bedrock Lithology: Crystalline Hercynian Granite &amp; Gneiss</span>
+              </div>
+            </div>
+
+            <div class="p-6 rounded-2xl bg-morandi-900/60 border border-morandi-800">
+              <h3 class="font-serif text-2xl font-bold text-chalk mb-3">
+                Permafrost Degradation in High Elevation Rockwalls
+              </h3>
+              <p class="text-sm text-morandi-300 leading-relaxed mb-4">
+                Borehole temperature monitoring across the 3,000 meter to 4,500 meter elevation belt indicates active layer thickening by 0.3 meters per decade. This triggers mechanical structural instability in steep rock faces such as the Drus and the Matterhorn north wall.
+              </p>
+              <div class="flex items-center gap-3 text-xs font-mono text-lichen">
+                <i class="ph ph-check-circle text-base"></i>
+                <span>Thermal Active Layer Depth: 2.8 m to 4.2 m (Sample Baseline)</span>
+              </div>
+            </div>
+
+            <div class="p-6 rounded-2xl bg-morandi-900/60 border border-morandi-800">
+              <h3 class="font-serif text-2xl font-bold text-chalk mb-3">
+                Endemic Alpine Flora Adaptation
+              </h3>
+              <p class="text-sm text-morandi-300 leading-relaxed mb-4">
+                Species such as <em>Saxifraga oppositifolia</em> and <em>Ranunculus glacialis</em> survive up to 4,200 meters elevation through anthocyanin pigment accumulation, cushion growth architectures, and freeze-thaw tolerance at minus 15 degrees Celsius during active flowering.
+              </p>
+              <div class="flex items-center gap-3 text-xs font-mono text-lichen">
+                <i class="ph ph-check-circle text-base"></i>
+                <span>Ecological Range: Nival Belt (2,800 m to 4,200 m a.s.l.)</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. Hydrology & Karst Systems (Eyebrow 2: GEOLOGICAL DRIFT) -->
+    <section id="hydrology" class="py-24 bg-morandi-900 border-b border-morandi-800">
+      <div class="max-w-[1400px] mx-auto px-6 md:px-12">
+        
+        <!-- Eyebrow 2 allowed (1 per 3 sections rule) -->
+        <div class="max-w-3xl mb-16 reveal-item">
+          <span class="font-mono text-xs uppercase tracking-widest text-lichen mb-3 block">
+            Hydrographic Dynamics &amp; Fluvial Morphologies
+          </span>
+          <h2 class="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold text-chalk tracking-tight mb-4">
+            Continental Drainage Basins &amp; Subterranean Karst
+          </h2>
+          <p class="text-morandi-300 text-sm sm:text-base leading-relaxed">
+            The hydrological spine of Europe divides precipitation across three oceans and seas via the European Triple Divide located at Pass Lunghin in the Swiss Alps (2,645 m).
+          </p>
+        </div>
+
+        <!-- 3-Column Asymmetric Content Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+          
+          <div class="bg-morandi-950 p-6 sm:p-8 rounded-2xl border border-morandi-800 flex flex-col justify-between reveal-item">
+            <div>
+              <div class="w-12 h-12 rounded-xl bg-morandi-800 flex items-center justify-center text-lichen text-2xl mb-6">
+                <i class="ph ph-waves"></i>
+              </div>
+              <h3 class="font-serif text-2xl font-bold text-chalk mb-3">Danube River Delta</h3>
+              <p class="text-xs font-mono text-morandi-400 mb-4">45.2000° N, 29.5000° E | Black Sea Basin</p>
+              <p class="text-sm text-morandi-300 leading-relaxed mb-6">
+                Spanning 5,165 square kilometers across Romania and Ukraine, this represents Europe's largest continuous wetland and reedbed ecosystem. The delta transports 80 million tons of alluvium annually.
+              </p>
+            </div>
+            <div class="pt-4 border-t border-morandi-800/80 font-mono text-xs text-morandi-400 space-y-1">
+              <div class="flex justify-between">
+                <span>Annual Discharge:</span>
+                <span class="text-chalk">6,500 m³/s</span>
+              </div>
+              <div class="flex justify-between">
+                <span>Avian Species:</span>
+                <span class="text-chalk">362 documented</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="bg-morandi-950 p-6 sm:p-8 rounded-2xl border border-morandi-800 flex flex-col justify-between reveal-item delay-1">
+            <div>
+              <div class="w-12 h-12 rounded-xl bg-morandi-800 flex items-center justify-center text-lichen text-2xl mb-6">
+                <i class="ph ph-mountains"></i>
+              </div>
+              <h3 class="font-serif text-2xl font-bold text-chalk mb-3">Verdon Gorge Canyon</h3>
+              <p class="text-xs font-mono text-morandi-400 mb-4">43.7389° N, 6.3811° E | Provence Sub-Alpine</p>
+              <p class="text-sm text-morandi-300 leading-relaxed mb-6">
+                A 25-kilometer limestone chasm dropping up to 700 meters deep, formed during the Quaternary through karstic subterranean river collapse into Upper Jurassic calcareous strata.
+              </p>
+            </div>
+            <div class="pt-4 border-t border-morandi-800/80 font-mono text-xs text-morandi-400 space-y-1">
+              <div class="flex justify-between">
+                <span>Canyon Depth:</span>
+                <span class="text-chalk">250 m to 700 m</span>
+              </div>
+              <div class="flex justify-between">
+                <span>Narrowest Width:</span>
+                <span class="text-chalk">198 m at Styx</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="bg-morandi-950 p-6 sm:p-8 rounded-2xl border border-morandi-800 flex flex-col justify-between reveal-item delay-2">
+            <div>
+              <div class="w-12 h-12 rounded-xl bg-morandi-800 flex items-center justify-center text-lichen text-2xl mb-6">
+                <i class="ph ph-drop"></i>
+              </div>
+              <h3 class="font-serif text-2xl font-bold text-chalk mb-3">Škocjan Cave System</h3>
+              <p class="text-xs font-mono text-morandi-400 mb-4">45.6631° N, 13.9903° E | Classical Slovene Karst</p>
+              <p class="text-sm text-morandi-300 leading-relaxed mb-6">
+                The underground canyon of the Reka River reaches a volume of 2.2 million cubic meters. The subterranean chamber Martelova dvorana extends 308 meters long with an average ceiling height of 106 meters.
+              </p>
+            </div>
+            <div class="pt-4 border-t border-morandi-800/80 font-mono text-xs text-morandi-400 space-y-1">
+              <div class="flex justify-between">
+                <span>Cave Depth:</span>
+                <span class="text-chalk">-223 m deep</span>
+              </div>
+              <div class="flex justify-between">
+                <span>Active Siphon:</span>
+                <span class="text-chalk">3.5 km mapped flow</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- 5. Grouped Spec UI (Product-Detail Spec Mode: No hairline tables, 2-col card chunks) -->
+    <section id="specifications" class="py-24 bg-morandi-950 border-b border-morandi-800">
+      <div class="max-w-[1400px] mx-auto px-6 md:px-12">
+        
+        <div class="max-w-3xl mb-16 reveal-item">
+          <h2 class="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold text-chalk tracking-tight mb-4">
+            Continental Geomorphology &amp; Biome Registry
+          </h2>
+          <p class="text-morandi-300 text-sm sm:text-base leading-relaxed">
+            Consolidated structural metrics across tectonic orogenies, maximum vertical relief, hydrological catchments, and protected ecological corridors under European environmental standards.
+          </p>
+        </div>
+
+        <!-- Chunk 1: Orogenic & Tectonic Metrics -->
+        <div class="mb-14 reveal-item">
+          <div class="flex items-center gap-3 mb-6 pb-2 border-b border-morandi-800">
+            <i class="ph ph-globe-hemisphere-west text-lichen text-xl"></i>
+            <h3 class="font-serif text-xl sm:text-2xl font-bold text-chalk">
+              Major Orogenic Belts &amp; Peak Stratigraphy
+            </h3>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+            <div class="p-5 rounded-xl bg-morandi-900 border border-morandi-800">
+              <span class="text-xs font-mono text-morandi-400 block mb-1">Mont Blanc Massif</span>
+              <div class="font-sans text-2xl font-bold text-chalk">4,809 m</div>
+              <p class="text-xs text-morandi-300 mt-2">Granite protogine pluton uplifted 30 million years ago during Oligocene plate convergence.</p>
+            </div>
+            <div class="p-5 rounded-xl bg-morandi-900 border border-morandi-800">
+              <span class="text-xs font-mono text-morandi-400 block mb-1">Mount Teide (Canaries)</span>
+              <div class="font-sans text-2xl font-bold text-chalk">3,715 m</div>
+              <p class="text-xs text-morandi-300 mt-2">Oceanic stratovolcano with 7,500 m base relief from Atlantic seafloor crust.</p>
+            </div>
+            <div class="p-5 rounded-xl bg-morandi-900 border border-morandi-800">
+              <span class="text-xs font-mono text-morandi-400 block mb-1">Mulhacén (Iberian)</span>
+              <div class="font-sans text-2xl font-bold text-chalk">3,479 m</div>
+              <p class="text-xs text-morandi-300 mt-2">Betic Cordillera mica-schist block uplifted along Eurasian-African contact zone.</p>
+            </div>
+            <div class="p-5 rounded-xl bg-morandi-900 border border-morandi-800">
+              <span class="text-xs font-mono text-morandi-400 block mb-1">Galdhøpiggen (Scandes)</span>
+              <div class="font-sans text-2xl font-bold text-chalk">2,469 m</div>
+              <p class="text-xs text-morandi-300 mt-2">Caledonian thrust sheet composed of ultra-dense pyroxene granulite.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Chunk 2: Hydrology & Limnology Metrics -->
+        <div class="mb-14 reveal-item delay-1">
+          <div class="flex items-center gap-3 mb-6 pb-2 border-b border-morandi-800">
+            <i class="ph ph-drop-half text-lichen text-xl"></i>
+            <h3 class="font-serif text-xl sm:text-2xl font-bold text-chalk">
+              Catchment Hydrodynamics &amp; Glacial Lake Basins
+            </h3>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+            <div class="p-5 rounded-xl bg-morandi-900 border border-morandi-800">
+              <span class="text-xs font-mono text-morandi-400 block mb-1">Lake Geneva (Lac Léman)</span>
+              <div class="font-sans text-2xl font-bold text-chalk">310 m Max Depth</div>
+              <p class="text-xs text-morandi-300 mt-2">Subalpine overdeepened glacial trough holding 89 billion m³ of water volume.</p>
+            </div>
+            <div class="p-5 rounded-xl bg-morandi-900 border border-morandi-800">
+              <span class="text-xs font-mono text-morandi-400 block mb-1">Rhine Basin Graben</span>
+              <div class="font-sans text-2xl font-bold text-chalk">185,000 km²</div>
+              <p class="text-xs text-morandi-300 mt-2">Continental rift valley corridor extending from Swiss Alps to North Sea delta.</p>
+            </div>
+            <div class="p-5 rounded-xl bg-morandi-900 border border-morandi-800">
+              <span class="text-xs font-mono text-morandi-400 block mb-1">Lake Hornindalsvatnet</span>
+              <div class="font-sans text-2xl font-bold text-chalk">514 m Depth</div>
+              <p class="text-xs text-morandi-300 mt-2">Deepest lake in Europe, formed via glacial ice gouging below sea level.</p>
+            </div>
+            <div class="p-5 rounded-xl bg-morandi-900 border border-morandi-800">
+              <span class="text-xs font-mono text-morandi-400 block mb-1">Danube Catchment</span>
+              <div class="font-sans text-2xl font-bold text-chalk">801,463 km²</div>
+              <p class="text-xs text-morandi-300 mt-2">Drainage network linking 19 nations through the Black Forest to the Black Sea.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Chunk 3: Conservation & Natura 2000 Biomes -->
+        <div class="reveal-item delay-2">
+          <div class="flex items-center gap-3 mb-6 pb-2 border-b border-morandi-800">
+            <i class="ph ph-shield-check text-lichen text-xl"></i>
+            <h3 class="font-serif text-xl sm:text-2xl font-bold text-chalk">
+              Ecological Refugia &amp; Protected Habitat Network
+            </h3>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+            <div class="p-5 rounded-xl bg-morandi-900 border border-morandi-800">
+              <span class="text-xs font-mono text-morandi-400 block mb-1">Natura 2000 Coverage</span>
+              <div class="font-sans text-2xl font-bold text-chalk">18.5% Territory</div>
+              <p class="text-xs text-morandi-300 mt-2">Over 27,000 terrestrial and marine sites safeguarding key EU habitats.</p>
+            </div>
+            <div class="p-5 rounded-xl bg-morandi-900 border border-morandi-800">
+              <span class="text-xs font-mono text-morandi-400 block mb-1">Ancient Beech Forests</span>
+              <div class="font-sans text-2xl font-bold text-chalk">94 Units / 18 States</div>
+              <p class="text-xs text-morandi-300 mt-2">Primeval <em>Fagus sylvatica</em> forest expanding post-glacial across Carpathians.</p>
+            </div>
+            <div class="p-5 rounded-xl bg-morandi-900 border border-morandi-800">
+              <span class="text-xs font-mono text-morandi-400 block mb-1">Białowieża Primeval</span>
+              <div class="font-sans text-2xl font-bold text-chalk">1,418 km² Area</div>
+              <p class="text-xs text-morandi-300 mt-2">Last lowland deciduous virgin forest home to 800+ wild European bison (<em>Bison bonasus</em>).</p>
+            </div>
+            <div class="p-5 rounded-xl bg-morandi-900 border border-morandi-800">
+              <span class="text-xs font-mono text-morandi-400 block mb-1">Coto Doñana Marshes</span>
+              <div class="font-sans text-2xl font-bold text-chalk">543 km² Sanctuary</div>
+              <p class="text-xs text-morandi-300 mt-2">Guadalquivir delta estuary supporting the endangered Iberian lynx (<em>Lynx pardinus</em>).</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- 6. Interactive Field Survey Tabs (Eyebrow 3: CHRONOLOGICAL SURVEY) -->
+    <section id="seasonal" class="py-24 bg-morandi-900 border-b border-morandi-800">
+      <div class="max-w-[1400px] mx-auto px-6 md:px-12">
+        
+        <!-- Eyebrow 3 (Final allowed eyebrow: exactly 3 eyebrows across 8 sections) -->
+        <div class="max-w-3xl mb-12 reveal-item">
+          <span class="font-mono text-xs uppercase tracking-widest text-lichen mb-3 block">
+            Phenological Cycles &amp; Climate Matrix
+          </span>
+          <h2 class="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold text-chalk tracking-tight mb-4">
+            Seasonal Field Dynamics in High Latitudes &amp; Altitudes
+          </h2>
+          <p class="text-morandi-300 text-sm sm:text-base leading-relaxed">
+            Examine weather patterns, snowpack duration, biological activity, and solar radiation variance across Europe's wilderness coordinates.
+          </p>
+        </div>
+
+        <!-- Interactive Tab Navigation -->
+        <div class="flex flex-wrap gap-3 mb-10 reveal-item">
+          <button onclick="switchTab('spring')" id="tab-spring" class="tab-btn active px-6 py-3 rounded-full text-xs font-mono font-medium border border-morandi-700 transition-all">
+            Vernal Thaw (March to May)
+          </button>
+          <button onclick="switchTab('summer')" id="tab-summer" class="tab-btn px-6 py-3 rounded-full text-xs font-mono font-medium bg-morandi-950 text-morandi-300 border border-morandi-800 hover:border-morandi-700 transition-all">
+            Alpine High Summer (June to August)
+          </button>
+          <button onclick="switchTab('autumn')" id="tab-autumn" class="tab-btn px-6 py-3 rounded-full text-xs font-mono font-medium bg-morandi-950 text-morandi-300 border border-morandi-800 hover:border-morandi-700 transition-all">
+            Taiga Senescence (September to November)
+          </button>
+          <button onclick="switchTab('winter')" id="tab-winter" class="tab-btn px-6 py-3 rounded-full text-xs font-mono font-medium bg-morandi-950 text-morandi-300 border border-morandi-800 hover:border-morandi-700 transition-all">
+            Cryospheric Peak (December to February)
+          </button>
+        </div>
+
+        <!-- Tab Content Panes -->
+        <div class="bg-morandi-950 p-8 sm:p-12 rounded-3xl border border-morandi-800 min-h-[380px] flex items-center reveal-item delay-1">
+          
+          <!-- Spring Pane -->
+          <div id="content-spring" class="tab-pane grid grid-cols-1 lg:grid-cols-12 gap-8 items-center w-full">
+            <div class="lg:col-span-7">
+              <span class="font-mono text-xs text-lichen block mb-2">Phenology Index: 100 to 160 DOY</span>
+              <h3 class="font-serif text-3xl font-bold text-chalk mb-4">
+                Sub-Alpine Snowpack Ablation &amp; Karst Aquifer Recharge
+              </h3>
+              <p class="text-sm text-morandi-300 leading-relaxed mb-6">
+                Rapid thermal rises accelerate snowmelt in the Pyrenean and Carpathian catchments, producing peak discharge rates in river systems. Underground karstic conduits in Slovenia and Croatia reach maximum hydraulic pressures, flooding poljes and feeding cascading waterfall networks.
+              </p>
+              <div class="grid grid-cols-3 gap-4 font-mono text-xs">
+                <div class="p-3 bg-morandi-900 rounded-lg">
+                  <span class="text-morandi-400 block">Isotherm 0°C</span>
+                  <span class="text-chalk font-bold">1,800 m a.s.l.</span>
+                </div>
+                <div class="p-3 bg-morandi-900 rounded-lg">
+                  <span class="text-morandi-400 block">Soil Moisture</span>
+                  <span class="text-chalk font-bold">94% Saturation</span>
+                </div>
+                <div class="p-3 bg-morandi-900 rounded-lg">
+                  <span class="text-morandi-400 block">Flora Awakening</span>
+                  <span class="text-chalk font-bold"><em>Crocus vernus</em></span>
+                </div>
+              </div>
+            </div>
+            <div class="lg:col-span-5 img-zoom-container rounded-2xl overflow-hidden aspect-[4/3] bg-morandi-900 border border-morandi-800">
+              <img src="https://picsum.photos/seed/plitvice-karst/800/600" alt="Spring meltwater cascading over limestone tufa terraces" class="w-full h-full object-cover" />
+            </div>
+          </div>
+
+          <!-- Summer Pane -->
+          <div id="content-summer" class="tab-pane hidden grid grid-cols-1 lg:grid-cols-12 gap-8 items-center w-full">
+            <div class="lg:col-span-7">
+              <span class="font-mono text-xs text-lichen block mb-2">Phenology Index: 161 to 243 DOY</span>
+              <h3 class="font-serif text-3xl font-bold text-chalk mb-4">
+                Midnight Sun in Fennoscandia &amp; High Meadow Anthesis
+              </h3>
+              <p class="text-sm text-morandi-300 leading-relaxed mb-6">
+                Continuous 24-hour solar irradiance above the Arctic Circle drives rapid photosynthesis in tundra mosses and lichens. In the Alps, alpine pastures above 2,200 meters experience peak biomass accumulation, grazed by wild chamois (<em>Rupicapra rupicapra</em>) and Alpine ibex (<em>Capra ibex</em>).
+              </p>
+              <div class="grid grid-cols-3 gap-4 font-mono text-xs">
+                <div class="p-3 bg-morandi-900 rounded-lg">
+                  <span class="text-morandi-400 block">Daylight (68° N)</span>
+                  <span class="text-chalk font-bold">24.0 Hours</span>
+                </div>
+                <div class="p-3 bg-morandi-900 rounded-lg">
+                  <span class="text-morandi-400 block">Solar Radiation</span>
+                  <span class="text-chalk font-bold">28.4 MJ/m²/day</span>
+                </div>
+                <div class="p-3 bg-morandi-900 rounded-lg">
+                  <span class="text-morandi-400 block">Peak Bloom</span>
+                  <span class="text-chalk font-bold"><em>Leontopodium</em></span>
+                </div>
+              </div>
+            </div>
+            <div class="lg:col-span-5 img-zoom-container rounded-2xl overflow-hidden aspect-[4/3] bg-morandi-900 border border-morandi-800">
+              <img src="https://picsum.photos/seed/swiss-alps/800/600" alt="High alpine meadow in full summer bloom under clear peaks" class="w-full h-full object-cover" />
+            </div>
+          </div>
+
+          <!-- Autumn Pane -->
+          <div id="content-autumn" class="tab-pane hidden grid grid-cols-1 lg:grid-cols-12 gap-8 items-center w-full">
+            <div class="lg:col-span-7">
+              <span class="font-mono text-xs text-lichen block mb-2">Phenology Index: 244 to 334 DOY</span>
+              <h3 class="font-serif text-3xl font-bold text-chalk mb-4">
+                Taiga Ruska Foliage Shift &amp; Migratory Flyways
+              </h3>
+              <p class="text-sm text-morandi-300 leading-relaxed mb-6">
+                Deciduous larch (<em>Larix decidua</em>) and dwarf birch (<em>Betula nana</em>) undergo carotenoid pigment activation across Scandinavian and Siberian taiga borders. Millions of migratory waterbirds concentrate in the Wadden Sea and Danube Delta before departing toward Mediterranean wintering grounds.
+              </p>
+              <div class="grid grid-cols-3 gap-4 font-mono text-xs">
+                <div class="p-3 bg-morandi-900 rounded-lg">
+                  <span class="text-morandi-400 block">Ground Frost</span>
+                  <span class="text-chalk font-bold">-4.5°C Night</span>
+                </div>
+                <div class="p-3 bg-morandi-900 rounded-lg">
+                  <span class="text-morandi-400 block">Chlorophyll Loss</span>
+                  <span class="text-chalk font-bold">78% Foliage</span>
+                </div>
+                <div class="p-3 bg-morandi-900 rounded-lg">
+                  <span class="text-morandi-400 block">Migrant Flux</span>
+                  <span class="text-chalk font-bold">12M Individuals</span>
+                </div>
+              </div>
+            </div>
+            <div class="lg:col-span-5 img-zoom-container rounded-2xl overflow-hidden aspect-[4/3] bg-morandi-900 border border-morandi-800">
+              <img src="https://picsum.photos/seed/taiga-forest/800/600" alt="Golden taiga forest and boreal wetlands in late autumn" class="w-full h-full object-cover" />
+            </div>
+          </div>
+
+          <!-- Winter Pane -->
+          <div id="content-winter" class="tab-pane hidden grid grid-cols-1 lg:grid-cols-12 gap-8 items-center w-full">
+            <div class="lg:col-span-7">
+              <span class="font-mono text-xs text-lichen block mb-2">Phenology Index: 335 to 059 DOY</span>
+              <h3 class="font-serif text-3xl font-bold text-chalk mb-4">
+                Aurora Borealis &amp; Full Cryospheric Consolidation
+              </h3>
+              <p class="text-sm text-morandi-300 leading-relaxed mb-6">
+                Polar night settles over northern Fennoscandia, enabling observations of magnetospheric plasma interactions between solar wind and upper atmospheric nitrogen and oxygen. In Central Europe, persistent temperature inversions trap freezing fog in valleys while peaks bask in high solar clarity.
+              </p>
+              <div class="grid grid-cols-3 gap-4 font-mono text-xs">
+                <div class="p-3 bg-morandi-900 rounded-lg">
+                  <span class="text-morandi-400 block">Min Temperature</span>
+                  <span class="text-chalk font-bold">-42.6°C (Lapland)</span>
+                </div>
+                <div class="p-3 bg-morandi-900 rounded-lg">
+                  <span class="text-morandi-400 block">Snowpack Depth</span>
+                  <span class="text-chalk font-bold">2.4 m Mean High</span>
+                </div>
+                <div class="p-3 bg-morandi-900 rounded-lg">
+                  <span class="text-morandi-400 block">Auroral Oval</span>
+                  <span class="text-chalk font-bold">65° to 72° N Latitude</span>
+                </div>
+              </div>
+            </div>
+            <div class="lg:col-span-5 img-zoom-container rounded-2xl overflow-hidden aspect-[4/3] bg-morandi-900 border border-morandi-800">
+              <img src="https://picsum.photos/seed/aurora-arctic/800/600" alt="Aurora borealis green ribbon across snowy Arctic plateau" class="w-full h-full object-cover" />
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- 7. Photographic Archival Index (Asymmetric Gallery Layout) -->
+    <section class="py-24 bg-morandi-950 border-b border-morandi-800">
+      <div class="max-w-[1400px] mx-auto px-6 md:px-12">
+        
+        <div class="max-w-2xl mb-16 reveal-item">
+          <h2 class="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold text-chalk tracking-tight mb-4">
+            Curated Topographic Plates
+          </h2>
+          <p class="text-morandi-300 text-sm sm:text-base leading-relaxed">
+            Representative optical surveys capturing structural geology, coastal erosion, and high-altitude micro-climates across Europe.
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-12 gap-6">
+          
+          <div class="md:col-span-8 reveal-item">
+            <div class="img-zoom-container rounded-2xl overflow-hidden aspect-[16/10] bg-morandi-900 border border-morandi-800 relative">
+              <img src="https://picsum.photos/seed/scottish-highlands/1200/750" alt="Scottish Highlands glaciated valley with heather and dark loch" class="w-full h-full object-cover" />
+              <div class="absolute bottom-4 left-4 p-3 rounded-lg bg-morandi-950/80 backdrop-blur-md border border-morandi-800 text-xs font-mono text-morandi-300">
+                Glen Coe Caledonian Caldera (Scotland) | 56.6667° N, 4.9833° W
+              </div>
+            </div>
+          </div>
+
+          <div class="md:col-span-4 reveal-item delay-1">
+            <div class="img-zoom-container rounded-2xl overflow-hidden aspect-[4/5] bg-morandi-900 border border-morandi-800 relative">
+              <img src="https://picsum.photos/seed/azores-volcano/600/750" alt="Azores volcanic caldera lake with lush laurel forest rims" class="w-full h-full object-cover" />
+              <div class="absolute bottom-4 left-4 p-3 rounded-lg bg-morandi-950/80 backdrop-blur-md border border-morandi-800 text-xs font-mono text-morandi-300">
+                Sete Cidades (Azores) | 37.8667° N, 25.7833° W
+              </div>
+            </div>
+          </div>
+
+          <div class="md:col-span-4 reveal-item delay-2">
+            <div class="img-zoom-container rounded-2xl overflow-hidden aspect-[4/5] bg-morandi-900 border border-morandi-800 relative">
+              <img src="https://picsum.photos/seed/etna-lava/600/750" alt="Mount Etna active basalt volcano in Sicily" class="w-full h-full object-cover" />
+              <div class="absolute bottom-4 left-4 p-3 rounded-lg bg-morandi-950/80 backdrop-blur-md border border-morandi-800 text-xs font-mono text-morandi-300">
+                Mount Etna (Sicily) | 37.7510° N, 14.9934° E
+              </div>
+            </div>
+          </div>
+
+          <div class="md:col-span-8 reveal-item delay-3">
+            <div class="img-zoom-container rounded-2xl overflow-hidden aspect-[16/10] bg-morandi-900 border border-morandi-800 relative">
+              <img src="https://picsum.photos/seed/picos-europa/1200/750" alt="Picos de Europa limestone peaks and alpine pastures in northern Spain" class="w-full h-full object-cover" />
+              <div class="absolute bottom-4 left-4 p-3 rounded-lg bg-morandi-950/80 backdrop-blur-md border border-morandi-800 text-xs font-mono text-morandi-300">
+                Picos de Europa Massif (Spain) | 43.1975° N, 4.8464° W
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Clean Editorial Footer -->
+  <footer class="bg-morandi-950 border-t border-morandi-800 text-morandi-400 py-16">
+    <div class="max-w-[1400px] mx-auto px-6 md:px-12">
+      <div class="grid grid-cols-1 md:grid-cols-12 gap-8 mb-12">
+        
+        <div class="md:col-span-5">
+          <div class="flex items-center gap-3 mb-4">
+            <span class="w-2.5 h-2.5 rounded-full bg-lichen"></span>
+            <span class="font-serif text-xl font-bold tracking-tight text-chalk">
+              PHYSIOGRAPHIA EUROPAEA
+            </span>
+          </div>
+          <p class="text-xs leading-relaxed max-w-sm text-morandi-400">
+            An open scientific register of European topographic structures, glacial monitoring archives, and biogeographical data compiled in accordance with European Environment Agency specifications.
+          </p>
+        </div>
+
+        <div class="md:col-span-3">
+          <h4 class="text-xs uppercase font-mono tracking-widest text-chalk mb-4">Cartographic Sectors</h4>
+          <ul class="text-xs space-y-2.5">
+            <li><a href="#alpine" class="hover:text-chalk transition-colors">Alpine &amp; Pyrenean Belts</a></li>
+            <li><a href="#biomes" class="hover:text-chalk transition-colors">Fennoscandian Shield</a></li>
+            <li><a href="#hydrology" class="hover:text-chalk transition-colors">Dinaric Karst Hydrology</a></li>
+            <li><a href="#specifications" class="hover:text-chalk transition-colors">Natura 2000 Habitats</a></li>
+          </ul>
+        </div>
+
+        <div class="md:col-span-4">
+          <h4 class="text-xs uppercase font-mono tracking-widest text-chalk mb-4">Data Standards &amp; Coordinate Base</h4>
+          <p class="text-xs font-mono leading-relaxed text-morandi-400 mb-3">
+            Reference Spheroid: ETRS89 / GRS80<br />
+            Datum: European Terrestrial Reference System 1989<br />
+            Elevation Datum: Normaal Amsterdams Peil (NAP)
+          </p>
+          <div class="text-[11px] text-morandi-500 font-mono">
+            Scientific field data compiled under open environmental research protocols.
+          </div>
+        </div>
+
+      </div>
+
+      <div class="pt-8 border-t border-morandi-900 flex flex-col sm:flex-row justify-between items-center gap-4 text-xs font-mono text-morandi-500">
+        <div>
+          &copy; 2026 Physiographia Europaea Archive. Public Knowledge Repository.
+        </div>
+        <div>
+          Continental Coordinates: 36° N to 71° N, 25° W to 45° E
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Script: IntersectionObserver Reveal with 400ms Hysteresis & Tab Switcher -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // 1. Reveal Hysteresis System
+      const revealElements = document.querySelectorAll('.reveal-item');
+      const exitTimeouts = new WeakMap();
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          const target = entry.target;
+
+          if (entry.isIntersecting && entry.intersectionRatio >= 0.15) {
+            // Cancel any exit grace timer
+            if (exitTimeouts.has(target)) {
+              clearTimeout(exitTimeouts.get(target));
+              exitTimeouts.delete(target);
+            }
+            target.classList.add('in-view');
+          } else if (!entry.isIntersecting && entry.intersectionRatio === 0) {
+            // Out of viewport with 400ms grace period
+            if (!exitTimeouts.has(target)) {
+              const timer = setTimeout(() => {
+                target.classList.remove('in-view');
+                exitTimeouts.delete(target);
+              }, 400);
+              exitTimeouts.set(target, timer);
+            }
+          }
+        });
+      }, {
+        threshold: [0, 0.15, 0.5]
+      });
+
+      revealElements.forEach(el => observer.observe(el));
+    });
+
+    // 2. Interactive Tab Switching Function
+    function switchTab(season) {
+      const tabs = ['spring', 'summer', 'autumn', 'winter'];
+      
+      tabs.forEach(t => {
+        const btn = document.getElementById(`tab-${t}`);
+        const content = document.getElementById(`content-${t}`);
+        
+        if (t === season) {
+          btn.classList.add('active');
+          btn.classList.remove('bg-morandi-950', 'text-morandi-300');
+          content.classList.remove('hidden');
+        } else {
+          btn.classList.remove('active');
+          btn.classList.add('bg-morandi-950', 'text-morandi-300');
+          content.classList.add('hidden');
+        }
+      });
+    }
+  </script>
+</body>
+</html>
