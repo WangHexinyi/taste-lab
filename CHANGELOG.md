@@ -6,6 +6,7 @@ All notable public releases of Taste Lab are documented here.
 
 - Rebuilt the repository README as a direct visual portfolio.
 - Added 30-second, 18 FPS browser-rendered previews for all seven archived HTML demos, cropped to keep browser scrollbars out of frame.
+- Documented the zero-install prompt workflow for using any Markdown version with a general-purpose AI.
 
 ## [0.4.0] - 2026-08-26
 
