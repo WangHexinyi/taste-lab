@@ -113,6 +113,8 @@ def validate_archive_and_demos(errors: list[str]) -> None:
         for path in files:
             if path.stat().st_size < 100_000:
                 errors.append(f"animated preview is unexpectedly small: {path.relative_to(ROOT)}")
+            if path.stat().st_size >= 10_000_000:
+                errors.append(f"animated preview exceeds the GitHub inline-media budget: {path.relative_to(ROOT)}")
 
 
 def validate_gallery_links(errors: list[str]) -> None:
