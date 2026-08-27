@@ -4,8 +4,12 @@ All notable public releases of Taste Lab are documented here.
 
 ## [Unreleased]
 
+- Split Taste Lab into parallel Prompt Lab and Agent Lab tracks.
+- Added Prompt V0.5–V0.7 with six original HTML demos; V0.7 is the current prompt release.
+- Added Agent A0.1–A0.3 as reviewable source trees and original downloadable bundles.
+- Added an interactive track switch to GitHub Pages.
 - Rebuilt the repository README as a direct visual portfolio.
-- Added 30-second, 18 FPS browser-rendered previews for all seven archived HTML demos, cropped to keep browser scrollbars out of frame.
+- Added 30-second, 18 FPS browser-rendered previews for the original V0.1–V0.4 HTML demos, cropped to keep browser scrollbars out of frame.
 - Documented the zero-install prompt workflow for using any Markdown version with a general-purpose AI.
 
 ## [0.4.0] - 2026-08-26

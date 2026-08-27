@@ -1,0 +1,1792 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>在风景中辨认自己 — Finding the Self in the Landscape</title>
+  <meta name="description" content="一份关于高地、荒原、林冠与冷海的个人自然影像手记与视觉散文。">
+
+  <!-- Google Fonts: Noto Serif SC + Cormorant Garamond + Inter + JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@300;400&family=Noto+Serif+SC:wght@300;400;600&display=swap" rel="stylesheet">
+
+  <style>
+    /* ==========================================================================
+       DESIGN TOKENS & SYSTEM
+       ========================================================================== */
+    :root {
+      --bg-base: #0E1011;
+      --bg-surface: #141718;
+      --bg-surface-elevated: #1B1E20;
+      --bg-card: #181B1C;
+      --bg-parchment: #F4EFEB;
+      
+      --text-primary: #EDEAE4;
+      --text-secondary: #9FA4A6;
+      --text-muted: #5C6265;
+      --text-inverse: #111314;
+      
+      --accent-moss: #7A8B7B;
+      --accent-ochre: #B89B72;
+      --accent-slate: #88929A;
+      --border-subtle: rgba(237, 234, 228, 0.08);
+      --border-focus: rgba(237, 234, 228, 0.22);
+      
+      --font-serif-en: 'Cormorant Garamond', Georgia, serif;
+      --font-serif-zh: 'Noto Serif SC', SimSun, serif;
+      --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+      
+      --ease-fluid: cubic-bezier(0.16, 1, 0.3, 1);
+      --ease-gentle: cubic-bezier(0.25, 1, 0.5, 1);
+      --transition-smooth: 0.6s var(--ease-fluid);
+      
+      --container-max: 1360px;
+      --container-narrow: 880px;
+      --nav-height: 72px;
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      font-size: 16px;
+      background-color: var(--bg-base);
+      color: var(--text-primary);
+      text-rendering: optimizeLegibility;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    body {
+      font-family: var(--font-sans);
+      font-weight: 300;
+      line-height: 1.75;
+      letter-spacing: 0.01em;
+      overflow-x: hidden;
+      selection-background-color: var(--accent-ochre);
+      selection-color: var(--bg-base);
+    }
+
+    ::selection {
+      background: rgba(184, 155, 114, 0.35);
+      color: #FFF;
+    }
+
+    img {
+      max-width: 100%;
+      height: auto;
+      display: block;
+      user-select: none;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    button {
+      background: none;
+      border: none;
+      font: inherit;
+      color: inherit;
+      cursor: pointer;
+    }
+
+    /* Progress & Nav */
+    .progress-bar-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background: rgba(255,255,255,0.04);
+      z-index: 1000;
+    }
+
+    .progress-bar-fill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, var(--accent-moss), var(--accent-ochre));
+      transition: width 0.1s linear;
+    }
+
+    .site-header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: var(--nav-height);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 4vw;
+      z-index: 900;
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      background: rgba(14, 16, 17, 0.75);
+      border-bottom: 1px solid var(--border-subtle);
+      transition: transform 0.4s var(--ease-gentle), background 0.3s;
+    }
+
+    .site-brand {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .brand-title {
+      font-family: var(--font-serif-en);
+      font-size: 1.15rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      font-weight: 400;
+    }
+
+    .brand-subtitle {
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      letter-spacing: 0.08em;
+      font-family: var(--font-mono);
+    }
+
+    .nav-chapters {
+      display: flex;
+      align-items: center;
+      gap: 2.5rem;
+      list-style: none;
+    }
+
+    .nav-item a {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: var(--text-secondary);
+      letter-spacing: 0.05em;
+      transition: color 0.3s;
+      position: relative;
+      padding: 4px 0;
+    }
+
+    .nav-item a::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 0;
+      height: 1px;
+      background: var(--accent-ochre);
+      transition: width 0.3s var(--ease-fluid);
+    }
+
+    .nav-item a:hover {
+      color: var(--text-primary);
+    }
+
+    .nav-item a:hover::after {
+      width: 100%;
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 1.25rem;
+    }
+
+    .ambient-toggle {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      padding: 6px 14px;
+      border-radius: 999px;
+      border: 1px solid var(--border-subtle);
+      transition: all 0.3s;
+    }
+
+    .ambient-toggle:hover {
+      border-color: var(--border-focus);
+      color: var(--text-primary);
+    }
+
+    .sound-bars {
+      display: flex;
+      gap: 2px;
+      height: 10px;
+      align-items: flex-end;
+    }
+
+    .sound-bar {
+      width: 2px;
+      height: 3px;
+      background: var(--text-muted);
+      transition: height 0.2s;
+    }
+
+    .ambient-toggle.active .sound-bar:nth-child(1) { animation: soundPulse 0.9s infinite ease-in-out; }
+    .ambient-toggle.active .sound-bar:nth-child(2) { animation: soundPulse 1.2s infinite ease-in-out 0.2s; }
+    .ambient-toggle.active .sound-bar:nth-child(3) { animation: soundPulse 0.7s infinite ease-in-out 0.4s; }
+    .ambient-toggle.active {
+      color: var(--accent-ochre);
+      border-color: rgba(184, 155, 114, 0.4);
+    }
+    .ambient-toggle.active .sound-bar { background: var(--accent-ochre); }
+
+    @keyframes soundPulse {
+      0%, 100% { height: 3px; }
+      50% { height: 10px; }
+    }
+
+    .container {
+      width: 90%;
+      max-width: var(--container-max);
+      margin: 0 auto;
+    }
+
+    .section-eyebrow {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--accent-ochre);
+      margin-bottom: 1.25rem;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .section-eyebrow::before {
+      content: '';
+      display: inline-block;
+      width: 18px;
+      height: 1px;
+      background: var(--accent-ochre);
+    }
+
+    .serif-display {
+      font-family: var(--font-serif-en);
+      font-weight: 300;
+      line-height: 1.15;
+    }
+
+    .serif-zh {
+      font-family: var(--font-serif-zh);
+    }
+
+    .reveal-node {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 1s var(--ease-fluid), transform 1s var(--ease-fluid);
+      will-change: opacity, transform;
+    }
+
+    .reveal-node.is-revealed {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Hero */
+    .hero-section {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      position: relative;
+      padding: 0 5vw 8vh 5vw;
+      overflow: hidden;
+    }
+
+    .hero-bg-frame {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 110%;
+      z-index: 1;
+      overflow: hidden;
+    }
+
+    .hero-bg-image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: brightness(0.65) contrast(1.08) saturate(0.9);
+      transform: scale(1.08);
+      transition: transform 2.5s var(--ease-fluid);
+    }
+
+    .hero-overlay-gradient {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at center, transparent 30%, rgba(14, 16, 17, 0.6) 80%),
+                  linear-gradient(to top, #0E1011 0%, rgba(14, 16, 17, 0.2) 60%, rgba(14, 16, 17, 0.7) 100%);
+      z-index: 2;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 3;
+      max-width: 1200px;
+    }
+
+    .hero-meta-strip {
+      display: flex;
+      gap: 2.5rem;
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: var(--text-secondary);
+      letter-spacing: 0.08em;
+      margin-bottom: 2rem;
+      text-transform: uppercase;
+    }
+
+    .hero-title-en {
+      font-size: clamp(2.8rem, 7.5vw, 6.5rem);
+      font-weight: 300;
+      letter-spacing: -0.02em;
+      line-height: 1.02;
+      color: #FAF8F5;
+      margin-bottom: 1.2rem;
+    }
+
+    .hero-title-zh {
+      font-size: clamp(1.4rem, 3.2vw, 2.4rem);
+      font-weight: 300;
+      letter-spacing: 0.15em;
+      color: rgba(237, 234, 228, 0.85);
+      margin-bottom: 2.5rem;
+    }
+
+    .hero-bottom-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      border-top: 1px solid rgba(255,255,255,0.12);
+      padding-top: 2rem;
+    }
+
+    .hero-manifesto-snippet {
+      max-width: 480px;
+      font-size: 0.95rem;
+      line-height: 1.8;
+      color: var(--text-secondary);
+    }
+
+    .hero-scroll-indicator {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      letter-spacing: 0.1em;
+    }
+
+    .scroll-mouse {
+      width: 18px;
+      height: 30px;
+      border: 1px solid var(--text-muted);
+      border-radius: 10px;
+      position: relative;
+    }
+
+    .scroll-mouse::after {
+      content: '';
+      position: absolute;
+      top: 6px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 2px;
+      height: 5px;
+      background: var(--accent-ochre);
+      border-radius: 2px;
+      animation: mouseWheel 2s infinite ease;
+    }
+
+    @keyframes mouseWheel {
+      0% { transform: translate(-50%, 0); opacity: 1; }
+      100% { transform: translate(-50%, 10px); opacity: 0; }
+    }
+
+    /* Preface */
+    .preface-section {
+      padding: 18vh 0 14vh 0;
+      position: relative;
+    }
+
+    .preface-grid {
+      display: grid;
+      grid-template-columns: 1.1fr 1.9fr;
+      gap: 6vw;
+      align-items: start;
+    }
+
+    .preface-aside h2 {
+      font-size: clamp(2rem, 3.8vw, 3.2rem);
+      margin-bottom: 1.5rem;
+      line-height: 1.2;
+    }
+
+    .preface-aside p {
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      font-family: var(--font-mono);
+      line-height: 1.8;
+    }
+
+    .preface-body {
+      display: flex;
+      flex-direction: column;
+      gap: 2.2rem;
+      font-size: 1.12rem;
+      color: #D2D0CA;
+      line-height: 2.1;
+      font-family: var(--font-serif-zh);
+      font-weight: 300;
+    }
+
+    .preface-body p:first-child::first-letter {
+      float: left;
+      font-family: var(--font-serif-en);
+      font-size: 4.2rem;
+      line-height: 0.8;
+      padding-right: 14px;
+      padding-top: 4px;
+      color: var(--accent-ochre);
+    }
+
+    .preface-signature {
+      margin-top: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+      padding-top: 2rem;
+      border-top: 1px solid var(--border-subtle);
+    }
+
+    .sign-date {
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      color: var(--text-muted);
+    }
+
+    /* Chapters */
+    .chapter-section {
+      padding: 14vh 0;
+      border-top: 1px solid var(--border-subtle);
+      position: relative;
+    }
+
+    .chapter-header {
+      margin-bottom: 6vh;
+    }
+
+    .chapter-num {
+      font-family: var(--font-serif-en);
+      font-size: 1.4rem;
+      font-style: italic;
+      color: var(--text-muted);
+      margin-bottom: 0.4rem;
+    }
+
+    .chapter-title-group {
+      display: flex;
+      align-items: baseline;
+      gap: 1.8rem;
+      flex-wrap: wrap;
+    }
+
+    .chapter-title-main {
+      font-size: clamp(2.4rem, 5vw, 4rem);
+    }
+
+    .chapter-title-sub {
+      font-family: var(--font-mono);
+      font-size: 0.85rem;
+      color: var(--accent-slate);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .img-interactive-frame {
+      position: relative;
+      overflow: hidden;
+      background: var(--bg-surface);
+      cursor: pointer;
+    }
+
+    .img-interactive-frame img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 1.2s var(--ease-fluid), filter 0.8s ease;
+      filter: saturate(0.92) contrast(1.05);
+    }
+
+    .img-interactive-frame:hover img {
+      transform: scale(1.04);
+      filter: saturate(1.02) contrast(1.08);
+    }
+
+    .img-badge {
+      position: absolute;
+      bottom: 16px;
+      left: 16px;
+      background: rgba(14, 16, 17, 0.82);
+      backdrop-filter: blur(8px);
+      padding: 6px 12px;
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      color: var(--text-secondary);
+      letter-spacing: 0.08em;
+      border: 1px solid var(--border-subtle);
+      pointer-events: none;
+    }
+
+    /* Chapter 1 */
+    .c1-composition {
+      display: grid;
+      grid-template-columns: 7fr 5fr;
+      gap: 4vw;
+      align-items: center;
+      margin-bottom: 6vh;
+    }
+
+    .c1-main-img {
+      height: 72vh;
+      min-height: 520px;
+    }
+
+    .c1-side-narrative {
+      display: flex;
+      flex-direction: column;
+      gap: 3rem;
+    }
+
+    .c1-secondary-img {
+      height: 40vh;
+      min-height: 300px;
+    }
+
+    .field-observation-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      padding: 2.2rem;
+      position: relative;
+    }
+
+    .field-card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.2rem;
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      color: var(--accent-ochre);
+    }
+
+    .field-card-body {
+      font-size: 0.95rem;
+      line-height: 1.9;
+      color: #C2C6C8;
+    }
+
+    /* Chapter 2 */
+    .c2-editorial-strip {
+      display: grid;
+      grid-template-columns: 4fr 5fr 3fr;
+      gap: 3vw;
+      align-items: end;
+      margin-bottom: 8vh;
+    }
+
+    .c2-card-vertical {
+      height: 75vh;
+      min-height: 550px;
+    }
+
+    .c2-card-square {
+      height: 50vh;
+      min-height: 380px;
+      margin-bottom: 4vh;
+    }
+
+    .c2-text-column {
+      padding-bottom: 4vh;
+    }
+
+    .c2-quote {
+      font-family: var(--font-serif-en);
+      font-style: italic;
+      font-size: 1.8rem;
+      line-height: 1.35;
+      color: var(--text-primary);
+      margin-bottom: 1.8rem;
+    }
+
+    .c2-exif-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      color: var(--text-secondary);
+      margin-top: 2rem;
+    }
+
+    .c2-exif-table tr {
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .c2-exif-table td {
+      padding: 8px 0;
+    }
+
+    .c2-exif-table td:last-child {
+      text-align: right;
+      color: var(--text-primary);
+    }
+
+    /* Chapter 3 */
+    .c3-cinema-box {
+      width: 100%;
+      height: 75vh;
+      min-height: 500px;
+      margin: 4vh 0 6vh 0;
+      position: relative;
+    }
+
+    .c3-details-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2.5vw;
+    }
+
+    .c3-thumb-item {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .c3-thumb-frame {
+      height: 280px;
+    }
+
+    .c3-caption {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    .c3-caption strong {
+      color: var(--text-secondary);
+      display: block;
+      margin-bottom: 2px;
+      font-weight: normal;
+    }
+
+    /* Chapter 4 */
+    .c4-dark-monolith {
+      background: #08090A;
+      border: 1px solid rgba(255,255,255,0.05);
+      padding: 8vw;
+      margin: 6vh 0;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6vw;
+      align-items: center;
+    }
+
+    .c4-image-cluster {
+      position: relative;
+      height: 60vh;
+      min-height: 440px;
+    }
+
+    .c4-main-night {
+      width: 88%;
+      height: 90%;
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: 1;
+    }
+
+    .c4-sub-night {
+      width: 50%;
+      height: 55%;
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      z-index: 2;
+      border: 4px solid #08090A;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.8);
+    }
+
+    .c4-content h3 {
+      font-size: clamp(2rem, 3.5vw, 3rem);
+      margin-bottom: 1.5rem;
+    }
+
+    .c4-content p {
+      font-size: 1rem;
+      color: #A3A8AB;
+      line-height: 2;
+      margin-bottom: 2rem;
+    }
+
+    /* Field Notebook */
+    .logs-section {
+      padding: 16vh 0;
+      background: var(--bg-surface);
+      border-top: 1px solid var(--border-subtle);
+    }
+
+    .logs-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-bottom: 8vh;
+      border-bottom: 1px solid var(--border-subtle);
+      padding-bottom: 2.5rem;
+    }
+
+    .logs-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 2.5rem;
+    }
+
+    .log-entry {
+      background: var(--bg-base);
+      border: 1px solid var(--border-subtle);
+      padding: 2.2rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-height: 340px;
+      transition: border-color 0.4s, transform 0.4s var(--ease-fluid);
+    }
+
+    .log-entry:hover {
+      border-color: var(--accent-ochre);
+      transform: translateY(-6px);
+    }
+
+    .log-meta {
+      display: flex;
+      justify-content: space-between;
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      color: var(--accent-slate);
+      margin-bottom: 1.5rem;
+    }
+
+    .log-title {
+      font-size: 1.3rem;
+      margin-bottom: 1rem;
+      font-weight: 400;
+    }
+
+    .log-excerpt {
+      font-size: 0.92rem;
+      color: var(--text-secondary);
+      line-height: 1.85;
+      margin-bottom: 1.8rem;
+    }
+
+    .log-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      border-top: 1px solid var(--border-subtle);
+      padding-top: 1rem;
+    }
+
+    /* About Section */
+    .about-section {
+      padding: 18vh 0;
+      position: relative;
+    }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: 5fr 7fr;
+      gap: 6vw;
+      align-items: center;
+    }
+
+    .about-portrait-frame {
+      height: 68vh;
+      min-height: 500px;
+      position: relative;
+    }
+
+    .about-portrait-frame::after {
+      content: '';
+      position: absolute;
+      inset: -12px;
+      border: 1px solid var(--border-subtle);
+      pointer-events: none;
+    }
+
+    .about-article {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+    }
+
+    .about-headline {
+      font-size: clamp(2rem, 3.8vw, 3.2rem);
+      line-height: 1.25;
+    }
+
+    .about-creed-list {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      margin: 1.5rem 0;
+      border-top: 1px solid var(--border-subtle);
+      padding-top: 2rem;
+    }
+
+    .creed-item h4 {
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      color: var(--accent-ochre);
+      margin-bottom: 0.6rem;
+      letter-spacing: 0.08em;
+    }
+
+    .creed-item p {
+      font-size: 0.88rem;
+      color: var(--text-secondary);
+      line-height: 1.7;
+    }
+
+    /* Timeline */
+    .timeline-section {
+      padding: 14vh 0;
+      border-top: 1px solid var(--border-subtle);
+      background: linear-gradient(180deg, var(--bg-base) 0%, #121415 100%);
+    }
+
+    .timeline-strip {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      margin-top: 6vh;
+    }
+
+    .timeline-row {
+      display: grid;
+      grid-template-columns: 1.5fr 2fr 4fr 1.5fr;
+      padding: 2.2rem 1.5rem;
+      border-bottom: 1px solid var(--border-subtle);
+      align-items: center;
+      transition: background-color 0.3s;
+      cursor: default;
+    }
+
+    .timeline-row:hover {
+      background-color: rgba(255, 255, 255, 0.02);
+    }
+
+    .t-date {
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      color: var(--accent-ochre);
+    }
+
+    .t-location {
+      font-size: 1.15rem;
+      font-family: var(--font-serif-zh);
+    }
+
+    .t-notes {
+      font-size: 0.88rem;
+      color: var(--text-secondary);
+      padding-right: 2rem;
+    }
+
+    .t-coords {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      text-align: right;
+    }
+
+    /* Footer */
+    .site-footer {
+      padding: 16vh 0 8vh 0;
+      background: #090A0B;
+      border-top: 1px solid var(--border-subtle);
+      position: relative;
+    }
+
+    .footer-big-title {
+      font-size: clamp(3rem, 9vw, 9.5rem);
+      color: rgba(237, 234, 228, 0.06);
+      text-align: center;
+      line-height: 0.9;
+      user-select: none;
+      margin-bottom: 8vh;
+      font-family: var(--font-serif-en);
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 4vw;
+      margin-bottom: 8vh;
+    }
+
+    .footer-column h5 {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      letter-spacing: 0.12em;
+      color: var(--accent-ochre);
+      margin-bottom: 1.5rem;
+      text-transform: uppercase;
+    }
+
+    .footer-column p, .footer-column li {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      line-height: 1.8;
+      list-style: none;
+    }
+
+    .footer-bottom-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 3rem;
+      border-top: 1px solid rgba(255,255,255,0.06);
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      color: var(--text-muted);
+    }
+
+    /* Lightbox Modal */
+    .lightbox-modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(10, 11, 12, 0.94);
+      backdrop-filter: blur(20px);
+      z-index: 2000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 4vw;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.4s var(--ease-fluid);
+    }
+
+    .lightbox-modal.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .lightbox-inner {
+      max-width: 1100px;
+      width: 100%;
+      display: grid;
+      grid-template-columns: 7fr 4fr;
+      gap: 3rem;
+      background: #131516;
+      border: 1px solid var(--border-focus);
+      padding: 2rem;
+      position: relative;
+    }
+
+    .lightbox-close-btn {
+      position: absolute;
+      top: -45px;
+      right: 0;
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      color: var(--text-secondary);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .lightbox-img-wrap {
+      max-height: 70vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #000;
+    }
+
+    .lightbox-img-wrap img {
+      max-height: 70vh;
+      width: 100%;
+      object-fit: contain;
+    }
+
+    .lightbox-meta {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 1.2rem;
+    }
+
+    .lightbox-meta h4 {
+      font-size: 1.5rem;
+      font-family: var(--font-serif-zh);
+    }
+
+    .lightbox-meta p {
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+      line-height: 1.8;
+    }
+
+    /* Responsive */
+    @media (max-width: 1024px) {
+      .preface-grid, .c1-composition, .c2-editorial-strip, 
+      .c4-dark-monolith, .about-grid {
+        grid-template-columns: 1fr;
+      }
+      .footer-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+      .timeline-row {
+        grid-template-columns: 1fr 1fr;
+        gap: 1rem;
+      }
+      .t-notes {
+        grid-column: span 2;
+        padding-right: 0;
+      }
+      .t-coords {
+        text-align: left;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .site-header { padding: 0 5vw; }
+      .nav-chapters { display: none; }
+      .hero-bottom-bar { flex-direction: column; align-items: flex-start; gap: 2rem; }
+      .c3-details-grid, .lightbox-inner, .about-creed-list, .footer-grid { grid-template-columns: 1fr; }
+      .footer-bottom-row { flex-direction: column; gap: 1rem; align-items: flex-start; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+      }
+      .reveal-node { opacity: 1 !important; transform: none !important; }
+      .hero-bg-image { transform: none !important; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Reading Progress Bar -->
+  <div class="progress-bar-container" aria-hidden="true">
+    <div class="progress-bar-fill" id="progressBar"></div>
+  </div>
+
+  <!-- Header -->
+  <header class="site-header" id="siteHeader">
+    <div class="site-brand">
+      <span class="brand-title">Finding the Self</span>
+      <span class="brand-subtitle">VOL. IV — 荒原与自我的折射</span>
+    </div>
+
+    <nav aria-label="刊物章节导航">
+      <ul class="nav-chapters">
+        <li class="nav-item"><a href="#preface">前言</a></li>
+        <li class="nav-item"><a href="#chapter-01">01. 脊线</a></li>
+        <li class="nav-item"><a href="#chapter-02">02. 晨雾</a></li>
+        <li class="nav-item"><a href="#chapter-03">03. 潮汐</a></li>
+        <li class="nav-item"><a href="#chapter-04">04. 高穹</a></li>
+        <li class="nav-item"><a href="#field-notes">手记</a></li>
+        <li class="nav-item"><a href="#about-curator">记录者</a></li>
+      </ul>
+    </nav>
+
+    <div class="nav-actions">
+      <button class="ambient-toggle" id="ambientToggle" aria-label="开启沉浸自然风声白噪音">
+        <span class="sound-bars" aria-hidden="true">
+          <span class="sound-bar"></span>
+          <span class="sound-bar"></span>
+          <span class="sound-bar"></span>
+        </span>
+        <span id="ambientStatusText">静音氛围</span>
+      </button>
+    </div>
+  </header>
+
+  <main>
+    <!-- HERO -->
+    <section class="hero-section" id="hero">
+      <div class="hero-bg-frame">
+        <img 
+          src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?q=85&w=2400&auto=format&fit=crop" 
+          alt="雾气弥漫的远古山脉与冷杉湖泊" 
+          class="hero-bg-image"
+          id="heroBgImage"
+        >
+        <div class="hero-overlay-gradient"></div>
+      </div>
+
+      <div class="hero-content">
+        <div class="hero-meta-strip">
+          <span>MONOGRAPH 2024–2026</span>
+          <span>LAT 64°08' N / LON 21°56' W</span>
+          <span>FIELD ESSAY</span>
+        </div>
+
+        <h1 class="hero-title-en serif-display">Finding the Self in the Landscape</h1>
+        <div class="hero-title-zh serif-zh">在风景中辨认自己</div>
+
+        <div class="hero-bottom-bar">
+          <p class="hero-manifesto-snippet">
+            风景不是被观看的客体，而是一面极其安静、巨大的镜子。我们在山川与寒潮的消退中走入旷野，最终辨认出自己内心深处的轮廓。
+          </p>
+          <div class="hero-scroll-indicator" aria-hidden="true">
+            <div class="scroll-mouse"></div>
+            <span>向下翻阅卷册</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PREFACE -->
+    <section class="preface-section" id="preface">
+      <div class="container">
+        <div class="preface-grid">
+          <div class="preface-aside reveal-node">
+            <div class="section-eyebrow">EDITORIAL PREFACE</div>
+            <h2 class="serif-zh">不喧哗的观看</h2>
+            <p>关于取景框、风速、孤独<br>与时间的无声沉积。</p>
+          </div>
+
+          <div class="preface-body reveal-node">
+            <p>
+              我们常常误以为按下快门是为了“占有”某处风景。但当你独自站在北大西洋沿岸的黑砂石滩上，或者在凌晨四点的冷杉林中等待第一缕散射光穿透浓雾，你会迅速意识到大自然对人类的注视毫无兴趣。
+            </p>
+            <p>
+              山脉不因你的到来而崇高，潮汐亦不因你的离开而止步。正是这种彻底的“冷漠”，赋予了自然最深邃的宽容——在无边无际的荒原面前，你不需要扮演任何社会角色，不必证明效率，不必维持姿态。
+            </p>
+            <p>
+              这本刊物记录了我过去数年间在极北高地、冰蚀峡谷、原始林冠与潮间带的真实行走。每一张图片与手记，都是一次向外的注视与向内的校准。
+            </p>
+
+            <div class="preface-signature">
+              <div class="sign-name serif-display" style="font-size: 1.4rem;">Linus Vance / 撰文与影像</div>
+              <div class="sign-date">于北方高地观察站记录</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CHAPTER 01 -->
+    <section class="chapter-section" id="chapter-01">
+      <div class="container">
+        <div class="chapter-header reveal-node">
+          <div class="chapter-num">Chapter 01</div>
+          <div class="chapter-title-group">
+            <h2 class="chapter-title-main serif-zh">荒原与脊线</h2>
+            <span class="chapter-title-sub">The Alpine & Highland Ridges</span>
+          </div>
+        </div>
+
+        <div class="c1-composition">
+          <div class="img-interactive-frame c1-main-img reveal-node" 
+               data-modal-title="高地背风坡的阴影切割"
+               data-modal-desc="在海拔1800米的玄武岩山脊，冷风以超过22米/秒的速度掠过。山体切削出的锐利光影如同大地的骨骼。"
+               data-modal-img="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?q=85&w=2000&auto=format&fit=crop">
+            <img src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?q=85&w=1600&auto=format&fit=crop" alt="多罗米蒂高耸的山脊与落日余晖">
+            <div class="img-badge">PLATE 01.1 — MT. RIDGE / 1/400s · f/8 · ISO 100</div>
+          </div>
+
+          <div class="c1-side-narrative">
+            <div class="img-interactive-frame c1-secondary-img reveal-node"
+                 data-modal-title="苔原带的微观植物"
+                 data-modal-desc="贴地生长的地衣在严寒与贫瘠中生长了数百年，每一寸暗红都是时间耐心的具象化。"
+                 data-modal-img="https://images.unsplash.com/photo-1486870591958-9b9d0d1dda99?q=85&w=1600&auto=format&fit=crop">
+              <img src="https://images.unsplash.com/photo-1486870591958-9b9d0d1dda99?q=85&w=1000&auto=format&fit=crop" alt="高寒高山峰顶的地貌纹理">
+              <div class="img-badge">PLATE 01.2 — 46°32' N</div>
+            </div>
+
+            <div class="field-observation-card reveal-node">
+              <div class="field-card-header">
+                <span>FIELD NOTE #104</span>
+                <span>OCTOBER 14</span>
+              </div>
+              <p class="field-card-body">
+                “这里的风带着花岗岩碎屑的味道。站在山脊上，你无法思考琐事。大风把一切多余的思绪刮走，只留下呼吸声和心跳声。风景以其绝对的体量让人保持谦卑。”
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CHAPTER 02 (Fixed) -->
+    <section class="chapter-section" id="chapter-02">
+      <div class="container">
+        <div class="chapter-header reveal-node">
+          <div class="chapter-num">Chapter 02</div>
+          <div class="chapter-title-group">
+            <h2 class="chapter-title-main serif-zh">晨雾与深林</h2>
+            <span class="chapter-title-sub">The Whispering Canopy</span>
+          </div>
+        </div>
+
+        <div class="c2-editorial-strip">
+          <div class="img-interactive-frame c2-card-vertical reveal-node"
+               data-modal-title="古杉林中的晨光弥散"
+               data-modal-desc="当湿度达到饱和，清晨的阳光在林间切出清晰的丁达尔光束。整座森林宛如一个巨大的水汽泵。"
+               data-modal-img="https://images.unsplash.com/photo-1448375240586-882707db888b?q=85&w=1600&auto=format&fit=crop">
+            <img src="https://images.unsplash.com/photo-1448375240586-882707db888b?q=85&w=1000&auto=format&fit=crop" alt="薄雾笼罩的茂密原始针叶林">
+            <div class="img-badge">PLATE 02.1 — DEEP TAIGA</div>
+          </div>
+
+          <div class="c2-center-cluster">
+            <!-- Fixed Image 1 -->
+            <div class="img-interactive-frame c2-card-square reveal-node"
+                 data-modal-title="潮湿苔藓与落叶的静物"
+                 data-modal-desc="树皮表面寄生的地衣群落，是森林空气洁净度的最严苛度量衡。"
+                 data-modal-img="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?q=85&w=1600&auto=format&fit=crop">
+              <img src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?q=85&w=1200&auto=format&fit=crop" alt="阳光穿过幽暗森林的树冠">
+              <div class="img-badge">PLATE 02.2 — MICRO BIOME</div>
+            </div>
+            <p class="field-card-body reveal-node" style="padding: 0 1rem;">
+              走进没有步道的原始林，脚步必须放轻。厚达十几厘米的落叶腐殖层吸收了所有杂音，世界在此刻被静音，只剩下冷杉树脂挥发出的微苦气味。
+            </p>
+          </div>
+
+          <div class="c2-text-column reveal-node">
+            <div class="c2-quote">“在林木深处，光不是照亮物体的工具，光本身就是实体。”</div>
+            <table class="c2-exif-table">
+              <tr>
+                <td>湿度</td>
+                <td>94% RH</td>
+              </tr>
+              <tr>
+                <td>环境声级</td>
+                <td>18 dB</td>
+              </tr>
+              <tr>
+                <td>光学配置</td>
+                <td>50mm f/1.2 S</td>
+              </tr>
+              <tr>
+                <td>时间戳</td>
+                <td>05:42 AM</td>
+              </tr>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CHAPTER 03 -->
+    <section class="chapter-section" id="chapter-03">
+      <div class="container">
+        <div class="chapter-header reveal-node">
+          <div class="chapter-num">Chapter 03</div>
+          <div class="chapter-title-group">
+            <h2 class="chapter-title-main serif-zh">潮汐与黑礁</h2>
+            <span class="chapter-title-sub">Basalt Columns & Cold Tides</span>
+          </div>
+        </div>
+
+        <div class="c3-cinema-box img-interactive-frame reveal-node"
+             data-modal-title="北大西洋狂浪与黑沙滩"
+             data-modal-desc="火山玄武岩被万年海浪研磨成极细的墨黑沙粒。白色的浪沫在黑沙上铺展，如同大地的负片。"
+             data-modal-img="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=85&w=2200&auto=format&fit=crop">
+          <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=85&w=2000&auto=format&fit=crop" alt="广袤而凛冽的海岸线与浪涛">
+          <div class="img-badge">PLATE 03.1 — 63°24' N / SÓLHEIMSANDUR</div>
+        </div>
+
+        <div class="c3-details-grid">
+          <div class="c3-thumb-item reveal-node">
+            <div class="img-interactive-frame c3-thumb-frame"
+                 data-modal-title="海蚀玄武岩断崖"
+                 data-modal-desc="六边形节理结构，地心岩浆冷却结晶的几何秩序。"
+                 data-modal-img="https://images.unsplash.com/photo-1518495973542-4542c06a5843?q=85&w=1200&auto=format&fit=crop">
+              <img src="https://images.unsplash.com/photo-1518495973542-4542c06a5843?q=85&w=800&auto=format&fit=crop" alt="岩石节理与自然纹理">
+              <div class="img-badge">03.2 — BASALT</div>
+            </div>
+            <div class="c3-caption">
+              <strong>六边形节理 (Hexagonal Jointing)</strong>
+              岩浆在均质冷却过程中产生的收缩张力网格。
+            </div>
+          </div>
+
+          <div class="c3-thumb-item reveal-node">
+            <div class="img-interactive-frame c3-thumb-frame"
+                 data-modal-title="浮冰与黑沙"
+                 data-modal-desc="从冰川崩解落入大海的纯净蓝冰，被潮水重新推回黑色沙滩，晶莹如弃置的钻石。"
+                 data-modal-img="https://images.unsplash.com/photo-1519681393784-d120267933ba?q=85&w=1200&auto=format&fit=crop">
+              <img src="https://images.unsplash.com/photo-1519681393784-d120267933ba?q=85&w=800&auto=format&fit=crop" alt="雪山与海浪的交汇">
+              <div class="img-badge">03.3 — GLACIAL FRAGMENT</div>
+            </div>
+            <div class="c3-caption">
+              <strong>冰川碎屑 (Glacial Drift)</strong>
+              经历数千年的压实，气泡被挤出后的致密深蓝。
+            </div>
+          </div>
+
+          <div class="c3-thumb-item reveal-node">
+            <div class="img-interactive-frame c3-thumb-frame"
+                 data-modal-title="潮间带退潮水迹"
+                 data-modal-desc="水流退去时在沙砾表面留下的分形支流，与高空鸟瞰的大陆水系完全一致。"
+                 data-modal-img="https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?q=85&w=1200&auto=format&fit=crop">
+              <img src="https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?q=85&w=800&auto=format&fit=crop" alt="晨雾弥漫的山野与湿润大地">
+              <div class="img-badge">03.4 — RECEDING TIDE</div>
+            </div>
+            <div class="c3-caption">
+              <strong>分形水迹 (Fractal Drainage)</strong>
+              自然界在不同尺度上自我复制的优雅数学。
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CHAPTER 04 (Fixed) -->
+    <section class="chapter-section" id="chapter-04">
+      <div class="container">
+        <div class="chapter-header reveal-node">
+          <div class="chapter-num">Chapter 04</div>
+          <div class="chapter-title-group">
+            <h2 class="chapter-title-main serif-zh">高穹与静默</h2>
+            <span class="chapter-title-sub">The Nocturnal Silence</span>
+          </div>
+        </div>
+
+        <div class="c4-dark-monolith reveal-node">
+          <div class="c4-image-cluster">
+            <div class="img-interactive-frame c4-main-night"
+                 data-modal-title="冬季银河与暗夜天穹"
+                 data-modal-desc="远离城市光污染300公里处，肉眼可见的不仅是恒星，更是银河系旋臂尘埃带的暗黑遮蔽。"
+                 data-modal-img="https://images.unsplash.com/photo-1506703719100-a0f3a48c0f86?q=85&w=1800&auto=format&fit=crop">
+              <img src="https://images.unsplash.com/photo-1506703719100-a0f3a48c0f86?q=85&w=1200&auto=format&fit=crop" alt="纯净夜空中的璀璨银河与星轨">
+              <div class="img-badge">PLATE 04.1 — BORTLE CLASS 1</div>
+            </div>
+
+            <!-- Fixed Image 2 -->
+            <div class="img-interactive-frame c4-sub-night"
+                 data-modal-title="夜间观测帐篷的微光"
+                 data-modal-desc="在零下15度的寂静中，一顶微红色的帐篷成为这片苍茫宇宙里唯一的人类坐标。"
+                 data-modal-img="https://images.unsplash.com/photo-1510312305653-8ed496efae75?q=85&w=1200&auto=format&fit=crop">
+              <img src="https://images.unsplash.com/photo-1510312305653-8ed496efae75?q=85&w=800&auto=format&fit=crop" alt="极地荒野星空下的野营帐篷微光">
+              <div class="img-badge">CAMP 04.2</div>
+            </div>
+          </div>
+
+          <div class="c4-content">
+            <div class="section-eyebrow">STELLAR HARMONY</div>
+            <h3 class="serif-zh">深黑不是虚无，<br>而是无限的容纳</h3>
+            <p>
+              在没有光害的荒野高地，夜空并非平面，而是一个拥有巨大深度的穹顶。看着数百万年前发出的星光在今夜落入视网膜，所有的焦躁与急迫都显得微不足道。
+            </p>
+            <div class="field-observation-card">
+              <div class="field-card-header">
+                <span>OBSERVATION NOTE #309</span>
+                <span>02:15 AM / -14°C</span>
+              </div>
+              <p class="field-card-body" style="font-size: 0.88rem;">
+                “长曝光不是在记录一瞬间，而是在容器里收集时间的涓流。30秒的曝光，足以让地球的自转变成星星的微小拖尾。”
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FIELD NOTES -->
+    <section class="logs-section" id="field-notes">
+      <div class="container">
+        <div class="logs-header reveal-node">
+          <div>
+            <div class="section-eyebrow">FIELD OBSERVATIONS</div>
+            <h2 class="serif-zh" style="font-size: 2.4rem;">观察手记与片段</h2>
+          </div>
+          <p style="color: var(--text-muted); font-family: var(--font-mono); font-size: 0.8rem;">
+            FRAGMENTARY TEXTS & EXPOSURE NOTES
+          </p>
+        </div>
+
+        <div class="logs-grid">
+          <article class="log-entry reveal-node">
+            <div>
+              <div class="log-meta">
+                <span>VOL. 24 / ENTRY 01</span>
+                <span>高地冻原</span>
+              </div>
+              <h3 class="log-title serif-zh">关于风的声音</h3>
+              <p class="log-excerpt">
+                风在不同植被上的摩擦声是完全不同的。高山草甸的风是细碎的沙沙声，而在风化碎石坡上，风听起来像是一面被不断拉紧的帆。
+              </p>
+            </div>
+            <div class="log-footer">
+              <span>ISO 64 · 70mm · f/5.6</span>
+              <span>2024.09.18</span>
+            </div>
+          </article>
+
+          <article class="log-entry reveal-node">
+            <div>
+              <div class="log-meta">
+                <span>VOL. 24 / ENTRY 02</span>
+                <span>峡湾潮间带</span>
+              </div>
+              <h3 class="log-title serif-zh">等待退潮的两个小时</h3>
+              <p class="log-excerpt">
+                海水退下后，黑色的礁石上会留下一层镜面般的薄水膜。天空的倒影在几分钟内从铅灰变成淡金，那是一天中光线最柔顺的片刻。
+              </p>
+            </div>
+            <div class="log-footer">
+              <span>ISO 100 · 24mm · f/11</span>
+              <span>2025.04.02</span>
+            </div>
+          </article>
+
+          <article class="log-entry reveal-node">
+            <div>
+              <div class="log-meta">
+                <span>VOL. 25 / ENTRY 03</span>
+                <span>冰蚀湖畔</span>
+              </div>
+              <h3 class="log-title serif-zh">蓝色的层级</h3>
+              <p class="log-excerpt">
+                冰川融水形成的湖泊有一种不透明的奶蓝色，地质学家称之为“岩粉悬浮”。它不同于天空的蓝，这是一种沉重、古老且拒绝被看透的质地。
+              </p>
+            </div>
+            <div class="log-footer">
+              <span>ISO 200 · 35mm · f/4.0</span>
+              <span>2025.08.11</span>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ABOUT ME -->
+    <section class="about-section" id="about-curator">
+      <div class="container">
+        <div class="about-grid">
+          <div class="about-portrait-frame reveal-node img-interactive-frame"
+               data-modal-title="在冰原边缘的记录者"
+               data-modal-desc="携带单兵轻量化设备徒步进入无人区。所有行李与器材严格控制在18公斤以内。"
+               data-modal-img="https://images.unsplash.com/photo-1501785888041-af3ef285b470?q=85&w=1600&auto=format&fit=crop">
+            <img src="https://images.unsplash.com/photo-1501785888041-af3ef285b470?q=85&w=1000&auto=format&fit=crop" alt="伫立在广袤自然中的旅人背影">
+            <div class="img-badge">THE OBSERVER / LINUS V.</div>
+          </div>
+
+          <div class="about-article reveal-node">
+            <div class="section-eyebrow">ABOUT THE OBSERVER</div>
+            <h2 class="about-headline serif-zh">“我不过是大自然的一副临时视网膜”</h2>
+            
+            <p style="color: #BAC0C2; line-height: 2;">
+              我是一名独立影像记录者与界面设计师。对我而言，摄影不是打卡或制造奇观，而是一种训练感知力的方式——迫使自己在极快节奏的现代生活中停下来，用身体的感官去丈量气温、坡度、光线的衰减与土壤的干湿。
+            </p>
+
+            <div class="about-creed-list">
+              <div class="creed-item">
+                <h4>01. 克制原则 (Restraint)</h4>
+                <p>不做过度饱和与戏剧化的人工调色，还原高地与冷海原本质朴、微冷的真实灰阶。</p>
+              </div>
+              <div class="creed-item">
+                <h4>02. 最小痕迹 (Leave No Trace)</h4>
+                <p>无论拍摄多么震撼的画面，绝不干扰野生动物栖息地，不在脆弱的苔原上留下车辙。</p>
+              </div>
+              <div class="creed-item">
+                <h4>03. 空间共鸣 (Spatial Depth)</h4>
+                <p>将网页视作纸张与画廊的延伸，让每一次滚动都成为呼吸与沉思的节奏。</p>
+              </div>
+              <div class="creed-item">
+                <h4>04. 长期主义 (Slow Archiving)</h4>
+                <p>拒绝算法驱动的短内容生产，以年为单位整理出版每一份自然刊物。</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TIMELINE -->
+    <section class="timeline-section" id="timeline">
+      <div class="container">
+        <div class="reveal-node">
+          <div class="section-eyebrow">EXPEDITION ITINERARY</div>
+          <h2 class="serif-zh" style="font-size: 2.2rem; margin-bottom: 1rem;">行走与观测路径</h2>
+          <p style="color: var(--text-muted); font-size: 0.9rem;">记录过去三年的主要野外驻留与环境采风节点</p>
+        </div>
+
+        <div class="timeline-strip">
+          <div class="timeline-row reveal-node">
+            <div class="t-date">2026.06 — 2026.07</div>
+            <div class="t-location">北部高地山脊跨越</div>
+            <div class="t-notes">完成连续14天的无人区高线徒步，记录夏季苔原的解冻与地衣复苏。</div>
+            <div class="t-coords">66°33' N · 19°05' W</div>
+          </div>
+
+          <div class="timeline-row reveal-node">
+            <div class="t-date">2025.11 — 2025.12</div>
+            <div class="t-location">玄武岩峡湾与极夜观测</div>
+            <div class="t-notes">驻留于西峡湾灯塔哨所，完成高纬度暗夜天穹与潮汐长曝光系列。</div>
+            <div class="t-coords">65°44' N · 23°35' W</div>
+          </div>
+
+          <div class="timeline-row reveal-node">
+            <div class="t-date">2025.03 — 2025.04</div>
+            <div class="t-location">古针叶林水汽与林冠采风</div>
+            <div class="t-notes">针对早春融雪期原始林的微气候、丁达尔现象与声景录音采样。</div>
+            <div class="t-coords">61°12' N · 14°58' E</div>
+          </div>
+
+          <div class="timeline-row reveal-node">
+            <div class="t-date">2024.09 — 2024.10</div>
+            <div class="t-location">冰川末端冰碛带考察</div>
+            <div class="t-notes">追踪冰川消融退缩边缘，记录漂砾、冰洞光线与水文切削地貌。</div>
+            <div class="t-coords">64°01' N · 16°58' W</div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-big-title">LANDSCAPE & SELF</div>
+
+      <div class="footer-grid">
+        <div class="footer-column">
+          <h5>刊物结语 / Colophon</h5>
+          <p>
+            这本在线刊物由个人独立设计与编码构建。它不仅是一处个人摄影与文字手记的容器，更是对现代网页过度商业化与浮躁设计的一次克制反拨。感谢自然的沉默与浩瀚。
+          </p>
+        </div>
+
+        <div class="footer-column">
+          <h5>章节索引</h5>
+          <ul>
+            <li><a href="#chapter-01">01. 荒原与脊线</a></li>
+            <li><a href="#chapter-02">02. 晨雾与深林</a></li>
+            <li><a href="#chapter-03">03. 潮汐与黑礁</a></li>
+            <li><a href="#chapter-04">04. 高穹与静默</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-column">
+          <h5>美学与排印</h5>
+          <ul>
+            <li>Type: Cormorant Garamond</li>
+            <li>CJK: Noto Serif SC</li>
+            <li>Mono: JetBrains Mono</li>
+            <li>Grid: 12-Column Responsive</li>
+          </ul>
+        </div>
+
+        <div class="footer-column">
+          <h5>版权与声明</h5>
+          <p>
+            © 2024–2026 Linus Vance.<br>
+            All Imagery & Texts Authenticated.<br>
+            Non-commercial Edition.
+          </p>
+        </div>
+      </div>
+
+      <div class="footer-bottom-row">
+        <span>DESIGNED WITH RESTRAINT & DEEP FOCUS</span>
+        <span>BACK TO TOP ↑</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- LIGHTBOX -->
+  <div class="lightbox-modal" id="lightboxModal" role="dialog" aria-modal="true" aria-hidden="true">
+    <div class="lightbox-inner">
+      <button class="lightbox-close-btn" id="lightboxClose" aria-label="关闭查看器">
+        <span>[ ESC / 关闭 ]</span>
+      </button>
+      <div class="lightbox-img-wrap">
+        <img src="" alt="" id="lightboxImg">
+      </div>
+      <div class="lightbox-meta">
+        <div class="section-eyebrow">FIELD ARCHIVE PLATE</div>
+        <h4 id="lightboxTitle">标题</h4>
+        <p id="lightboxDesc">描述内容</p>
+        <div style="font-family: var(--font-mono); font-size: 0.72rem; color: var(--accent-ochre); margin-top: 1rem;">
+          AUTHENTIC RECORDED ARTIFACT
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- JAVASCRIPT -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const progressBar = document.getElementById('progressBar');
+      
+      window.addEventListener('scroll', () => {
+        const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+        const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+        const progress = (scrollTop / scrollHeight) * 100;
+        
+        if (progressBar) progressBar.style.width = `${progress}%`;
+
+        const heroBg = document.getElementById('heroBgImage');
+        if (heroBg && scrollTop < window.innerHeight) {
+          heroBg.style.transform = `scale(${1.08 + scrollTop * 0.00015}) translateY(${scrollTop * 0.12}px)`;
+        }
+      }, { passive: true });
+
+      const revealNodes = document.querySelectorAll('.reveal-node');
+      const revealObserver = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-revealed');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, {
+        threshold: 0.15,
+        rootMargin: '0px 0px -40px 0px'
+      });
+
+      revealNodes.forEach(node => revealObserver.observe(node));
+
+      const modal = document.getElementById('lightboxModal');
+      const modalImg = document.getElementById('lightboxImg');
+      const modalTitle = document.getElementById('lightboxTitle');
+      const modalDesc = document.getElementById('lightboxDesc');
+      const modalClose = document.getElementById('lightboxClose');
+      const interactiveFrames = document.querySelectorAll('.img-interactive-frame');
+
+      function openModal(frame) {
+        const fullImgUrl = frame.getAttribute('data-modal-img') || frame.querySelector('img').src;
+        const title = frame.getAttribute('data-modal-title') || '自然影像记录';
+        const desc = frame.getAttribute('data-modal-desc') || '无附加手记注释。';
+
+        modalImg.src = fullImgUrl;
+        modalImg.alt = title;
+        modalTitle.textContent = title;
+        modalDesc.textContent = desc;
+
+        modal.classList.add('active');
+        modal.setAttribute('aria-hidden', 'false');
+        document.body.style.overflow = 'hidden';
+      }
+
+      function closeModal() {
+        modal.classList.remove('active');
+        modal.setAttribute('aria-hidden', 'true');
+        document.body.style.overflow = '';
+      }
+
+      interactiveFrames.forEach(frame => {
+        frame.addEventListener('click', () => openModal(frame));
+      });
+
+      if (modalClose) modalClose.addEventListener('click', closeModal);
+      modal.addEventListener('click', (e) => { if (e.target === modal) closeModal(); });
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && modal.classList.contains('active')) closeModal();
+      });
+
+      const ambientBtn = document.getElementById('ambientToggle');
+      const statusText = document.getElementById('ambientStatusText');
+      let audioCtx = null;
+      let isPlaying = false;
+      let noiseNode = null;
+      let gainNode = null;
+      let filterNode = null;
+
+      function initAmbientAudio() {
+        try {
+          const AudioContext = window.AudioContext || window.webkitAudioContext;
+          audioCtx = new AudioContext();
+          const bufferSize = audioCtx.sampleRate * 4;
+          const buffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
+          const data = buffer.getChannelData(0);
+          let b0 = 0, b1 = 0, b2 = 0, b3 = 0, b4 = 0, b5 = 0, b6 = 0;
+
+          for (let i = 0; i < bufferSize; i++) {
+            const white = Math.random() * 2 - 1;
+            b0 = 0.99886 * b0 + white * 0.0555179;
+            b1 = 0.99332 * b1 + white * 0.0750759;
+            b2 = 0.96900 * b2 + white * 0.1538520;
+            b3 = 0.86650 * b3 + white * 0.3104856;
+            b4 = 0.55000 * b4 + white * 0.5329522;
+            b5 = -0.7616 * b5 - white * 0.0168980;
+            data[i] = (b0 + b1 + b2 + b3 + b4 + b5 + b6 + white * 0.5362) * 0.04;
+            b6 = white * 0.115926;
+          }
+
+          noiseNode = audioCtx.createBufferSource();
+          noiseNode.buffer = buffer;
+          noiseNode.loop = true;
+
+          filterNode = audioCtx.createBiquadFilter();
+          filterNode.type = 'lowpass';
+          filterNode.frequency.setValueAtTime(320, audioCtx.currentTime);
+
+          gainNode = audioCtx.createGain();
+          gainNode.gain.setValueAtTime(0.01, audioCtx.currentTime);
+
+          noiseNode.connect(filterNode);
+          filterNode.connect(gainNode);
+          gainNode.connect(audioCtx.destination);
+
+          noiseNode.start(0);
+        } catch (e) {
+          console.warn('Web Audio Ambient not supported.');
+        }
+      }
+
+      if (ambientBtn) {
+        ambientBtn.addEventListener('click', () => {
+          if (!audioCtx) initAmbientAudio();
+          if (audioCtx && audioCtx.state === 'suspended') audioCtx.resume();
+
+          isPlaying = !isPlaying;
+          if (isPlaying) {
+            ambientBtn.classList.add('active');
+            statusText.textContent = '荒原微风 (已开启)';
+            if (gainNode) gainNode.gain.setTargetAtTime(0.35, audioCtx.currentTime, 1.2);
+          } else {
+            ambientBtn.classList.remove('active');
+            statusText.textContent = '静音氛围';
+            if (gainNode) gainNode.gain.setTargetAtTime(0.001, audioCtx.currentTime, 0.8);
+          }
+        });
+      }
+
+      const backToTopBtn = document.querySelector('.footer-bottom-row span:last-child');
+      if (backToTopBtn) {
+        backToTopBtn.style.cursor = 'pointer';
+        backToTopBtn.addEventListener('click', () => {
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+      }
+    });
+  </script>
+</body>
+</html>

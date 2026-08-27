@@ -4,3 +4,13 @@
 *.jpg binary
 *.gif binary
 *.webp binary
+*.zip binary
+
+# Preserve imported source snapshots byte-for-byte, including original line endings.
+agent/** -text
+archive/v0.5/** -text
+archive/v0.6/** -text
+archive/v0.7/** -text
+docs/demos/v0.5/** -text
+docs/demos/v0.6/** -text
+docs/demos/v0.7/** -text

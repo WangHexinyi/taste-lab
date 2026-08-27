@@ -1,0 +1,2091 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NOMAD / 27 — International Contemporary Art, Sound & Moving Image Festival</title>
+  <meta name="description" content="NOMAD / 27: BETWEEN SIGNALS — What remains between image, sound, body and space? A 7-day festival across 4 coastal sites.">
+
+  <!-- Google Fonts: Syncopate, Newsreader, Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;1,6..72,400;1,6..72,500&family=Syncopate:wght@400;700&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg: #090a0c;
+      --bg-surface: #111317;
+      --bg-surface-elevated: #181b22;
+      --text: #e2e4e8;
+      --text-muted: #8b929e;
+      --text-faint: #484f5d;
+      --line: #21252f;
+      --line-bright: #353b49;
+      --accent: #d8f944; /* High-visibility sodium sulphur, sharp tactile editorial signal */
+      --accent-muted: rgba(216, 249, 68, 0.15);
+      --signal-red: #ff3e3e;
+      --salt: #f4f4f2;
+      
+      --font-display: 'Syncopate', -apple-system, sans-serif;
+      --font-serif: 'Newsreader', Georgia, serif;
+      --font-sans: 'Inter', -apple-system, sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+
+      --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+      --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      background-color: var(--bg);
+      color: var(--text);
+      font-family: var(--font-sans);
+      font-size: 15px;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    body {
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    /* TYPOGRAPHY */
+    h1, h2, h3, h4 {
+      font-weight: normal;
+      color: var(--salt);
+    }
+
+    .display-title {
+      font-family: var(--font-display);
+      text-transform: uppercase;
+      letter-spacing: -0.03em;
+      line-height: 0.92;
+    }
+
+    .editorial-quote {
+      font-family: var(--font-serif);
+      font-style: italic;
+      font-weight: 300;
+    }
+
+    .mono-meta {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+
+    /* GLOBAL UTILITIES & BUTTONS */
+    .container {
+      width: 100%;
+      max-width: 1560px;
+      margin: 0 auto;
+      padding: 0 clamp(1.25rem, 4vw, 4rem);
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.75rem;
+      padding: 0.9rem 1.8rem;
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      text-decoration: none;
+      cursor: pointer;
+      border: 1px solid var(--line-bright);
+      background: transparent;
+      color: var(--salt);
+      transition: all 0.3s var(--ease-out);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: #000;
+      border-color: var(--accent);
+      font-weight: 600;
+    }
+
+    .btn-primary:hover {
+      background: #fff;
+      border-color: #fff;
+      color: #000;
+      transform: translateY(-2px);
+    }
+
+    .btn-outline:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+      background: var(--accent-muted);
+    }
+
+    .badge-pill {
+      display: inline-block;
+      padding: 0.25rem 0.6rem;
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      border: 1px solid var(--line-bright);
+      border-radius: 2px;
+      color: var(--text-muted);
+    }
+
+    .badge-pill.active-pill {
+      background: var(--text);
+      color: var(--bg);
+      border-color: var(--text);
+      font-weight: 600;
+    }
+
+    /* HEADER & NAV */
+    header.site-header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 100;
+      background: rgba(9, 10, 12, 0.82);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--line);
+      transition: transform 0.4s var(--ease-out);
+    }
+
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 72px;
+    }
+
+    .brand-mark {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      text-decoration: none;
+      color: var(--salt);
+    }
+
+    .brand-logo {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 1.15rem;
+      letter-spacing: 0.05em;
+    }
+
+    .brand-edition {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      padding: 0.15rem 0.45rem;
+      border: 1px solid var(--line-bright);
+      color: var(--accent);
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 2.2rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      letter-spacing: 0.04em;
+      transition: color 0.2s ease;
+      position: relative;
+    }
+
+    .nav-links a:hover, .nav-links a.active {
+      color: var(--salt);
+    }
+
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      width: 0%;
+      height: 1px;
+      background: var(--accent);
+      transition: width 0.3s ease;
+    }
+
+    .nav-links a:hover::after {
+      width: 100%;
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 1.25rem;
+    }
+
+    /* HERO SECTION */
+    .hero-section {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding-top: 100px;
+      padding-bottom: 2.5rem;
+      position: relative;
+      overflow: hidden;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .hero-spatial-canvas {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+      opacity: 0.65;
+      pointer-events: none;
+    }
+
+    .hero-grid-overlay {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 80% 20%, rgba(216, 249, 68, 0.06) 0%, transparent 60%),
+                  linear-gradient(180deg, transparent 60%, var(--bg) 100%);
+      z-index: 2;
+      pointer-events: none;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 3;
+      margin-top: auto;
+      margin-bottom: auto;
+      padding: 3rem 0;
+    }
+
+    .hero-header-meta {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .status-pulse {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: var(--accent);
+    }
+
+    .status-pulse::before {
+      content: '';
+      width: 7px;
+      height: 7px;
+      background: var(--accent);
+      border-radius: 50%;
+      box-shadow: 0 0 10px var(--accent);
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0% { opacity: 0.4; }
+      50% { opacity: 1; }
+      100% { opacity: 0.4; }
+    }
+
+    .hero-main-title {
+      font-size: clamp(3rem, 10vw, 9.5rem);
+      margin-bottom: 1.5rem;
+      color: var(--salt);
+    }
+
+    .hero-subtitle-row {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 3rem;
+      align-items: end;
+      border-top: 1px solid var(--line-bright);
+      padding-top: 2rem;
+    }
+
+    .theme-statement {
+      font-size: clamp(1.2rem, 2.2vw, 2rem);
+      color: var(--salt);
+      line-height: 1.3;
+    }
+
+    .hero-meta-block {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      font-family: var(--font-mono);
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+
+    .hero-meta-row {
+      display: flex;
+      justify-content: space-between;
+      border-bottom: 1px dashed var(--line);
+      padding-bottom: 0.35rem;
+    }
+
+    .hero-meta-row span:last-child {
+      color: var(--salt);
+    }
+
+    .hero-footer-bar {
+      position: relative;
+      z-index: 3;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px solid var(--line);
+      padding-top: 1.5rem;
+    }
+
+    .quick-stats {
+      display: flex;
+      gap: 2.5rem;
+    }
+
+    .stat-item {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .stat-num {
+      font-family: var(--font-display);
+      font-size: 1.3rem;
+      color: var(--salt);
+    }
+
+    .stat-lbl {
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+    }
+
+    /* SECTION 1: CURATORIAL / ABOUT */
+    .curatorial-section {
+      padding: 9rem 0;
+      background: var(--bg);
+      position: relative;
+    }
+
+    .curatorial-grid {
+      display: grid;
+      grid-template-columns: 0.9fr 1.1fr;
+      gap: clamp(3rem, 6vw, 7rem);
+      align-items: start;
+    }
+
+    .curatorial-sticky-col {
+      position: sticky;
+      top: 120px;
+    }
+
+    .section-eyebrow {
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      color: var(--accent);
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .section-eyebrow::before {
+      content: '—';
+    }
+
+    .curatorial-lead {
+      font-size: clamp(2rem, 3.4vw, 3.2rem);
+      line-height: 1.15;
+      letter-spacing: -0.02em;
+      margin-bottom: 2rem;
+    }
+
+    .curatorial-manifesto {
+      font-size: 1.15rem;
+      line-height: 1.8;
+      color: var(--text-muted);
+      margin-bottom: 2.5rem;
+    }
+
+    .curatorial-manifesto p {
+      margin-bottom: 1.5rem;
+    }
+
+    .curatorial-manifesto p strong {
+      color: var(--salt);
+      font-weight: 500;
+    }
+
+    .curator-signatures {
+      display: flex;
+      gap: 3rem;
+      border-top: 1px solid var(--line);
+      padding-top: 1.5rem;
+    }
+
+    .curator-sig-block {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .curator-name {
+      font-family: var(--font-mono);
+      font-size: 0.85rem;
+      color: var(--salt);
+      font-weight: 600;
+    }
+
+    .curator-role {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    .curatorial-media-aside {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+    }
+
+    .editorial-frame {
+      position: relative;
+      background: var(--bg-surface);
+      border: 1px solid var(--line);
+      overflow: hidden;
+    }
+
+    .editorial-frame img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      filter: grayscale(40%) contrast(110%);
+      transition: filter 0.5s ease, transform 0.7s var(--ease-out);
+    }
+
+    .editorial-frame:hover img {
+      filter: grayscale(0%) contrast(100%);
+      transform: scale(1.025);
+    }
+
+    .frame-caption {
+      padding: 1.25rem;
+      background: var(--bg-surface);
+      border-top: 1px solid var(--line);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    /* SECTION 2: DISCIPLINE BREAK / 5 PILLARS */
+    .disciplines-strip {
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+      background: var(--bg-surface);
+      padding: 3rem 0;
+    }
+
+    .disciplines-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 1.5rem;
+    }
+
+    .discipline-node {
+      border-left: 1px solid var(--line);
+      padding-left: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-height: 160px;
+    }
+
+    .disc-id {
+      font-family: var(--font-mono);
+      color: var(--text-faint);
+      font-size: 0.8rem;
+    }
+
+    .disc-title {
+      font-family: var(--font-display);
+      font-size: 1.1rem;
+      letter-spacing: 0.05em;
+      color: var(--salt);
+      margin: 0.8rem 0;
+    }
+
+    .disc-desc {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      line-height: 1.4;
+    }
+
+    /* SECTION 3: FEATURED PROJECTS & ARTISTS (Rhythm: Anchor + Dynamic Grid) */
+    .featured-section {
+      padding: 9rem 0;
+      background: var(--bg);
+    }
+
+    .section-head-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-bottom: 4rem;
+      border-bottom: 1px solid var(--line);
+      padding-bottom: 2rem;
+    }
+
+    .filter-tabs {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+
+    .tab-btn {
+      padding: 0.5rem 1rem;
+      background: transparent;
+      border: 1px solid var(--line);
+      color: var(--text-muted);
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .tab-btn.active, .tab-btn:hover {
+      border-color: var(--salt);
+      color: var(--salt);
+      background: var(--bg-surface-elevated);
+    }
+
+    /* Hero Project Lead (Anchor Layout) */
+    .hero-project-card {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      background: var(--bg-surface);
+      border: 1px solid var(--line-bright);
+      margin-bottom: 3.5rem;
+      position: relative;
+      cursor: pointer;
+      transition: border-color 0.3s ease;
+    }
+
+    .hero-project-card:hover {
+      border-color: var(--accent);
+    }
+
+    .project-media-wrap {
+      position: relative;
+      height: 480px;
+      overflow: hidden;
+      background: #000;
+    }
+
+    .project-media-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.8s var(--ease-out);
+    }
+
+    .hero-project-card:hover .project-media-wrap img {
+      transform: scale(1.04);
+    }
+
+    .project-body {
+      padding: clamp(2rem, 3.5vw, 3.5rem);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .project-badge-row {
+      display: flex;
+      gap: 0.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .project-name {
+      font-family: var(--font-display);
+      font-size: clamp(1.8rem, 2.8vw, 2.6rem);
+      line-height: 1.05;
+      margin-bottom: 0.75rem;
+      letter-spacing: -0.02em;
+    }
+
+    .project-artist-credit {
+      font-family: var(--font-serif);
+      font-size: 1.25rem;
+      color: var(--accent);
+      margin-bottom: 1.5rem;
+      font-style: italic;
+    }
+
+    .project-synopsis {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      line-height: 1.7;
+      margin-bottom: 2rem;
+    }
+
+    .project-footer-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px solid var(--line);
+      padding-top: 1.25rem;
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+    }
+
+    /* Supporting Projects Grid (Asymmetric 3-column) */
+    .projects-sub-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+    }
+
+    .sub-project-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--line);
+      display: flex;
+      flex-direction: column;
+      cursor: pointer;
+      transition: transform 0.3s ease, border-color 0.3s ease;
+    }
+
+    .sub-project-card:hover {
+      transform: translateY(-4px);
+      border-color: var(--line-bright);
+    }
+
+    .sub-media-wrap {
+      height: 240px;
+      position: relative;
+      overflow: hidden;
+      background: #000;
+    }
+
+    .sub-media-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.6s var(--ease-out);
+    }
+
+    .sub-project-card:hover .sub-media-wrap img {
+      transform: scale(1.05);
+    }
+
+    .sub-card-body {
+      padding: 1.75rem;
+      display: flex;
+      flex-direction: column;
+      flex-grow: 1;
+      justify-content: space-between;
+    }
+
+    .sub-title {
+      font-family: var(--font-display);
+      font-size: 1.25rem;
+      line-height: 1.15;
+      margin: 0.75rem 0 0.4rem 0;
+    }
+
+    .sub-artist {
+      font-family: var(--font-serif);
+      font-style: italic;
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      margin-bottom: 1rem;
+    }
+
+    .sub-desc {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+      margin-bottom: 1.5rem;
+    }
+
+    /* SECTION 4: FOUR SPATIAL VENUES (Spatial Character Focus) */
+    .venues-section {
+      padding: 9rem 0;
+      background: var(--bg-surface);
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .venue-quad-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.5rem;
+    }
+
+    .venue-card {
+      background: var(--bg);
+      border: 1px solid var(--line);
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      transition: border-color 0.3s ease;
+    }
+
+    .venue-card:hover {
+      border-color: var(--accent);
+    }
+
+    .venue-card-media {
+      height: 220px;
+      position: relative;
+    }
+
+    .venue-card-media img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: grayscale(30%);
+      transition: filter 0.4s ease;
+    }
+
+    .venue-card:hover .venue-card-media img {
+      filter: grayscale(0%);
+    }
+
+    .venue-card-body {
+      padding: 1.75rem;
+      display: flex;
+      flex-direction: column;
+      flex-grow: 1;
+      justify-content: space-between;
+    }
+
+    .venue-badge-id {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      color: var(--accent);
+      margin-bottom: 0.5rem;
+    }
+
+    .venue-name {
+      font-family: var(--font-display);
+      font-size: 1.2rem;
+      letter-spacing: -0.01em;
+      margin-bottom: 0.5rem;
+    }
+
+    .venue-nature {
+      font-family: var(--font-serif);
+      font-style: italic;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      margin-bottom: 1.25rem;
+      display: block;
+    }
+
+    .venue-desc {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      line-height: 1.55;
+      margin-bottom: 1.5rem;
+    }
+
+    .venue-specs {
+      border-top: 1px solid var(--line);
+      padding-top: 1rem;
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      display: flex;
+      flex-direction: column;
+      gap: 0.3rem;
+    }
+
+    /* SECTION 5: 7-DAY SCHEDULE / TIMETABLE DISCOVERY */
+    .schedule-section {
+      padding: 9rem 0;
+      background: var(--bg);
+    }
+
+    .day-selector-strip {
+      display: flex;
+      gap: 0.75rem;
+      overflow-x: auto;
+      padding-bottom: 1.5rem;
+      margin-bottom: 3rem;
+      border-bottom: 1px solid var(--line);
+      scrollbar-width: thin;
+    }
+
+    .day-pill-btn {
+      flex: 1;
+      min-width: 140px;
+      padding: 1.25rem 1rem;
+      background: var(--bg-surface);
+      border: 1px solid var(--line);
+      cursor: pointer;
+      text-align: left;
+      transition: all 0.25s ease;
+    }
+
+    .day-pill-btn.active {
+      background: var(--bg-surface-elevated);
+      border-color: var(--accent);
+    }
+
+    .day-pill-btn.active .day-code {
+      color: var(--accent);
+    }
+
+    .day-code {
+      font-family: var(--font-display);
+      font-size: 1.1rem;
+      color: var(--salt);
+      display: block;
+      margin-bottom: 0.25rem;
+    }
+
+    .day-date {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      display: block;
+    }
+
+    .day-theme {
+      font-family: var(--font-serif);
+      font-style: italic;
+      font-size: 0.8rem;
+      color: var(--text-faint);
+      margin-top: 0.4rem;
+      display: block;
+    }
+
+    /* Schedule Index Table */
+    .schedule-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    .schedule-row {
+      display: grid;
+      grid-template-columns: 140px 180px 1.5fr 1fr 140px;
+      align-items: center;
+      padding: 1.5rem 1.25rem;
+      border-bottom: 1px solid var(--line);
+      transition: background 0.2s ease, border-color 0.2s ease;
+      cursor: pointer;
+    }
+
+    .schedule-row:hover {
+      background: var(--bg-surface);
+      border-color: var(--line-bright);
+    }
+
+    .time-slot {
+      font-family: var(--font-mono);
+      font-size: 0.9rem;
+      color: var(--accent);
+      font-weight: 500;
+    }
+
+    .event-type-badge {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+
+    .event-info-cell {
+      padding-right: 1.5rem;
+    }
+
+    .event-act-title {
+      font-size: 1.1rem;
+      font-weight: 500;
+      color: var(--salt);
+      margin-bottom: 0.2rem;
+    }
+
+    .event-act-artist {
+      font-family: var(--font-serif);
+      font-style: italic;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+    }
+
+    .event-venue-cell {
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    .event-action-cell {
+      text-align: right;
+    }
+
+    /* SECTION 6: TICKETS & ACCESS PASSES */
+    .tickets-section {
+      padding: 9rem 0;
+      background: var(--bg-surface);
+      border-top: 1px solid var(--line);
+    }
+
+    .ticket-cards-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+      align-items: stretch;
+    }
+
+    .ticket-tier-card {
+      background: var(--bg);
+      border: 1px solid var(--line);
+      padding: 3rem 2.5rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: relative;
+      transition: transform 0.3s ease, border-color 0.3s ease;
+    }
+
+    .ticket-tier-card.featured-pass {
+      border-color: var(--accent);
+      background: linear-gradient(180deg, rgba(216, 249, 68, 0.04) 0%, var(--bg) 100%);
+      transform: scale(1.02);
+    }
+
+    .tier-header {
+      border-bottom: 1px solid var(--line);
+      padding-bottom: 2rem;
+      margin-bottom: 2rem;
+    }
+
+    .tier-name {
+      font-family: var(--font-display);
+      font-size: 1.5rem;
+      color: var(--salt);
+      margin-bottom: 0.5rem;
+    }
+
+    .tier-price-row {
+      display: flex;
+      align-items: baseline;
+      gap: 0.5rem;
+      margin: 1.25rem 0 0.5rem 0;
+    }
+
+    .tier-price {
+      font-family: var(--font-mono);
+      font-size: 2.4rem;
+      color: var(--salt);
+      font-weight: 700;
+    }
+
+    .tier-currency {
+      font-family: var(--font-mono);
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+
+    .tier-access-summary {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+
+    .tier-features-list {
+      list-style: none;
+      margin-bottom: 2.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.9rem;
+    }
+
+    .tier-features-list li {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+      line-height: 1.4;
+    }
+
+    .tier-features-list li::before {
+      content: '✓';
+      color: var(--accent);
+      font-family: var(--font-mono);
+    }
+
+    /* MODAL (Interactive Project / Artist Detail) */
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(9, 10, 12, 0.88);
+      backdrop-filter: blur(12px);
+      z-index: 1000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+    }
+
+    .modal-backdrop.open {
+      display: flex;
+    }
+
+    .modal-window {
+      background: var(--bg-surface);
+      border: 1px solid var(--line-bright);
+      width: 100%;
+      max-width: 960px;
+      max-height: 90vh;
+      overflow-y: auto;
+      position: relative;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.8);
+      animation: modalEnter 0.35s var(--ease-out);
+    }
+
+    @keyframes modalEnter {
+      from { opacity: 0; transform: translateY(20px) scale(0.98); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    .modal-media-pane {
+      background: #000;
+      min-height: 380px;
+      position: relative;
+    }
+
+    .modal-media-pane img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .modal-content-pane {
+      padding: 3rem 2.5rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .modal-close-btn {
+      position: absolute;
+      top: 1.5rem;
+      right: 1.5rem;
+      background: var(--bg-surface-elevated);
+      border: 1px solid var(--line-bright);
+      color: var(--salt);
+      width: 36px;
+      height: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-family: var(--font-mono);
+      font-size: 1.1rem;
+      z-index: 10;
+      transition: border-color 0.2s ease;
+    }
+
+    .modal-close-btn:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    /* FOOTER & PRACTICAL INFORMATION */
+    footer.site-footer {
+      background: #050607;
+      border-top: 1px solid var(--line);
+      padding: 7rem 0 3rem 0;
+      color: var(--text-muted);
+    }
+
+    .footer-main-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1.5fr;
+      gap: 4rem;
+      margin-bottom: 5rem;
+    }
+
+    .footer-brand-statement {
+      font-size: 0.95rem;
+      line-height: 1.7;
+      max-width: 380px;
+      margin: 1.5rem 0 2rem 0;
+    }
+
+    .footer-col-title {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: var(--salt);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 1.5rem;
+    }
+
+    .footer-links-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.8rem;
+    }
+
+    .footer-links-list a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.85rem;
+      transition: color 0.2s ease;
+    }
+
+    .footer-links-list a:hover {
+      color: var(--accent);
+    }
+
+    .newsletter-box input {
+      width: 100%;
+      padding: 0.85rem 1rem;
+      background: var(--bg-surface);
+      border: 1px solid var(--line);
+      color: var(--salt);
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      margin-bottom: 0.75rem;
+      outline: none;
+    }
+
+    .newsletter-box input:focus {
+      border-color: var(--accent);
+    }
+
+    .footer-bottom-bar {
+      border-top: 1px solid var(--line);
+      padding-top: 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+    }
+
+    /* RESPONSIVE BREAKPOINTS (Mobile Recomposition) */
+    @media (max-width: 1100px) {
+      .curatorial-grid { grid-template-columns: 1fr; }
+      .curatorial-sticky-col { position: relative; top: 0; }
+      .disciplines-grid { grid-template-columns: repeat(2, 1fr); }
+      .projects-sub-grid { grid-template-columns: repeat(2, 1fr); }
+      .venue-quad-grid { grid-template-columns: repeat(2, 1fr); }
+      .ticket-cards-grid { grid-template-columns: 1fr; }
+      .footer-main-grid { grid-template-columns: 1fr 1fr; }
+    }
+
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .hero-subtitle-row { grid-template-columns: 1fr; gap: 1.5rem; }
+      .hero-project-card { grid-template-columns: 1fr; }
+      .project-media-wrap { height: 280px; }
+      .projects-sub-grid { grid-template-columns: 1fr; }
+      .venue-quad-grid { grid-template-columns: 1fr; }
+      .disciplines-grid { grid-template-columns: 1fr; }
+      .schedule-row {
+        grid-template-columns: 1fr;
+        gap: 0.5rem;
+      }
+      .event-action-cell { text-align: left; }
+      .modal-window { grid-template-columns: 1fr; }
+      .modal-media-pane { min-height: 220px; }
+      .footer-main-grid { grid-template-columns: 1fr; }
+      .hero-footer-bar { flex-direction: column; align-items: flex-start; gap: 1.5rem; }
+    }
+
+    /* ACCESSIBILITY & PREFERS-REDUCED-MOTION */
+    @media (prefers-reduced-motion: reduce) {
+      * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+      }
+      .hero-spatial-canvas { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- SITE HEADER -->
+  <header class="site-header" id="siteHeader">
+    <div class="container">
+      <div class="nav-inner">
+        <a href="#hero" class="brand-mark">
+          <span class="brand-logo">NOMAD</span>
+          <span class="brand-edition">/ 27</span>
+        </a>
+
+        <nav>
+          <ul class="nav-links">
+            <li><a href="#about">Curatorial</a></li>
+            <li><a href="#programme">Artists & Works</a></li>
+            <li><a href="#venues">4 Venues</a></li>
+            <li><a href="#schedule">7-Day Schedule</a></li>
+            <li><a href="#tickets">Passes</a></li>
+          </ul>
+        </nav>
+
+        <div class="header-actions">
+          <a href="#tickets" class="btn btn-primary" style="padding: 0.55rem 1.1rem; font-size: 0.72rem;">Get Pass</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- HERO: SPATIAL CANVAS & CURATORIAL THESIS -->
+  <section class="hero-section" id="hero">
+    <canvas id="spatialCanvas" class="hero-spatial-canvas"></canvas>
+    <div class="hero-grid-overlay"></div>
+
+    <div class="container hero-content">
+      <div class="hero-header-meta">
+        <div class="status-pulse mono-meta">Signals Live Across 4 Coastal Sites</div>
+        <div class="mono-meta">October 14 — 20, 2027</div>
+      </div>
+
+      <h1 class="display-title hero-main-title">
+        BETWEEN<br>SIGNALS
+      </h1>
+
+      <div class="hero-subtitle-row">
+        <div class="theme-statement editorial-quote">
+          “What remains between image, sound, body and space?”
+        </div>
+        <div class="hero-meta-block">
+          <div class="hero-meta-row">
+            <span>DISCIPLINES</span>
+            <span>Film / Sound / Body / Tech / Talk</span>
+          </div>
+          <div class="hero-meta-row">
+            <span>GEOGRAPHY</span>
+            <span>4 Coastal Venues & Public Sites</span>
+          </div>
+          <div class="hero-meta-row">
+            <span>CURATORIAL BOARD</span>
+            <span>Dr. Maya Lin-Sorensen, Elena Vance</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container hero-footer-bar">
+      <div class="quick-stats">
+        <div class="stat-item">
+          <span class="stat-num">48</span>
+          <span class="stat-lbl">Artists</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-num">7</span>
+          <span class="stat-lbl">Days</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-num">19</span>
+          <span class="stat-lbl">Premieres</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-num">4</span>
+          <span class="stat-lbl">Architectures</span>
+        </div>
+      </div>
+
+      <div style="display: flex; gap: 1rem;">
+        <a href="#programme" class="btn btn-outline">Explore Programme</a>
+        <a href="#schedule" class="btn btn-outline">Daily Schedule</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 1: CURATORIAL STATEMENT -->
+  <section class="curatorial-section" id="about">
+    <div class="container">
+      <div class="curatorial-grid">
+        
+        <div class="curatorial-sticky-col">
+          <div class="section-eyebrow">Curatorial Framework</div>
+          <h2 class="curatorial-lead">
+            A coastal topography of fragmented frequencies, somatic resonance, and machine memory.
+          </h2>
+          <div class="curator-signatures">
+            <div class="curator-sig-block">
+              <span class="curator-name">Dr. Maya Lin-Sorensen</span>
+              <span class="curator-role">Chief Curator, Moving Image & Digital</span>
+            </div>
+            <div class="curator-sig-block">
+              <span class="curator-name">Elena Vance</span>
+              <span class="curator-role">Spatial Sound & Choreographic Lead</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="curatorial-media-aside">
+          <div class="curatorial-manifesto">
+            <p>
+              In our hyper-mediated coastal ecology, information arrives as high-frequency pulses—light refracted through salt fog, sonar scanning seabed fissures, and data streams circulating through underwater fibre optics. <strong>NOMAD / 27</strong> positions itself squarely in the interstitial spaces: the quiet interval between a soundwave and its architectural reflection, between a camera lens and a living nervous system.
+            </p>
+            <p>
+              Over seven days, the festival repurposes four radical coastal architectures—a defunct heavy turbine hall, a cliff-edge glass pavilion, a subterranean bomb-shelter amphitheatre, and an open tide square—transforming them into acoustic transducers and luminous projection chambers.
+            </p>
+          </div>
+
+          <div class="editorial-frame">
+            <img src="https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=1200&q=80" alt="Turbine Hall Acoustic Intervention" loading="lazy">
+            <div class="frame-caption">
+              <span>FIG 01. Acoustic measurement of Turbine Hall Hall A</span>
+              <span>Site 01 / North Pier</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 2: 5 DISCIPLINE PILLARS -->
+  <section class="disciplines-strip">
+    <div class="container">
+      <div class="disciplines-grid">
+        <div class="discipline-node">
+          <span class="disc-id">01 / DISCIPLINE</span>
+          <h3 class="disc-title">EXPERIMENTAL FILM</h3>
+          <p class="disc-desc">16mm expanded cinema, multi-channel algorithmic projections, and uncompressed photochemical scans.</p>
+        </div>
+        <div class="discipline-node">
+          <span class="disc-id">02 / DISCIPLINE</span>
+          <h3 class="disc-title">SPATIAL SOUND</h3>
+          <p class="disc-desc">Sub-bass wavefield synthesis, ambisonic live diffusions, and custom electromagnetic coil arrays.</p>
+        </div>
+        <div class="discipline-node">
+          <span class="disc-id">03 / DISCIPLINE</span>
+          <h3 class="disc-title">PERFORMANCE & BODY</h3>
+          <p class="disc-desc">Choreographic interventions with sensor exoskeletons, bio-electric capture, and somatic resistance.</p>
+        </div>
+        <div class="discipline-node">
+          <span class="disc-id">04 / DISCIPLINE</span>
+          <h3 class="disc-title">INSTALLATION</h3>
+          <p class="disc-desc">Site-responsive kinetic structures, optical mist chambers, and speculative architectural interventions.</p>
+        </div>
+        <div class="discipline-node">
+          <span class="disc-id">05 / DISCIPLINE</span>
+          <h3 class="disc-title">TALKS & CRITIQUE</h3>
+          <p class="disc-desc">Daily curatorial symposia on deep-sea infrastructure, machine epistemology, and coastal acoustics.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 3: FEATURED PROJECTS & ARTISTS -->
+  <section class="featured-section" id="programme">
+    <div class="container">
+      <div class="section-head-bar">
+        <div>
+          <div class="section-eyebrow">Curated Works</div>
+          <h2 class="display-title" style="font-size: clamp(2.2rem, 4vw, 3.8rem);">FEATURED / WORKS</h2>
+        </div>
+        <div class="filter-tabs" id="projectFilterTabs">
+          <button class="tab-btn active" data-filter="all">All Disciplines</button>
+          <button class="tab-btn" data-filter="installation">Installation</button>
+          <button class="tab-btn" data-filter="sound">Spatial Sound</button>
+          <button class="tab-btn" data-filter="film">Film</button>
+          <button class="tab-btn" data-filter="performance">Performance</button>
+        </div>
+      </div>
+
+      <!-- Hero Anchor Project (Interactive) -->
+      <div class="hero-project-card" onclick="openModal('hydro')" data-category="installation">
+        <div class="project-media-wrap">
+          <img src="https://images.unsplash.com/photo-1509198397868-475647b2a1e5?auto=format&fit=crop&w=1400&q=80" alt="Hydrological Resonance" loading="lazy">
+        </div>
+        <div class="project-body">
+          <div>
+            <div class="project-badge-row">
+              <span class="badge-pill active-pill">Keynote Commission</span>
+              <span class="badge-pill">Installation / Sound</span>
+            </div>
+            <h3 class="project-name">HYDROLOGICAL RESONANCE</h3>
+            <div class="project-artist-credit">Kaelen Voss & Studio Arch/0 (DE / UK)</div>
+            <p class="project-synopsis">
+              A 32-channel hydro-acoustic installation utilizing real-time tidal telemetry from the outer breakwater to drive a suspended matrix of 120 resonant glass vessels inside the former boiler room.
+            </p>
+          </div>
+          <div class="project-footer-meta">
+            <span>VENUE: Turbine Hall A</span>
+            <span style="color: var(--accent);">Inspect Project Details →</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Supporting Asymmetric Grid -->
+      <div class="projects-sub-grid" id="projectListGrid">
+
+        <div class="sub-project-card" onclick="openModal('subm')" data-category="sound">
+          <div class="sub-media-wrap">
+            <img src="https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&w=800&q=80" alt="Sub-surface Monologue" loading="lazy">
+          </div>
+          <div class="sub-card-body">
+            <div>
+              <span class="badge-pill">Live Sound Diffusion</span>
+              <h4 class="sub-title">SUB-SURFACE MONOLOGUE</h4>
+              <div class="sub-artist">Tanya Chen & Haruki Sato (JP)</div>
+              <p class="sub-desc">Sub-audible frequency fields and granular spatial synthesis capturing tectonic shifts along the continental shelf.</p>
+            </div>
+            <div class="mono-meta" style="border-top: 1px solid var(--line); padding-top: 0.75rem;">
+              The Vaults Sub-B / 80 Mins
+            </div>
+          </div>
+        </div>
+
+        <div class="sub-project-card" onclick="openModal('chroma')" data-category="film">
+          <div class="sub-media-wrap">
+            <img src="https://images.unsplash.com/photo-1485846234645-a62644f84728?auto=format&fit=crop&w=800&q=80" alt="Chromatophore Drift" loading="lazy">
+          </div>
+          <div class="sub-card-body">
+            <div>
+              <span class="badge-pill">Expanded 35mm Film</span>
+              <h4 class="sub-title">CHROMATOPHORE DRIFT</h4>
+              <div class="sub-artist">Lara Bo-Kirkegaard (DK)</div>
+              <p class="sub-desc">Double 35mm optical projection examining bioluminescent decay and industrial residue along shipping lanes.</p>
+            </div>
+            <div class="mono-meta" style="border-top: 1px solid var(--line); padding-top: 0.75rem;">
+              Coastal Pavilion Glass / Loop
+            </div>
+          </div>
+        </div>
+
+        <div class="sub-project-card" onclick="openModal('kinetic')" data-category="performance">
+          <div class="sub-media-wrap">
+            <img src="https://images.unsplash.com/photo-1508700115892-45ecd05ae2ad?auto=format&fit=crop&w=800&q=80" alt="Kinetic Inscriptions" loading="lazy">
+          </div>
+          <div class="sub-card-body">
+            <div>
+              <span class="badge-pill">Body / Bio-Sensors</span>
+              <h4 class="sub-title">KINETIC INSCRIPTIONS</h4>
+              <div class="sub-artist">Ensemble Somatika (IS / FR)</div>
+              <p class="sub-desc">Four performers linked via wearable electromyography sensors modulating architectural lighting in real-time.</p>
+            </div>
+            <div class="mono-meta" style="border-top: 1px solid var(--line); padding-top: 0.75rem;">
+              Tide Square Arena / Dusk
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 4: 4 RADICAL VENUES -->
+  <section class="venues-section" id="venues">
+    <div class="container">
+      <div class="section-head-bar">
+        <div>
+          <div class="section-eyebrow">Spatial Geography</div>
+          <h2 class="display-title" style="font-size: clamp(2.2rem, 4vw, 3.8rem);">FOUR SITES</h2>
+        </div>
+        <p class="mono-meta" style="max-width: 320px; line-height: 1.5;">
+          The festival activates 4 architectural extremes along a 3.4km coastal corridor connected by electric sea shuttles.
+        </p>
+      </div>
+
+      <div class="venue-quad-grid">
+        
+        <div class="venue-card">
+          <div class="venue-card-media">
+            <img src="https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=700&q=80" alt="Turbine Hall" loading="lazy">
+          </div>
+          <div class="venue-card-body">
+            <div>
+              <span class="venue-badge-id">SITE 01 / INDUSTRIAL</span>
+              <h3 class="venue-name">THE TURBINE HALL</h3>
+              <span class="venue-nature">Former 1932 Coal Power Station</span>
+              <p class="venue-desc">Raw 24-meter concrete ceilings and industrial reverberation, hosting monumental spatial installations and modular synthesizer performances.</p>
+            </div>
+            <div class="venue-specs">
+              <span>CAPACITY: 1,400</span>
+              <span>ACOUSTICS: 4.8s Decay Time</span>
+              <span>ACCESS: North Pier Ferry</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="venue-card">
+          <div class="venue-card-media">
+            <img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=700&q=80" alt="Coastal Pavilion" loading="lazy">
+          </div>
+          <div class="venue-card-body">
+            <div>
+              <span class="venue-badge-id">SITE 02 / GLASS ARCHITECTURE</span>
+              <h3 class="venue-name">COASTAL PAVILION</h3>
+              <span class="venue-nature">Cliff-Edge Glass Art Museum</span>
+              <p class="venue-desc">Cantilevered directly over the ocean breakers, housing expanded cinema projections that dissolve into the maritime twilight horizon.</p>
+            </div>
+            <div class="venue-specs">
+              <span>CAPACITY: 450</span>
+              <span>PROJECTION: 4K Laser + 35mm</span>
+              <span>ACCESS: Cliffside Boardwalk</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="venue-card">
+          <div class="venue-card-media">
+            <img src="https://images.unsplash.com/photo-1509198397868-475647b2a1e5?auto=format&fit=crop&w=700&q=80" alt="Subterranean Bunker" loading="lazy">
+          </div>
+          <div class="venue-card-body">
+            <div>
+              <span class="venue-badge-id">SITE 03 / SUBTERRANEAN</span>
+              <h3 class="venue-name">THE VAULTS</h3>
+              <span class="venue-nature">Underground Naval Munitions Bunker</span>
+              <p class="venue-desc">Deep subterranean darkness with zero natural light. Dedicated to pitch-black spatial sound immersion and multichannel wavefield synthesis.</p>
+            </div>
+            <div class="venue-specs">
+              <span>CAPACITY: 300</span>
+              <span>SOUND: 64.4 Ambisonic Array</span>
+              <span>ACCESS: South Tunnel Gate</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="venue-card">
+          <div class="venue-card-media">
+            <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=700&q=80" alt="Tide Square" loading="lazy">
+          </div>
+          <div class="venue-card-body">
+            <div>
+              <span class="venue-badge-id">SITE 04 / PUBLIC HORIZON</span>
+              <h3 class="venue-name">TIDE SQUARE</h3>
+              <span class="venue-nature">Intertidal Stone Esplanade</span>
+              <p class="venue-desc">Submerged at spring tide, this open civic arena features outdoor choreographic rituals, laser atmospheric interventions, and free public concerts.</p>
+            </div>
+            <div class="venue-specs">
+              <span>CAPACITY: 3,500 (Open)</span>
+              <span>ELEMENT: Wind & Tide Dependent</span>
+              <span>ACCESS: Central Promenade</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 5: 7-DAY PROGRAMME / SCHEDULE DISCOVERY -->
+  <section class="schedule-section" id="schedule">
+    <div class="container">
+      <div class="section-head-bar">
+        <div>
+          <div class="section-eyebrow">Chronological Timeline</div>
+          <h2 class="display-title" style="font-size: clamp(2.2rem, 4vw, 3.8rem);">7-DAY / DISCOVERY</h2>
+        </div>
+        <div class="mono-meta">Filter by Festival Day</div>
+      </div>
+
+      <!-- Day Selector Bar -->
+      <div class="day-selector-strip" id="daySelector">
+        <button class="day-pill-btn active" data-day="day1">
+          <span class="day-code">DAY 01</span>
+          <span class="day-date">THU 14 OCT</span>
+          <span class="day-theme">Signal Ingestion</span>
+        </button>
+        <button class="day-pill-btn" data-day="day2">
+          <span class="day-code">DAY 02</span>
+          <span class="day-date">FRI 15 OCT</span>
+          <span class="day-theme">Tectonic Sound</span>
+        </button>
+        <button class="day-pill-btn" data-day="day3">
+          <span class="day-code">DAY 03</span>
+          <span class="day-date">SAT 16 OCT</span>
+          <span class="day-theme">Expanded Body</span>
+        </button>
+        <button class="day-pill-btn" data-day="day4">
+          <span class="day-code">DAY 04</span>
+          <span class="day-date">SUN 17 OCT</span>
+          <span class="day-theme">Maritime Photons</span>
+        </button>
+        <button class="day-pill-btn" data-day="day5">
+          <span class="day-code">DAY 05</span>
+          <span class="day-date">MON 18 OCT</span>
+          <span class="day-theme">Deep Infrastructure</span>
+        </button>
+        <button class="day-pill-btn" data-day="day6">
+          <span class="day-code">DAY 06</span>
+          <span class="day-date">TUE 19 OCT</span>
+          <span class="day-theme">Sub-Audible Shift</span>
+        </button>
+        <button class="day-pill-btn" data-day="day7">
+          <span class="day-code">DAY 07</span>
+          <span class="day-date">WED 20 OCT</span>
+          <span class="day-theme">Residual Dispersion</span>
+        </button>
+      </div>
+
+      <!-- Schedule Table Body (Dynamic JS injection) -->
+      <div class="schedule-table-wrap">
+        <div class="schedule-table" id="scheduleTableBody">
+          <!-- Populated by JavaScript -->
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- SECTION 6: TICKET & PASS CONVERSION -->
+  <section class="tickets-section" id="tickets">
+    <div class="container">
+      <div class="section-head-bar">
+        <div>
+          <div class="section-eyebrow">Festival Access</div>
+          <h2 class="display-title" style="font-size: clamp(2.2rem, 4vw, 3.8rem);">PASSES & ADMISSION</h2>
+        </div>
+        <p class="mono-meta" style="max-width: 320px;">
+          All passes grant entry to exhibitions and shuttle ferries. Limited capacity for subterranean Vaults events.
+        </p>
+      </div>
+
+      <div class="ticket-cards-grid">
+        
+        <!-- Pass 1 -->
+        <div class="ticket-tier-card">
+          <div>
+            <div class="tier-header">
+              <span class="mono-meta">SINGLE ENTRY</span>
+              <h3 class="tier-name">DAY PASS</h3>
+              <div class="tier-price-row">
+                <span class="tier-price">€42</span>
+                <span class="tier-currency">EUR / DAY</span>
+              </div>
+              <p class="tier-access-summary">Access to all exhibitions, screenings, and outdoor performances for 1 chosen date.</p>
+            </div>
+            <ul class="tier-features-list">
+              <li>Entry to all 4 venues from 10:00 to 23:00</li>
+              <li>Unlimited Coastal Sea Shuttle transfers</li>
+              <li>Access to daily curatorial symposia</li>
+              <li>Standard mobile schedule companion app</li>
+            </ul>
+          </div>
+          <button class="btn btn-outline" style="width: 100%;">Select Day Pass</button>
+        </div>
+
+        <!-- Pass 2 (Featured) -->
+        <div class="ticket-tier-card featured-pass">
+          <div>
+            <div class="tier-header">
+              <span class="badge-pill active-pill" style="margin-bottom: 0.5rem;">RECOMMENDED</span>
+              <h3 class="tier-name">FULL 7-DAY PASS</h3>
+              <div class="tier-price-row">
+                <span class="tier-price">€185</span>
+                <span class="tier-currency">EUR / 7 DAYS</span>
+              </div>
+              <p class="tier-access-summary">Complete unrestricted access to all 7 days, night concerts, and world premieres.</p>
+            </div>
+            <ul class="tier-features-list">
+              <li>Complete 7-day priority admission to all 4 sites</li>
+              <li>Guaranteed reservation in The Vaults 64-channel sound sessions</li>
+              <li>Opening & Closing night keynote live performances</li>
+              <li>Printed 240-page Curatorial Catalogue & Vinyl Compilation</li>
+              <li>Priority boarding on electric coastal shuttles</li>
+            </ul>
+          </div>
+          <button class="btn btn-primary" style="width: 100%;">Book Full Pass</button>
+        </div>
+
+        <!-- Pass 3 -->
+        <div class="ticket-tier-card">
+          <div>
+            <div class="tier-header">
+              <span class="mono-meta">PROFESSIONAL & RESEARCH</span>
+              <h3 class="tier-name">DELEGATE PRO</h3>
+              <div class="tier-price-row">
+                <span class="tier-price">€290</span>
+                <span class="tier-currency">EUR / ALL-ACCESS</span>
+              </div>
+              <p class="tier-access-summary">For curators, researchers, sound technologists, and cultural institutions.</p>
+            </div>
+            <ul class="tier-features-list">
+              <li>All 7-Day Festival privileges & VIP lounges</li>
+              <li>Closed-door Curatorial Roundtables & Artist Dinners</li>
+              <li>Direct spatial sound system masterclasses in Turbine Hall</li>
+              <li>Institutional networking portal & project documentation kit</li>
+            </ul>
+          </div>
+          <button class="btn btn-outline" style="width: 100%;">Apply For Delegate</button>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- MODAL WINDOW (PROJECT / ARTIST DEEP DIVE) -->
+  <div class="modal-backdrop" id="projectModal" onclick="closeModal(event)">
+    <div class="modal-window" onclick="event.stopPropagation()">
+      <button class="modal-close-btn" onclick="closeModal()">✕</button>
+      <div class="modal-media-pane">
+        <img id="modalImg" src="" alt="Project view">
+      </div>
+      <div class="modal-content-pane">
+        <div>
+          <div class="badge-pill active-pill" id="modalCategory" style="margin-bottom: 1rem;">Installation</div>
+          <h2 class="display-title" id="modalTitle" style="font-size: 1.8rem; margin-bottom: 0.5rem;">HYDROLOGICAL RESONANCE</h2>
+          <div class="editorial-quote" id="modalArtist" style="font-size: 1.2rem; color: var(--accent); margin-bottom: 1.5rem;">Kaelen Voss & Studio Arch/0</div>
+          <p id="modalDesc" style="color: var(--text-muted); font-size: 0.95rem; line-height: 1.7; margin-bottom: 1.5rem;">
+            Detailed description of the artwork, spatial installation logistics, and theoretical research underpinning the piece.
+          </p>
+          <div class="mono-meta" id="modalSpecs" style="border-top: 1px solid var(--line); padding-top: 1rem; line-height: 1.6;">
+            LOCATION: Turbine Hall A<br>
+            DURATION: Continuous Loop<br>
+            MEDIUM: Real-time telemetry, blown glass, hydrophones
+          </div>
+        </div>
+        <div style="margin-top: 2rem;">
+          <a href="#tickets" class="btn btn-primary" onclick="closeModal()" style="width: 100%;">Reserve Session In Schedule</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SITE FOOTER -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-main-grid">
+        
+        <div>
+          <div class="brand-logo" style="font-size: 1.4rem; color: var(--salt);">NOMAD / 27</div>
+          <p class="footer-brand-statement">
+            International Festival of Contemporary Art, Spatial Sound and Expanded Moving Image. Held biennially along the Atlantic littoral corridor.
+          </p>
+          <div class="mono-meta">
+            OCTOBER 14 — 20, 2027<br>
+            COASTAL METROPOLITAN REGION
+          </div>
+        </div>
+
+        <div>
+          <div class="footer-col-title">Festival Map</div>
+          <ul class="footer-links-list">
+            <li><a href="#about">Curatorial Statement</a></li>
+            <li><a href="#programme">Artists Index</a></li>
+            <li><a href="#venues">The 4 Venues</a></li>
+            <li><a href="#schedule">7-Day Timetable</a></li>
+            <li><a href="#tickets">Passes & Pricing</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <div class="footer-col-title">Visitor Info</div>
+          <ul class="footer-links-list">
+            <li><a href="#">Sea Shuttle Ferry Timetable</a></li>
+            <li><a href="#">Accessibility Guide (Step-Free)</a></li>
+            <li><a href="#">Press Kit & Media Assets</a></li>
+            <li><a href="#">Volunteer Programme</a></li>
+            <li><a href="#">Contact Curatorial Office</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <div class="footer-col-title">Signal Dispatch</div>
+          <p style="font-size: 0.85rem; margin-bottom: 1rem; color: var(--text-muted);">
+            Receive daily curatorial essays, acoustic recordings, and surprise pop-up announcements.
+          </p>
+          <form class="newsletter-box" onsubmit="event.preventDefault(); alert('Subscribed to NOMAD / 27 Signals Dispatch.');">
+            <input type="email" placeholder="Enter frequency / email" required>
+            <button type="submit" class="btn btn-primary" style="width: 100%; padding: 0.75rem;">Subscribe</button>
+          </form>
+        </div>
+
+      </div>
+
+      <div class="footer-bottom-bar">
+        <div>© 2027 NOMAD ARTS FOUNDATION. ALL RIGHTS RESERVED.</div>
+        <div style="display: flex; gap: 2rem;">
+          <span>PRECISION / RESTRAINT / CONTINUITY</span>
+          <span>CURATED BY LIN-SORENSEN & VANCE</span>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- SCRIPT LOGIC -->
+  <script>
+    /* 1. SCHEDULE DATA MATRIX FOR 7 DAYS */
+    const scheduleData = {
+      day1: [
+        { time: "11:00 — 13:00", type: "Symposium", title: "Keynote: Sonic Topographies of the Littoral", artist: "Dr. Maya Lin-Sorensen + Panel", venue: "Coastal Pavilion" },
+        { time: "14:30 — 18:00", type: "Installation", title: "Hydrological Resonance (Opening)", artist: "Kaelen Voss & Studio Arch/0", venue: "Turbine Hall A" },
+        { time: "19:00 — 20:30", type: "Performance", title: "Kinetic Inscriptions: Body as Antenna", artist: "Ensemble Somatika", venue: "Tide Square Arena" },
+        { time: "21:30 — 23:00", type: "Sound Diffusion", title: "Wavefield Immersion No. 1 (Live 64ch)", artist: "Haruki Sato", venue: "The Vaults Sub-B" }
+      ],
+      day2: [
+        { time: "10:30 — 12:00", type: "Expanded Film", title: "Photochemical Decay in Coastal Waters", artist: "Lara Bo-Kirkegaard", venue: "Coastal Pavilion" },
+        { time: "14:00 — 16:30", type: "Workshop", title: "Hydrophone Building & Bio-signal Capture", artist: "Open Sound Lab", venue: "Turbine Hall B" },
+        { time: "18:00 — 19:45", type: "Sound", title: "Sub-surface Monologue (World Premiere)", artist: "Tanya Chen", venue: "The Vaults Sub-B" },
+        { time: "21:00 — 23:30", type: "Performance", title: "Night Signal: Modular Interference", artist: "K/Voss + Guests", venue: "Turbine Hall A" }
+      ],
+      day3: [
+        { time: "11:00 — 13:30", type: "Talk / Panel", title: "Machine Vision in Subsea Cables", artist: "Elena Vance & Media Theorists", venue: "Coastal Pavilion" },
+        { time: "15:00 — 17:30", type: "Installation", title: "Optical Mist & Laser Inscription", artist: "Studio Arch/0", venue: "Tide Square" },
+        { time: "19:00 — 21:00", type: "Expanded Film", title: "Chromatophore Drift 35mm Live Score", artist: "Bo-Kirkegaard & Chen", venue: "Coastal Pavilion" },
+        { time: "22:00 — 01:00", type: "Night Concert", title: "Subterranean Echo Chamber Sessions", artist: "Various Artists", venue: "The Vaults Sub-B" }
+      ],
+      day4: [
+        { time: "10:00 — 12:00", type: "Performance", title: "Tide Reading: Somatic Chorus", artist: "Ensemble Somatika", venue: "Tide Square" },
+        { time: "14:00 — 17:00", type: "Installation", title: "Hydrological Resonance (Continuous)", artist: "Kaelen Voss", venue: "Turbine Hall A" },
+        { time: "18:30 — 20:00", type: "Sound Diffusion", title: "Ambisonic Bath: Deep Ocean Drift", artist: "Haruki Sato", venue: "The Vaults Sub-B" },
+        { time: "21:00 — 22:30", type: "Film Screening", title: "Selected 16mm Experimental Shorts", artist: "International Curators", venue: "Coastal Pavilion" }
+      ],
+      day5: [
+        { time: "11:00 — 13:00", type: "Symposium", title: "Acoustic Ecology in the Anthropocene", artist: "Dr. Maya Lin-Sorensen", venue: "Coastal Pavilion" },
+        { time: "15:00 — 18:00", type: "Sound", title: "Electromagnetic Coil Resonance", artist: "Tanya Chen", venue: "Turbine Hall A" },
+        { time: "19:30 — 21:00", type: "Performance", title: "Bio-electric Sensor Duets", artist: "Somatika Lab", venue: "The Vaults Sub-B" }
+      ],
+      day6: [
+        { time: "14:00 — 16:30", type: "Installation", title: "Glass Vessel Telemetry Walkthrough", artist: "Studio Arch/0", venue: "Turbine Hall A" },
+        { time: "17:30 — 19:30", type: "Expanded Film", title: "Luminescent Horizons Live Re-cut", artist: "Lara Bo-Kirkegaard", venue: "Coastal Pavilion" },
+        { time: "21:00 — 23:30", type: "Sound", title: "Tectonic Frequencies: Sub-audible Shift", artist: "Haruki Sato & Chen", venue: "The Vaults Sub-B" }
+      ],
+      day7: [
+        { time: "12:00 — 14:30", type: "Plenary Talk", title: "Between Signals: What Remains?", artist: "Lin-Sorensen, Vance, Voss, Chen", venue: "Coastal Pavilion" },
+        { time: "16:00 — 18:30", type: "Installation", title: "Final Resonance Cycle", artist: "All Featured Artists", venue: "Turbine Hall A" },
+        { time: "20:00 — 23:00", type: "Closing Concert", title: "Grand Signal Dispersion (Open Air)", artist: "Full Festival Collective", venue: "Tide Square Arena" }
+      ]
+    };
+
+    /* 2. RENDER SCHEDULE TABLE */
+    function renderSchedule(dayKey) {
+      const container = document.getElementById('scheduleTableBody');
+      const events = scheduleData[dayKey] || [];
+      
+      let html = '';
+      events.forEach(item => {
+        html += `
+          <div class="schedule-row" onclick="alert('Session details: ${item.title} at ${item.venue}')">
+            <div class="time-slot">${item.time}</div>
+            <div class="event-type-badge"><span class="badge-pill">${item.type}</span></div>
+            <div class="event-info-cell">
+              <div class="event-act-title">${item.title}</div>
+              <div class="event-act-artist">${item.artist}</div>
+            </div>
+            <div class="event-venue-cell">📍 ${item.venue}</div>
+            <div class="event-action-cell">
+              <span class="mono-meta" style="color: var(--accent);">View Spot →</span>
+            </div>
+          </div>
+        `;
+      });
+      container.innerHTML = html;
+    }
+
+    // Day button toggle
+    const dayButtons = document.querySelectorAll('.day-pill-btn');
+    dayButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        dayButtons.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        renderSchedule(btn.dataset.day);
+      });
+    });
+
+    // Initial render
+    renderSchedule('day1');
+
+    /* 3. PROJECT FILTER TABS */
+    const filterTabs = document.querySelectorAll('#projectFilterTabs .tab-btn');
+    const heroCard = document.querySelector('.hero-project-card');
+    const subCards = document.querySelectorAll('.sub-project-card');
+
+    filterTabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        filterTabs.forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+        const filter = tab.dataset.filter;
+
+        if (filter === 'all') {
+          heroCard.style.display = 'grid';
+          subCards.forEach(c => c.style.display = 'flex');
+        } else {
+          heroCard.style.display = (heroCard.dataset.category.includes(filter)) ? 'grid' : 'none';
+          subCards.forEach(c => {
+            c.style.display = (c.dataset.category.includes(filter)) ? 'flex' : 'none';
+          });
+        }
+      });
+    });
+
+    /* 4. MODAL DATA & CONTROLS */
+    const modalData = {
+      hydro: {
+        title: "HYDROLOGICAL RESONANCE",
+        artist: "Kaelen Voss & Studio Arch/0",
+        category: "Site Installation / Sound",
+        img: "https://images.unsplash.com/photo-1509198397868-475647b2a1e5?auto=format&fit=crop&w=1200&q=80",
+        desc: "Constructed specifically for Turbine Hall A, this kinetic sound architecture connects 120 custom mouth-blown glass resonators to live oceanic pressure data measured via breakwater hydrophones. As ocean waves strike the shore 1.2km away, solenoid hammers translate the hydraulic force into crystalline standing acoustic waves within the cavernous industrial concrete space.",
+        specs: "LOCATION: Turbine Hall A | DURATION: 10:00 - 22:00 Daily | ACCESS: Included in all passes"
+      },
+      subm: {
+        title: "SUB-SURFACE MONOLOGUE",
+        artist: "Tanya Chen & Haruki Sato",
+        category: "Spatial Sound Diffusion",
+        img: "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&w=1200&q=80",
+        desc: "A pure ambisonic sound performance taking place in total darkness within the subterranean munitions vaults. Chen and Sato translate low-frequency microseismic telemetry and submarine communications into high-density tactile wavefields using a 64-channel loudspeaker perimeter.",
+        specs: "LOCATION: The Vaults Sub-B | DURATION: 80 Mins | CAPACITY: 80 Persons per session"
+      },
+      chroma: {
+        title: "CHROMATOPHORE DRIFT",
+        artist: "Lara Bo-Kirkegaard",
+        category: "Expanded 35mm Film",
+        img: "https://images.unsplash.com/photo-1485846234645-a62644f84728?auto=format&fit=crop&w=1200&q=80",
+        desc: "Shot on expired 35mm high-contrast film treated with sea salt and bioluminescent enzymes, Chromatophore Drift investigates oceanic shipping lanes at the brink of ecological tipping points. Dual modified 35mm optical projectors cast an ultra-wide image onto the glass wall of the Coastal Pavilion.",
+        specs: "LOCATION: Coastal Pavilion Glass Wing | DURATION: Continuous Loop | CURATED: Moving Image Dept"
+      },
+      kinetic: {
+        title: "KINETIC INSCRIPTIONS",
+        artist: "Ensemble Somatika",
+        category: "Somatic Performance",
+        img: "https://images.unsplash.com/photo-1508700115892-45ecd05ae2ad?auto=format&fit=crop&w=1200&q=80",
+        desc: "A live choreographic work exploring the resistance of human bodies subjected to environmental electromagnetic interference. Wearable EMG biometrical sensors directly drive the intensity of 12 carbon-arc searchlights stationed around the intertidal granite steps.",
+        specs: "LOCATION: Tide Square Arena | DURATION: Dusk Performance (19:00) | ACCESS: Open to Public"
+      }
+    };
+
+    function openModal(key) {
+      const data = modalData[key];
+      if (!data) return;
+
+      document.getElementById('modalTitle').innerText = data.title;
+      document.getElementById('modalArtist').innerText = data.artist;
+      document.getElementById('modalCategory').innerText = data.category;
+      document.getElementById('modalImg').src = data.img;
+      document.getElementById('modalDesc').innerText = data.desc;
+      document.getElementById('modalSpecs').innerText = data.specs;
+
+      document.getElementById('projectModal').classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeModal(e) {
+      document.getElementById('projectModal').classList.remove('open');
+      document.body.style.overflow = '';
+    }
+
+    // Close on Escape key
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeModal();
+    });
+
+    /* 5. GENERATIVE SPATIAL DEPTH CANVAS (Signals & Coastal Wave Interferometry) */
+    const canvas = document.getElementById('spatialCanvas');
+    const ctx = canvas.getContext('2d');
+    let width, height;
+    let particles = [];
+
+    function resizeCanvas() {
+      width = canvas.width = window.innerWidth;
+      height = canvas.height = window.innerHeight;
+      initParticles();
+    }
+
+    function initParticles() {
+      particles = [];
+      const count = Math.floor(width / 24);
+      for (let i = 0; i < count; i++) {
+        particles.push({
+          x: (i / count) * width,
+          baseY: height * 0.5,
+          speed: 0.008 + (i % 5) * 0.003,
+          amplitude: 40 + (i % 7) * 15,
+          phase: i * 0.2,
+          radius: (i % 3 === 0) ? 2 : 1.2
+        });
+      }
+    }
+
+    let time = 0;
+    function renderSpatialWave() {
+      ctx.clearRect(0, 0, width, height);
+
+      // Draw subtle interference grid
+      ctx.strokeStyle = 'rgba(255, 255, 255, 0.03)';
+      ctx.lineWidth = 1;
+      
+      const step = 60;
+      for (let x = 0; x < width; x += step) {
+        ctx.beginPath();
+        ctx.moveTo(x, 0);
+        ctx.lineTo(x, height);
+        ctx.stroke();
+      }
+
+      // Draw acoustic wave filaments
+      for (let layer = 0; layer < 3; layer++) {
+        ctx.beginPath();
+        ctx.strokeStyle = layer === 0 ? 'rgba(216, 249, 68, 0.35)' : 'rgba(255, 255, 255, 0.08)';
+        ctx.lineWidth = layer === 0 ? 1.5 : 1;
+
+        for (let i = 0; i < particles.length; i++) {
+          const p = particles[i];
+          const y = p.baseY + Math.sin(time * p.speed * 40 + p.phase + layer * 1.2) * (p.amplitude + layer * 25);
+          
+          if (i === 0) ctx.moveTo(p.x, y);
+          else ctx.lineTo(p.x, y);
+
+          // Draw small signal node dots
+          if (layer === 0 && i % 4 === 0) {
+            ctx.fillStyle = 'rgba(216, 249, 68, 0.6)';
+            ctx.fillRect(p.x - 1.5, y - 1.5, 3, 3);
+          }
+        }
+        ctx.stroke();
+      }
+
+      time += 0.02;
+      requestAnimationFrame(renderSpatialWave);
+    }
+
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
+    renderSpatialWave();
+
+    /* 6. HEADER AUTO-HIDE ON SCROLL */
+    let lastScroll = 0;
+    window.addEventListener('scroll', () => {
+      const currentScroll = window.pageYOffset;
+      const header = document.getElementById('siteHeader');
+      if (currentScroll > 150 && currentScroll > lastScroll) {
+        header.style.transform = 'translateY(-100%)';
+      } else {
+        header.style.transform = 'translateY(0)';
+      }
+      lastScroll = currentScroll;
+    });
+  </script>
+</body>
+</html>

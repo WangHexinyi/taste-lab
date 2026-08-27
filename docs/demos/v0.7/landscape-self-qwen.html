@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>在风景中辨认自己 · VOL.01 — 个人自然手记</title>
+<meta name="description" content="一本可以被浏览和沉浸阅读的个人数字影像刊物：山、森林、湖泊、海岸与夜空，以及七年里的手记与足迹。">
+<meta property="og:title" content="在风景中辨认自己 · VOL.01">
+<meta property="og:description" content="个人自然手记 — 数字影像刊物。Finding the Self in the Landscape.">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#EDEFEA">
+<script>document.documentElement.classList.add('js')</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Noto+Serif+SC:wght@400;500;600&family=Space+Grotesk:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#EDEFEA; --ink:#141B17; --ink2:#414D46; --fog:#C7CFC9; --line:#D5DBD5;
+  --pine:#2E4038; --night:#0C120F; --night-t:#D8E0DA; --accent:#A65A3A;
+  --serif:"Cormorant Garamond","Noto Serif SC",serif;
+  --sans:"Space Grotesk","Noto Serif SC",sans-serif;
+  --ease:cubic-bezier(.19,1,.22,1); --ease2:cubic-bezier(.22,.61,.21,1);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--paper);color:var(--ink);font-family:var(--serif);font-size:17px;line-height:1.95;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+::selection{background:var(--pine);color:var(--paper)}
+img{display:block;max-width:100%}
+figure{position:relative}
+a{color:inherit;text-decoration:none}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.wrap{width:min(1180px,92vw);margin:0 auto}
+.micro{font-family:var(--sans);font-size:11px;letter-spacing:.24em;text-transform:uppercase;color:var(--ink2)}
+.skip{position:absolute;left:-999px;top:0;background:var(--ink);color:var(--paper);padding:10px 16px;z-index:99}
+.skip:focus{left:12px;top:12px}
+/* 胶片颗粒 */
+.grain{position:fixed;inset:0;z-index:60;pointer-events:none;opacity:.05;
+  background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E")}
+/* 统一影像调性：轻微降饱和 + 冷色薄纱 */
+figure img{filter:saturate(.86) contrast(.98) brightness(.99)}
+figure::after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(180deg,rgba(214,226,222,.07),rgba(12,18,15,.06))}
+/* reveal 系统（仅在有 JS 时隐藏） */
+.js .rv{opacity:0;transform:translateY(26px);transition:opacity 1s var(--ease2),transform 1s var(--ease2)}
+.js .rv.in{opacity:1;transform:none}
+.js .mask{overflow:hidden}
+.js .mask .mask-in{display:inline-block;transform:translateY(112%);transition:transform 1.15s var(--ease)}
+.js .mask.in .mask-in{transform:none}
+/* 章节导航 */
+.chnav{position:fixed;right:22px;top:50%;transform:translateY(-50%);z-index:70;display:grid;gap:15px;mix-blend-mode:difference;color:#E8ECE8}
+.chnav a{display:flex;align-items:center;justify-content:flex-end;gap:9px}
+.chnav i{width:6px;height:6px;border-radius:50%;background:currentColor;opacity:.45;transition:transform .4s var(--ease2),opacity .4s}
+.chnav span{font-family:var(--sans);font-size:10px;letter-spacing:.2em;opacity:0;transform:translateX(6px);transition:.4s var(--ease2)}
+.chnav a:hover span,.chnav a.on span{opacity:.95;transform:none}
+.chnav a.on i{opacity:1;transform:scale(1.5)}
+/* ============ 封面 ============ */
+.cover{position:relative;height:100svh;min-height:620px;overflow:hidden}
+.cover-media{position:absolute;inset:0;overflow:hidden}
+.cover-media img{position:absolute;left:0;top:-8%;width:100%;height:116%;object-fit:cover}
+.cover-bar{position:absolute;top:0;left:0;right:0;display:flex;justify-content:space-between;padding:26px 4vw}
+.cover-title{position:absolute;right:5vw;top:9vh;writing-mode:vertical-rl;font-weight:500;font-size:clamp(42px,6.4vw,82px);letter-spacing:.14em;line-height:1.25;color:var(--ink)}
+.cover-en{position:absolute;right:calc(5vw + clamp(52px,7vw,92px));top:10vh;writing-mode:vertical-rl;color:var(--ink2)}
+.cover-scroll{position:absolute;left:4vw;bottom:30px;color:var(--paper);display:inline-flex;align-items:center;gap:12px}
+.cover-scroll .line{width:1px;height:44px;background:currentColor;display:inline-block;transform-origin:top;animation:cue 2.6s var(--ease2) infinite}
+@keyframes cue{0%{transform:scaleY(0)}55%{transform:scaleY(1)}100{transform:scaleY(1);opacity:0}}
+.js .cover-title{overflow:hidden}
+.js .cover-title .mask-in{transform:translateY(105%);transition:transform 1.4s var(--ease) .25s}
+.js body,.cover{transition:none}
+.js .cover-title.in .mask-in,.loaded .cover-title .mask-in{transform:none}
+.js .cover-bar,.js .cover-en,.js .cover-scroll{opacity:0;transition:opacity 1.2s ease .9s}
+.loaded .cover-bar,.loaded .cover-en,.loaded .cover-scroll{opacity:1}
+/* ============ 序 ============ */
+#preface{padding:clamp(90px,13vh,150px) 0 clamp(80px,11vh,130px)}
+.preface-grid{display:grid;grid-template-columns:7fr 5fr;gap:6vw;align-items:start}
+.preface-grid h2{font-size:clamp(30px,3.6vw,50px);line-height:1.5;font-weight:500;margin-top:22px}
+.preface-grid .body p{margin-bottom:1.4em;color:var(--ink2)}
+.preface-grid .body p:first-of-type::first-letter{font-size:2.2em;line-height:1;float:left;margin:6px 10px 0 0;color:var(--ink)}
+.preface-fig{margin-top:34px;max-width:420px}
+.preface-fig img{width:100%;aspect-ratio:4/3;object-fit:cover}
+figcaption{font-family:var(--sans);font-size:11px;letter-spacing:.14em;color:var(--ink2);margin-top:10px}
+/* ============ 章节公共 ============ */
+.ch{padding:clamp(70px,10vh,120px) 0}
+.ch-head{display:flex;align-items:baseline;gap:26px;margin-bottom:clamp(36px,6vh,64px)}
+.ch-head h2{font-size:clamp(56px,8vw,110px);line-height:1;font-weight:500}
+.ch-no{font-family:var(--serif);font-style:italic;font-size:clamp(20px,2.2vw,28px);color:var(--accent)}
+.full{overflow:hidden;height:min(88vh,820px)}
+.full img{position:absolute;left:0;top:-8%;width:100%;height:116%;object-fit:cover}
+.full figcaption{position:absolute;left:4vw;bottom:22px;color:var(--paper);z-index:2;margin:0}
+/* CH01 山 */
+.mtn-row{display:grid;grid-template-columns:4fr 7fr;gap:5vw;margin-top:clamp(48px,8vh,90px);align-items:start}
+.mtn-row .vert img{width:100%;aspect-ratio:3/4;object-fit:cover}
+.pull{font-size:clamp(24px,2.8vw,38px);line-height:1.7;font-weight:500;margin:0 0 1.2em}
+.mtn-text p{color:var(--ink2);max-width:34em}
+/* CH02 森林：sticky 双栏 */
+.forest-grid{display:grid;grid-template-columns:5fr 6fr;gap:6vw}
+.f-sticky{position:sticky;top:12vh;align-self:start}
+.f-sticky h2{font-size:clamp(56px,7vw,96px);font-weight:500;line-height:1.1;margin:14px 0 26px}
+.f-sticky p{color:var(--ink2);max-width:26em}
+.f-quote{font-style:italic;font-size:clamp(20px,2vw,26px);color:var(--pine);margin:26px 0}
+.f-sticky figure{margin-top:38px;max-width:300px}
+.f-sticky img{aspect-ratio:1;object-fit:cover;width:100%}
+.f-col{display:grid;gap:9vh}
+.f-col figure:nth-child(1) img{aspect-ratio:3/4.4;object-fit:cover;width:100%}
+.f-col figure:nth-child(3){width:78%;justify-self:end}
+.f-col figure:nth-child(3) img{aspect-ratio:3/4;object-fit:cover;width:100%}
+.f-col figure:nth-child(5){width:86%}
+.f-col figure:nth-child(5) img{aspect-ratio:4/3;object-fit:cover;width:100%}
+.f-inter{font-size:clamp(20px,2vw,27px);line-height:1.8;font-weight:500;max-width:20em}
+/* CH03 湖 */
+.lake-wide img{width:100%;aspect-ratio:21/10;object-fit:cover}
+.lake-row{display:grid;grid-template-columns:6fr 5fr;gap:5vw;margin-top:clamp(44px,7vh,80px);align-items:start}
+.lake-text .pull{margin-top:.4em}
+.lake-detail{margin-top:clamp(30px,6vh,70px)}
+.lake-detail img{aspect-ratio:1;object-fit:cover;width:100%}
+/* CH04 海岸 */
+.coast-overlay{position:absolute;right:0;bottom:0;background:var(--paper);padding:clamp(24px,4vw,48px);max-width:460px;z-index:2}
+.coast-overlay p{color:var(--ink2)}
+.coast-row{display:grid;grid-template-columns:5fr 7fr;gap:5vw;margin-top:clamp(48px,8vh,90px)}
+.coast-vert img{aspect-ratio:3/4;object-fit:cover;width:100%}
+/* CH05 夜 */
+#ch-night{background:var(--night);color:var(--night-t)}
+#ch-night .micro{color:#8FA096}
+#ch-night .ch-no{color:#C98A6B}
+.night-fig{overflow:hidden;height:min(80vh,720px)}
+.night-fig img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;animation:kb 30s var(--ease2) infinite alternate}
+@keyframes kb{from{transform:scale(1)}to{transform:scale(1.07)}}
+.night-line{font-size:clamp(22px,2.6vw,34px);font-weight:500;max-width:22em;margin-bottom:clamp(36px,6vh,60px)}
+#ch-night figcaption{color:#8FA096}
+/* 手记 */
+#notes{padding:clamp(80px,12vh,140px) 0}
+.notes-head{display:flex;justify-content:space-between;align-items:flex-end;gap:40px;margin-bottom:44px}
+.notes-head h2{font-size:clamp(40px,5vw,68px);font-weight:500;line-height:1.2}
+.notes-thumb{width:200px;flex:none}
+.notes-thumb img{aspect-ratio:4/3;object-fit:cover;width:100%}
+ul.notes{list-style:none}
+ul.notes li{display:grid;grid-template-columns:76px 170px 1fr;gap:20px;align-items:baseline;padding:20px 0;border-top:1px solid var(--line)}
+ul.notes li:last-child{border-bottom:1px solid var(--line)}
+.n-date{font-family:var(--sans);font-size:12px;letter-spacing:.18em;color:var(--ink2);position:relative;padding-left:16px}
+.n-date::before{content:"";position:absolute;left:0;top:.5em;width:6px;height:6px;background:var(--accent);opacity:0;transform:scale(.4);transition:.35s var(--ease2)}
+ul.notes li:hover .n-date::before{opacity:1;transform:scale(1)}
+.n-place{font-weight:500}
+.n-text{color:var(--ink2);transition:transform .5s var(--ease2),color .5s}
+ul.notes li:hover .n-text{transform:translateX(6px);color:var(--ink)}
+/* 足迹 */
+#path{padding:0 0 clamp(90px,12vh,140px)}
+.tl{list-style:none;position:relative;margin-top:50px;padding-left:34px;max-width:640px}
+.tl::before{content:"";position:absolute;left:6px;top:4px;bottom:4px;width:1px;background:var(--line)}
+.tl-prog{position:absolute;left:6px;top:4px;bottom:4px;width:1px;background:var(--accent);transform:scaleY(0);transform-origin:top}
+.tl li{position:relative;padding-bottom:46px}
+.tl li::before{content:"";position:absolute;left:-31px;top:12px;width:7px;height:7px;border-radius:50%;background:var(--paper);border:1px solid var(--ink2)}
+.tl-year{font-family:var(--serif);font-style:italic;font-size:26px;color:var(--accent);display:block;margin-bottom:2px}
+.tl h3{font-size:20px;font-weight:500}
+.tl .micro{display:block;margin-top:4px}
+/* 关于 */
+#self{padding:clamp(80px,11vh,130px) 0;border-top:1px solid var(--line)}
+.self-grid{display:grid;grid-template-columns:5fr 6fr;gap:6vw;align-items:start}
+.self-grid figure img{aspect-ratio:3/4;object-fit:cover;width:100%}
+.self-grid h2{font-size:clamp(40px,5vw,64px);font-weight:500;margin:12px 0 26px}
+.self-grid .txt p{color:var(--ink2);margin-bottom:1.3em;max-width:32em}
+.pref-lists{display:grid;grid-template-columns:1fr 1fr;gap:32px;margin:34px 0;border-top:1px solid var(--line);padding-top:26px}
+.pref-lists h4{font-family:var(--sans);font-size:11px;letter-spacing:.24em;color:var(--ink2);margin-bottom:12px}
+.pref-lists ul{list-style:none}
+.pref-lists li{padding:5px 0;color:var(--ink)}
+.sig{font-style:italic;font-size:20px;color:var(--pine)}
+/* 页尾 */
+footer{background:var(--night);color:var(--night-t);padding:clamp(90px,13vh,150px) 0 46px}
+.end-mark{font-size:clamp(90px,14vw,190px);line-height:1;font-weight:500}
+.end-sub{margin:18px 0 44px;color:#8FA096}
+.end-toc{display:flex;flex-wrap:wrap;gap:14px 30px;margin-bottom:64px}
+.end-toc a{font-family:var(--sans);font-size:11px;letter-spacing:.22em;color:var(--night-t);border-bottom:1px solid transparent;padding-bottom:3px;transition:.35s}
+.end-toc a:hover{border-color:var(--accent);color:#fff}
+.colo{display:grid;grid-template-columns:repeat(3,1fr);gap:40px;border-top:1px solid #24312A;padding-top:34px;color:#8FA096;font-size:14px;line-height:1.9}
+.colo h5{font-family:var(--sans);font-size:10px;letter-spacing:.26em;margin-bottom:10px;color:#6E7F75}
+.top{margin-top:52px;background:none;border:1px solid #3A4A41;color:var(--night-t);font-family:var(--sans);font-size:11px;letter-spacing:.24em;padding:13px 26px;cursor:pointer;transition:.4s var(--ease2)}
+.top:hover{border-color:var(--accent);color:#fff}
+/* ============ 移动端重构 ============ */
+@media (max-width:900px){
+  .chnav{display:none}
+  .cover-title{right:6vw;font-size:clamp(34px,9vw,56px)}
+  .cover-en{display:none}
+  .preface-grid,.mtn-row,.forest-grid,.lake-row,.coast-row,.self-grid{grid-template-columns:1fr}
+  .f-sticky{position:static}
+  .f-col figure:nth-child(3),.f-col figure:nth-child(5){width:100%}
+  .full{height:64vh}
+  .coast-overlay{position:static;max-width:none;margin-top:-1px}
+  ul.notes li{grid-template-columns:70px 1fr;grid-template-rows:auto auto}
+  .n-text{grid-column:1/-1}
+  .notes-head{flex-direction:column;align-items:flex-start}
+  .colo{grid-template-columns:1fr}
+  .lake-detail{margin-top:0}
+}
+/* ============ 减少动态 ============ */
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{animation:none!important;transition:none!important}
+  .js .rv,.js .mask .mask-in,.js .cover-title .mask-in{opacity:1!important;transform:none!important}
+  .js .cover-bar,.js .cover-en,.js .cover-scroll{opacity:1!important}
+}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">跳到正文</a>
+<div class="grain" aria-hidden="true"></div>
+
+<nav class="chnav" aria-label="章节导航">
+  <a href="#preface"><span>序</span><i></i></a>
+  <a href="#ch-mountain"><span>山</span><i></i></a>
+  <a href="#ch-forest"><span>林</span><i></i></a>
+  <a href="#ch-lake"><span>湖</span><i></i></a>
+  <a href="#ch-coast"><span>岸</span><i></i></a>
+  <a href="#ch-night"><span>夜</span><i></i></a>
+  <a href="#notes"><span>记</span><i></i></a>
+  <a href="#path"><span>迹</span><i></i></a>
+  <a href="#self"><span>我</span><i></i></a>
+</nav>
+
+<header class="cover" id="cover">
+  <div class="cover-media"><img src="https://image.qwenlm.ai/public_source/12c412bc-f175-43ed-9a29-b523c94b8266/16f654f18-f0ef-46ec-8eb0-1fa55d388c2a7596.png" alt="层叠的山脊在晨雾中由深至浅地退向远方" data-plx="0.12" fetchpriority="high"></div>
+  <div class="cover-bar">
+    <span class="micro">个人自然手记 · A Personal Field Journal</span>
+    <span class="micro">VOL.01 — 2019–2026</span>
+  </div>
+  <h1 class="cover-title mask"><span class="mask-in">在风景中辨认自己</span></h1>
+  <p class="cover-en micro">Finding the Self in the Landscape</p>
+  <a class="cover-scroll micro" href="#preface">向下，慢慢<span class="line" aria-hidden="true"></span></a>
+</header>
+
+<main id="main">
+
+<!-- 序 -->
+<section id="preface">
+  <div class="wrap preface-grid">
+    <div>
+      <p class="micro rv">序 · Preface</p>
+      <h2 class="mask"><span class="mask-in">我不收集风景，</span></h2>
+      <h2 class="mask"><span class="mask-in">我收集安静下来的时刻。</span></h2>
+    </div>
+    <div class="body">
+      <p class="rv">过去七年，我带着相机和一本越来越厚的笔记，走过一些山、一些湖、一些没有名字的雾。这里不是作品集，更像一本摊开的手记——图像是证据，文字是体温。</p>
+      <p class="rv">你不必读完。像翻一本纸刊一样，停在任何一页。</p>
+      <figure class="preface-fig rv">
+        <img loading="lazy" src="https://image.qwenlm.ai/public_source/12c412bc-f175-43ed-9a29-b523c94b8266/66f654f18-f0ef-46ec-8eb0-1fa55d388c2a9499.png" alt="摊开在木柴堆上的手写手记本">
+        <figcaption>手记本 · 第七年</figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<!-- 01 山 -->
+<section class="ch" id="ch-mountain">
+  <div class="wrap ch-head">
+    <p class="micro rv">Chapter 01 · Mountains</p>
+    <h2 class="mask"><span class="mask-in">山</span></h2>
+    <span class="ch-no rv">№ 01</span>
+  </div>
+  <figure class="full">
+    <img loading="lazy" data-plx="0.14" src="https://image.qwenlm.ai/public_source/12c412bc-f175-43ed-9a29-b523c94b8266/06f654f18-f0ef-46ec-8eb0-1fa55d388c2a6786.png" alt="一个人站在云海之上的山脊尽头">
+    <figcaption>图 01·01 — 脊线以上，声音消失</figcaption>
+  </figure>
+  <div class="wrap mtn-row">
+    <figure class="vert rv">
+      <img loading="lazy" src="https://image.qwenlm.ai/public_source/12c412bc-f175-43ed-9a29-b523c94b8266/56f654f18-f0ef-46ec-8eb0-1fa55d388c2a1673.png" alt="碎石山脊向上延伸，没入浓雾">
+      <figcaption>图 01·02 — 雾把路收走了</figcaption>
+    </figure>
+    <div class="mtn-text">
+      <p class="pull rv">山把我缩小，也把我放平。</p>
+      <p class="rv">海拔升高以后，声音会变少。少到能听见自己的脚步，像遇见一个久违的人。山不欢迎我，也不拒绝我——这恰好是我需要的距离。</p>
+    </div>
+  </div>
+</section>
+
+<!-- 02 森林 -->
+<section class="ch" id="ch-forest">
+  <div class="wrap forest-grid">
+    <div class="f-sticky">
+      <p class="micro rv">Chapter 02 · Forest</p>
+      <h2 class="mask"><span class="mask-in">森林</span></h2>
+      <p class="rv">雾进森林的时候，树会一棵一棵退出世界，最后只剩下眼前这一棵。我在这样的地方走得最慢，也想得最少。</p>
+      <p class="f-quote rv">「雾不是遮挡，是减法。」</p>
+      <figure class="rv">
+        <img loading="lazy" src="https://image.qwenlm.ai/public_source/12c412bc-f175-43ed-9a29-b523c94b8266/06f654f18-f0ef-46ec-8eb0-1fa55d388c2a6714.png" alt="倒木上的苔藓与星状小苗">
+        <figcaption>图 02·04 — 苔的速度</figcaption>
+      </figure>
+    </div>
+    <div class="f-col">
+      <figure class="rv">
+        <img loading="lazy" src="https://image.qwenlm.ai/public_source/12c412bc-f175-43ed-9a29-b523c94b8266/36f654f18-f0ef-46ec-8eb0-1fa55d388c2a4838.png" alt="雾中由深到浅的松树轮廓">
+        <figcaption>图 02·01 — 退场的顺序</figcaption>
+      </figure>
+      <p class="f-inter rv">树影先淡，树声后淡，<br>最后淡掉的是我自己的名字。</p>
+      <figure class="rv">
+        <img loading="lazy" src="https://image.qwenlm.ai/public_source/12c412bc-f175-43ed-9a29-b523c94b8266/16f654f18-f0ef-46ec-8eb0-1fa55d388c2a6402.png" alt="笔直的云杉树干立在雾与草地之间">
+        <figcaption>图 02·02 — 林间低语</figcaption>
+      </figure>
+      <figure class="rv">
+        <img loading="lazy" src="https://image.qwenlm.ai/public_source/12c412bc-f175-43ed-9a29-b523c94b8266/56f654f18-f0ef-46ec-8eb0-1fa55d388c2a1814.png" alt="一条小径穿过幽暗的森林，光落在深处">
+        <figcaption>图 02·03 — 光落在深处</figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<!-- 03 湖 -->
+<section class="ch" id="ch-lake">
+  <div class="wrap ch-head">
+    <p class="micro rv">Chapter 03 · Lakes</p>
+    <h2 class="mask"><span class="mask-in">湖</span></h2>
+    <span class="ch-no rv">№ 03</span>
+  </div>
+  <div class="wrap">
+    <figure class="lake-wide rv">
+      <img loading="lazy" src="https://image.qwenlm.ai/public_source/12c412bc-f175-43ed-9a29-b523c94b8266/06f654f18-f0ef-46ec-8eb0-1fa55d388c2a1583.png" alt="薄雾贴着湖面，岩石与冷杉倒映在静水中">
+      <figcaption>图 03·01 — 湖替天空呼吸</figcaption>
+    </figure>
+    <div class="lake-row">
+      <div class="lake-text">
+        <p class="pull rv">风停的清晨，<br>水面把天空接住。</p>
+        <p class="rv">我蹲在岸边看碎石下的水纹，一圈，又一圈，像时间在做深呼吸。湖是山的回声，也是我的。</p>
+      </div>
+      <figure class="lake-detail rv">
+        <img loading="lazy" src="https://image.qwenlm.ai/public_source/12c412bc-f175-43ed-9a29-b523c94b8266/06f654f18-f0ef-46ec-8eb0-1fa55d388c2a2507.png" alt="清澈浅水下圆润的卵石，被光线折射出纹理">
+        <figcaption>图 03·02 — 一圈，又一圈</figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<!-- 04 海岸 -->
+<section class="ch" id="ch-coast">
+  <div class="wrap ch-head">
+    <p class="micro rv">Chapter 04 · Coast</p>
+    <h2 class="mask"><span class="mask-in">岸</span></h2>
+    <span class="ch-no rv">№ 04</span>
+  </div>
+  <figure class="full" data-clip>
+    <img loading="lazy" src="https://image.qwenlm.ai/public_source/12c412bc-f175-43ed-9a29-b523c94b8266/46f654f18-f0ef-46ec-8eb0-1fa55d388c2a5981.png" alt="黑沙滩上，浪退成镜面，远处是玄武岩柱与海蚀柱">
+    <div class="coast-overlay">
+      <p class="rv">海岸教我看慢。长曝光把浪变成雾，把礁石变成唯一确定的东西。我站在风里，等一次退潮，也等自己冷静。</p>
+    </div>
+    <figcaption style="left:auto;right:4vw">图 04·01 — 退潮以前</figcaption>
+  </figure>
+  <div class="wrap coast-row">
+    <figure class="coast-vert rv">
+      <img loading="lazy" src="https://image.qwenlm.ai/public_source/12c412bc-f175-43ed-9a29-b523c94b8266/66f654f18-f0ef-46ec-8eb0-1fa55d388c2a9491.png" alt="巨浪在柱状玄武岩崖壁上炸开">
+      <figcaption>图 04·02 — 玄武岩与浪</figcaption>
+    </figure>
+    <div class="mtn-text">
+      <p class="pull rv">浪重复一万次，<br>没有一次是重复。</p>
+      <p class="rv">那天雨夹着风，崖壁黑得像一句没说完的话。我按了两次快门，然后把手放下，看了很久。</p>
+    </div>
+  </div>
+</section>
+
+<!-- 05 夜空 -->
+<section class="ch" id="ch-night">
+  <div class="wrap">
+    <div class="ch-head">
+      <p class="micro rv">Chapter 05 · Night</p>
+      <h2 class="mask"><span class="mask-in">夜空</span></h2>
+      <span class="ch-no rv">№ 05</span>
+    </div>
+    <p class="night-line rv">黑暗不是空，是满。眼睛用十分钟适应，然后世界重新有了层次。</p>
+  </div>
+  <figure class="night-fig">
+    <img loading="lazy" src="https://image.qwenlm.ai/public_source/12c412bc-f175-43ed-9a29-b523c94b8266/46f654f18-f0ef-46ec-8eb0-1fa55d388c2a4665.png" alt="银河垂落在山脊之上，谷底一顶帐篷亮着微光">
+  </figure>
+  <div class="wrap"><figcaption style="margin-top:14px">图 05·01 — 那一晚帐篷的灯，是整片黑里唯一的人间</figcaption></div>
+</section>
+
+<!-- 手记 -->
+<section id="notes">
+  <div class="wrap">
+    <div class="notes-head">
+      <div>
+        <p class="micro rv">Field Notes · 手记选</p>
+        <h2 class="mask"><span class="mask-in">等光的时候，写下的。</span></h2>
+      </div>
+      <figure class="notes-thumb rv">
+        <img loading="lazy" src="https://image.qwenlm.ai/public_source/12c412bc-f175-43ed-9a29-b523c94b8266/26f654f18-f0ef-46ec-8eb0-1fa55d388c2a4280.png" alt="浅滩上细密的水纹">
+        <figcaption>手记边页 · 水纹</figcaption>
+      </figure>
+    </div>
+    <ul class="notes">
+      <li class="rv"><span class="n-date">03·14</span><span class="n-place">德钦 · 云南</span><p class="n-text">雾在七点散开，雪山只露出四分钟。</p></li>
+      <li class="rv"><span class="n-date">10·02</span><span class="n-place">阿尔山 · 内蒙古</span><p class="n-text">落叶松黄得克制，像一件旧毛衣。</p></li>
+      <li class="rv"><span class="n-date">07·19</span><span class="n-place">青海湖 · 青海</span><p class="n-text">风把云压得很低，湖替天空呼吸。</p></li>
+      <li class="rv"><span class="n-date">01·27</span><span class="n-place">长白山 · 吉林</span><p class="n-text">零下二十六度，睫毛结冰，世界只剩黑白。</p></li>
+      <li class="rv"><span class="n-date">05·06</span><span class="n-place">莫干山 · 浙江</span><p class="n-text">雨后的竹林，有一种绿色的回声。</p></li>
+    </ul>
+  </div>
+</section>
+
+<!-- 足迹 -->
+<section id="path">
+  <div class="wrap">
+    <p class="micro rv">Path · 足迹 2019–2026</p>
+    <ol class="tl">
+      <span class="tl-prog" aria-hidden="true"></span>
+      <li class="rv"><span class="tl-year">2019</span><h3>第一次把相机带上山</h3><span class="micro">武功山 · 江西</span></li>
+      <li class="rv"><span class="tl-year">2020</span><h3>学会等</h3><span class="micro">青海湖 · 青海</span></li>
+      <li class="rv"><span class="tl-year">2021</span><h3>雾的年份</h3><span class="micro">莫干山 · 浙江</span></li>
+      <li class="rv"><span class="tl-year">2022</span><h3>开始写手记</h3><span class="micro">阿尔山 · 内蒙古</span></li>
+      <li class="rv"><span class="tl-year">2023</span><h3>一个人看海</h3><span class="micro">南岸 · 冰岛</span></li>
+      <li class="rv"><span class="tl-year">2024</span><h3>零下二十六度</h3><span class="micro">长白山 · 吉林</span></li>
+      <li class="rv"><span class="tl-year">2026</span><h3>把七年整理成这本刊物</h3><span class="micro">家中书桌</span></li>
+    </ol>
+  </div>
+</section>
+
+<!-- 关于 -->
+<section id="self">
+  <div class="wrap self-grid">
+    <figure class="rv">
+      <img loading="lazy" src="https://image.qwenlm.ai/public_source/12c412bc-f175-43ed-9a29-b523c94b8266/26f654f18-f0ef-46ec-8eb0-1fa55d388c2a4336.png" alt="一个穿深色外套的人背对镜头，望向雾中的海崖">
+      <figcaption>我 · 通常背对镜头</figcaption>
+    </figure>
+    <div class="txt">
+      <p class="micro rv">About · 关于我</p>
+      <h2 class="mask"><span class="mask-in">我是屿。</span></h2>
+      <p class="rv">白天做设计，清晨和假期在山里。拍照七年，写手记四年，这本刊物是它们的合订本。</p>
+      <p class="rv">我不把自然当背景。它是主语，我是路过的那个词。</p>
+      <div class="pref-lists rv">
+        <div>
+          <h4>我偏爱</h4>
+          <ul><li>雾、逆光、低饱和</li><li>留白与等出来的光</li><li>慢快门里的水</li><li>背影，而非笑脸</li></ul>
+        </div>
+        <div>
+          <h4>我回避</h4>
+          <ul><li>浓艳的滤镜</li><li>打卡式构图</li><li>形容词堆叠</li><li>任何「必去」</li></ul>
+        </div>
+      </div>
+      <p class="rv">拍摄方式：多数时候固定机位，等光。一张照片平均等四十分钟；手记写在等待里。</p>
+      <p class="sig rv">—— 屿</p>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer id="end">
+  <div class="wrap">
+    <p class="end-mark mask"><span class="mask-in">完</span></p>
+    <p class="end-sub micro">End of VOL.01 — 谢谢你慢慢读到这里</p>
+    <nav class="end-toc" aria-label="目录回顾">
+      <a href="#preface">序</a><a href="#ch-mountain">01 山</a><a href="#ch-forest">02 森林</a><a href="#ch-lake">03 湖</a><a href="#ch-coast">04 岸</a><a href="#ch-night">05 夜空</a><a href="#notes">手记</a><a href="#path">足迹</a><a href="#self">关于</a>
+    </nav>
+    <div class="colo">
+      <div><h5>关于本站</h5>个人概念刊物，非商业。文字为原创演示内容，影像为网络搜集的风光摄影，仅用于审美样张。</div>
+      <div><h5>字体</h5>Cormorant Garamond · Noto Serif SC · Space Grotesk</div>
+      <div><h5>动效</h5>全站动效遵循系统「减少动态效果」设置；无 JS 时内容完整可读。</div>
+    </div>
+    <button class="top" type="button">回到封面 ↑</button>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var d=document;
+  var reduced=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  window.addEventListener('load',function(){d.body.classList.add('loaded')});
+  setTimeout(function(){d.body.classList.add('loaded')},1200); /* 兜底 */
+
+  /* reveal */
+  var revEls=d.querySelectorAll('.rv,.mask');
+  if(reduced||!('IntersectionObserver' in window)){
+    revEls.forEach(function(el){el.classList.add('in')});
+  }else{
+    var io=new IntersectionObserver(function(es){
+      es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}});
+    },{threshold:.15,rootMargin:'0px 0px -6% 0px'});
+    revEls.forEach(function(el){io.observe(el)});
+  }
+
+  /* 滚动引擎：视差 / 裁切揭示 / 时间线 */
+  var plx=[].slice.call(d.querySelectorAll('[data-plx]'));
+  var clips=[].slice.call(d.querySelectorAll('[data-clip]'));
+  var tl=d.querySelector('.tl'),tlProg=d.querySelector('.tl-prog');
+  var ticking=false;
+  function clamp01(v){return Math.max(0,Math.min(1,v))}
+  function upd(){
+    ticking=false;var vh=window.innerHeight,i,el,r,c,s,max;
+    for(i=0;i<plx.length;i++){el=plx[i];r=el.parentElement.getBoundingClientRect();
+      if(r.bottom<-100||r.top>vh+100)continue;
+      c=r.top+r.height/2-vh/2;s=parseFloat(el.getAttribute('data-plx'));max=r.height*0.07;
+      c=Math.max(-max,Math.min(max,-c*s));
+      el.style.transform='translate3d(0,'+c.toFixed(1)+'px,0)';}
+    for(i=0;i<clips.length;i++){el=clips[i];r=el.getBoundingClientRect();
+      var p=clamp01((vh-r.top)/(vh*0.85)),ins=(14*(1-p)).toFixed(2);
+      el.style.clipPath='inset('+ins+'% '+(ins*0.66).toFixed(2)+'% '+ins+'% '+(ins*0.66).toFixed(2)+'%)';}
+    if(tl&&tlProg){r=tl.getBoundingClientRect();
+      tlProg.style.transform='scaleY('+clamp01((vh*0.72-r.top)/r.height).toFixed(3)+')';}
+  }
+  function onScroll(){if(!ticking){ticking=true;requestAnimationFrame(upd)}}
+  if(!reduced){
+    window.addEventListener('scroll',onScroll,{passive:true});
+    window.addEventListener('resize',onScroll);
+    onScroll();
+  }else{
+    clips.forEach(function(el){el.style.clipPath='none'});
+    if(tlProg)tlProg.style.transform='scaleY(1)';
+  }
+
+  /* 章节导航高亮 */
+  var links=[].slice.call(d.querySelectorAll('.chnav a'));
+  if('IntersectionObserver' in window){
+    var so=new IntersectionObserver(function(es){
+      es.forEach(function(e){
+        if(e.isIntersecting){
+          links.forEach(function(a){a.classList.toggle('on',a.getAttribute('href')==='#'+e.target.id)});
+        }
+      });
+    },{rootMargin:'-45% 0px -45% 0px'});
+    links.forEach(function(a){var s=d.querySelector(a.getAttribute('href'));if(s)so.observe(s)});
+  }
+
+  /* 回到封面 */
+  var tb=d.querySelector('.top');
+  if(tb)tb.addEventListener('click',function(){window.scrollTo({top:0,behavior:reduced?'auto':'smooth'})});
+})();
+</script>
+</body>
+</html>

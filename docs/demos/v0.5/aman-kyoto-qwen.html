@@ -1,0 +1,854 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="referrer" content="no-referrer">
+<title>安缦京都 Aman Kyoto · 北山秘谷的秘密庭园</title>
+<meta name="description" content="Aman Kyoto 独立设计原型：隐于京都鹰峰的秘密庭园。住宿、餐饮、温泉与预订体验。">
+<link rel="preload" as="image" fetchpriority="high" href="https://image.qwenlm.ai/public_source/a922b568-d16f-4b15-80a8-5f336f70edde/66a8b8be0-fa74-4a43-a4ba-de53196f81c17098.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;500;600&family=Noto+Serif+SC:wght@500;600;700&family=Noto+Sans+SC:wght@300;400;500&display=swap" rel="stylesheet">
+<script>document.documentElement.classList.add('js');</script>
+<style>
+/* ============ TOKENS ============ */
+:root{
+  --ink:#0f120d; --ink2:#151a13; --ink3:#1c221a;
+  --paper:#edeee6; --paper2:#e3e5da;
+  --tx-d:#20241d; --tx-d-mut:#5d6156;
+  --tx-l:#e9eae1; --tx-l-mut:#9aa091;
+  --moss:#5f7052; --moss-d:#3a4531;
+  --lantern:#d6a058; --rust:#a2542f;
+  --line-d:rgba(20,24,17,.16); --line-l:rgba(233,234,225,.16);
+  --disp:'Shippori Mincho','Noto Serif SC',serif;
+  --body:'Noto Sans SC',-apple-system,sans-serif;
+  --ease:cubic-bezier(.22,.61,.21,1);
+  --gut:clamp(20px,4.5vw,72px);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:var(--body);font-weight:300;background:var(--ink);color:var(--tx-l);
+  font-size:15px;line-height:1.9;letter-spacing:.02em;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+img{display:block;width:100%;height:100%;object-fit:cover}
+img.img-fail{opacity:0}
+figure{overflow:hidden;position:relative;background:var(--ink3)}
+figure::after{content:"";position:absolute;inset:0;box-shadow:inset 0 0 0 1px var(--line-l);pointer-events:none}
+a{color:inherit;text-decoration:none}
+button{font-family:var(--body);cursor:pointer;background:none;border:none;color:inherit}
+::selection{background:var(--moss);color:var(--paper)}
+section{scroll-margin-top:72px;position:relative}
+.wrap{padding-left:var(--gut);padding-right:var(--gut);max-width:1560px;margin:0 auto}
+
+/* type */
+.disp{font-family:var(--disp);font-weight:500;line-height:1.28;letter-spacing:.04em}
+.ovl{font-size:11px;letter-spacing:.42em;text-transform:uppercase;font-weight:400}
+.kanji{font-family:var(--disp)}
+.num{font-variant-numeric:tabular-nums}
+
+/* reveal system (only when JS) */
+.js [data-rv]{opacity:0;transform:translateY(28px);transition:opacity 1s var(--ease),transform 1s var(--ease);transition-delay:var(--d,0s)}
+.js [data-rv].rv-in{opacity:1;transform:none}
+.lm{display:block;overflow:hidden}
+.js .lm-i{display:block;transform:translateY(112%);transition:transform 1.1s var(--ease);transition-delay:var(--d,0s)}
+.js .rv-in .lm-i,.js .lm.rv-in .lm-i{transform:none}
+
+/* ============ RAIL (chapter path) ============ */
+.rail{position:fixed;left:26px;top:50%;transform:translateY(-50%);z-index:60;display:flex;flex-direction:column;gap:20px}
+.rail::before{content:"";position:absolute;left:4px;top:-34px;bottom:-34px;width:1px;background:var(--line-l);transition:background .4s}
+.rail button{position:relative;width:9px;height:9px;padding:0;display:block}
+.rail button i{position:absolute;inset:0;border-radius:50%;border:1px solid var(--tx-l-mut);background:transparent;transition:all .45s var(--ease)}
+.rail button span{position:absolute;left:20px;top:50%;transform:translateY(-50%);font-size:10px;letter-spacing:.3em;white-space:nowrap;color:var(--tx-l-mut);opacity:0;transition:opacity .3s}
+.rail button:hover span{opacity:1}
+.rail button.on i{background:var(--lantern);border-color:var(--lantern);transform:scale(1.25)}
+.rail button.on span{opacity:1;color:var(--tx-l)}
+.rail.dark-mode::before{background:var(--line-d)}
+.rail.dark-mode button i{border-color:var(--tx-d-mut)}
+.rail.dark-mode button.on i{background:var(--rust);border-color:var(--rust)}
+.rail.dark-mode button span{color:var(--tx-d-mut)}
+.rail.dark-mode button.on span{color:var(--tx-d)}
+@media(max-width:1080px){.rail{display:none}}
+
+/* ============ HEADER ============ */
+.site-head{position:fixed;inset:0 0 auto 0;z-index:70;display:flex;align-items:center;justify-content:space-between;
+  padding:0 var(--gut);height:72px;transition:background .5s var(--ease),box-shadow .5s}
+.site-head.scrolled{background:rgba(15,18,13,.92);backdrop-filter:blur(8px);box-shadow:0 1px 0 var(--line-l)}
+.brand{display:flex;align-items:baseline;gap:14px}
+.brand .en{font-family:var(--disp);font-size:17px;letter-spacing:.34em}
+.brand .zh{font-family:var(--disp);font-size:13px;letter-spacing:.5em;color:var(--tx-l-mut)}
+.site-nav{display:flex;gap:clamp(14px,2.2vw,34px);align-items:center}
+.site-nav a{font-size:12px;letter-spacing:.28em;position:relative;padding:6px 0;color:var(--tx-l-mut);transition:color .3s}
+.site-nav a::after{content:"";position:absolute;left:0;bottom:0;height:1px;width:100%;background:var(--lantern);transform:scaleX(0);transform-origin:right;transition:transform .45s var(--ease)}
+.site-nav a:hover{color:var(--tx-l)}
+.site-nav a:hover::after{transform:scaleX(1);transform-origin:left}
+.btn{display:inline-flex;align-items:center;gap:12px;padding:13px 26px;border:1px solid var(--line-l);
+  font-size:12px;letter-spacing:.32em;transition:all .4s var(--ease);position:relative}
+.btn:hover{background:var(--paper);color:var(--ink);border-color:var(--paper)}
+.btn.solid{background:var(--paper);color:var(--ink);border-color:var(--paper)}
+.btn.solid:hover{background:var(--lantern);border-color:var(--lantern)}
+.btn.dark-line{border-color:var(--line-d);color:var(--tx-d)}
+.btn.dark-line:hover{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+@media(max-width:900px){.site-nav a{display:none}.site-nav .btn{display:inline-flex}}
+
+/* ============ HERO ============ */
+.hero{min-height:100svh;display:flex;flex-direction:column;justify-content:flex-end;isolation:isolate}
+.hero-media{position:absolute;inset:0;z-index:-1;overflow:hidden;
+  background:
+    radial-gradient(120% 90% at 72% 8%, #26301f 0%, rgba(38,48,31,0) 58%),
+    linear-gradient(180deg,#182015 0%,#10150e 52%,#0b0e09 100%)}
+.hero-media img{animation:kb 3.2s var(--ease) both;transform-origin:50% 62%}
+.hero-media img.img-fail{display:none}
+@keyframes kb{from{transform:scale(1.14)}to{transform:scale(1.02)}}
+.hero-media::after{content:"";position:absolute;inset:0;
+  background:linear-gradient(180deg,rgba(15,18,13,.62) 0%,rgba(15,18,13,.08) 34%,rgba(15,18,13,.12) 62%,rgba(15,18,13,.88) 100%)}
+.hero-vert{position:absolute;right:var(--gut);top:110px;writing-mode:vertical-rl;display:flex;gap:22px;align-items:flex-start}
+.hero-vert .zh{font-family:var(--disp);font-size:clamp(15px,1.5vw,19px);letter-spacing:.6em;color:var(--tx-l)}
+.hero-vert .en{font-size:10px;letter-spacing:.5em;color:var(--tx-l-mut)}
+.hero-vert::before{content:"";width:1px;height:72px;background:var(--lantern);flex:none}
+.hero-core{padding:0 var(--gut) clamp(28px,4vh,52px)}
+.hero-core .ovl{color:var(--lantern);margin-bottom:22px}
+.hero-core h1{font-family:var(--disp);font-weight:500;font-size:clamp(30px,5.2vw,68px);line-height:1.32;letter-spacing:.06em;max-width:16em}
+.hero-facts{display:flex;gap:clamp(18px,3vw,48px);margin-top:26px;flex-wrap:wrap;
+  font-size:11px;letter-spacing:.24em;color:var(--tx-l-mut)}
+.hero-facts b{color:var(--tx-l);font-weight:400}
+/* booking bar */
+.bookbar{margin-top:clamp(26px,4vh,44px);border-top:1px solid var(--line-l);
+  display:grid;grid-template-columns:1.2fr 1.2fr .8fr auto;align-items:stretch;background:rgba(15,18,13,.55)}
+.bookbar label{display:flex;flex-direction:column;gap:6px;padding:16px 22px;border-right:1px solid var(--line-l);
+  font-size:10px;letter-spacing:.34em;color:var(--tx-l-mut)}
+.bookbar input,.bookbar select{background:transparent;border:none;color:var(--tx-l);font-family:var(--body);
+  font-size:14px;letter-spacing:.08em;padding:2px 0;outline:none;color-scheme:dark}
+.bookbar input:focus,.bookbar select:focus{outline:1px solid var(--lantern);outline-offset:4px}
+.bookbar .go{display:flex;align-items:center;padding:0 34px;font-size:12px;letter-spacing:.4em;background:var(--paper);color:var(--ink);transition:background .4s}
+.bookbar .go:hover{background:var(--lantern)}
+@media(max-width:760px){.bookbar{grid-template-columns:1fr 1fr}.bookbar label{border-bottom:1px solid var(--line-l)}.bookbar .go{grid-column:1/-1;justify-content:center;padding:16px}}
+.scroll-cue{position:absolute;left:var(--gut);bottom:0;width:1px;height:88px;background:var(--line-l);overflow:hidden}
+.scroll-cue::after{content:"";position:absolute;inset:0;background:var(--lantern);transform:translateY(-100%);animation:cue 2.6s var(--ease) infinite}
+@keyframes cue{40%{transform:translateY(0)}100%{transform:translateY(100%)}}
+
+/* ============ CHAPTER HEAD ============ */
+.chap{padding:clamp(84px,12vh,150px) 0 clamp(70px,10vh,120px)}
+.chap-head{display:flex;align-items:baseline;gap:22px;margin-bottom:clamp(40px,6vh,72px)}
+.chap-head .no{font-family:var(--disp);font-size:13px;letter-spacing:.3em}
+.chap-head .zh{font-family:var(--disp);font-size:clamp(24px,3vw,38px);letter-spacing:.3em}
+.chap-head .en{font-size:11px;letter-spacing:.44em;color:var(--tx-d-mut)}
+.chap-head::after{content:"";flex:1;height:1px;background:var(--line-d);align-self:center}
+.light{background:var(--paper);color:var(--tx-d)}
+.light .chap-head .en{color:var(--tx-d-mut)}
+.light .chap-head::after{background:var(--line-d)}
+
+/* ============ CH1 GARDEN (sticky split) ============ */
+.split{display:grid;grid-template-columns:5fr 6fr;gap:clamp(36px,5vw,90px)}
+.split .stick{position:sticky;top:110px;align-self:start}
+.split .stick h3{font-family:var(--disp);font-size:clamp(22px,2.4vw,32px);line-height:1.6;letter-spacing:.08em;margin:18px 0 26px}
+.split .stick p{color:var(--tx-d-mut);max-width:34em;margin-bottom:1.2em}
+.fact-grid{display:grid;grid-template-columns:1fr 1fr;border-top:1px solid var(--line-d);margin-top:34px}
+.fact-grid div{padding:16px 4px;border-bottom:1px solid var(--line-d)}
+.fact-grid .n{font-family:var(--disp);font-size:clamp(22px,2.2vw,30px);letter-spacing:.04em}
+.fact-grid .t{font-size:11px;letter-spacing:.26em;color:var(--tx-d-mut)}
+.flow{display:flex;flex-direction:column;gap:clamp(28px,4vh,56px)}
+.flow figure{aspect-ratio:3/4}
+.flow figure.wide{aspect-ratio:4/3}
+.flow figure.sq{aspect-ratio:1/1;max-width:78%;align-self:flex-end}
+figcaption{font-size:11px;letter-spacing:.22em;color:var(--tx-d-mut);padding-top:10px}
+.dark figcaption{color:var(--tx-l-mut)}
+.plx img{transform:scale(1.12);will-change:transform}
+@media(max-width:900px){.split{grid-template-columns:1fr}.split .stick{position:static}}
+
+/* ============ CH2 ARCHITECTURE ============ */
+.full-bleed{margin:0 calc(var(--gut) * -1);}
+.full-bleed figure{aspect-ratio:21/10;max-height:82vh}
+.arch-grid{display:grid;grid-template-columns:5fr 3fr 3fr;gap:clamp(20px,2.6vw,40px);margin-top:clamp(40px,6vh,70px)}
+.arch-grid .lead p{color:var(--tx-d-mut);max-width:32em}
+.arch-grid .lead p+p{margin-top:1.1em}
+.arch-grid figure{aspect-ratio:3/4}
+.mat-list{margin-top:22px;border-top:1px solid var(--line-d)}
+.mat-list li{list-style:none;display:flex;gap:16px;align-items:baseline;padding:12px 2px;border-bottom:1px solid var(--line-d);font-size:13px;letter-spacing:.14em}
+.mat-list li b{font-family:var(--disp);font-weight:500;letter-spacing:.2em}
+.mat-list li span{color:var(--tx-d-mut);font-size:12px}
+@media(max-width:900px){.arch-grid{grid-template-columns:1fr}}
+
+/* ============ CH3 STAY ============ */
+.incl{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--line-d);margin-bottom:clamp(48px,7vh,84px)}
+.incl li{list-style:none;padding:18px 18px 18px 2px;border-bottom:1px solid var(--line-d);font-size:13px;letter-spacing:.1em;color:var(--tx-d-mut);display:flex;gap:14px}
+.incl li i{font-style:normal;font-family:var(--disp);color:var(--rust);font-size:12px;flex:none}
+@media(max-width:900px){.incl{grid-template-columns:1fr}}
+.anchor{display:grid;grid-template-columns:7fr 5fr;gap:clamp(26px,3.4vw,60px);margin-bottom:clamp(50px,8vh,90px)}
+.anchor figure{aspect-ratio:16/10}
+.anchor .bath{aspect-ratio:16/7;margin-top:14px}
+.room-tag{font-size:10px;letter-spacing:.4em;color:var(--rust);margin-bottom:14px}
+.room-name{font-family:var(--disp);font-size:clamp(22px,2.4vw,34px);letter-spacing:.1em;display:flex;align-items:baseline;gap:16px}
+.room-name .jp{font-size:.55em;color:var(--tx-d-mut);letter-spacing:.3em}
+.specs{display:flex;flex-wrap:wrap;gap:8px 22px;margin:16px 0 18px;font-size:12px;letter-spacing:.16em;color:var(--tx-d-mut)}
+.specs b{font-weight:400;color:var(--tx-d)}
+.room-desc{color:var(--tx-d-mut);max-width:30em}
+.rate-row{display:flex;align-items:baseline;gap:14px;margin-top:22px}
+.rate{font-family:var(--disp);font-size:20px;letter-spacing:.04em}
+.rate small{font-size:11px;letter-spacing:.2em;color:var(--tx-d-mut);font-family:var(--body)}
+.rooms-grid{display:grid;grid-template-columns:repeat(12,1fr);gap:clamp(24px,3vw,44px) clamp(20px,2.4vw,36px)}
+.rooms-grid .room{grid-column:span 6}
+.rooms-grid .room.w7{grid-column:span 7}
+.rooms-grid .room.w5{grid-column:span 5}
+.room figure{aspect-ratio:4/3}
+.room.w5 figure{aspect-ratio:3/3.1}
+.room figure img{transition:transform 1.4s var(--ease)}
+.room:hover figure img{transform:scale(1.05)}
+.room .pick{margin-top:16px;font-size:11px;letter-spacing:.34em;color:var(--tx-d);border-bottom:1px solid var(--line-d);padding-bottom:6px;transition:all .35s var(--ease)}
+.room .pick:hover{color:var(--rust);border-color:var(--rust);letter-spacing:.42em}
+@media(max-width:900px){.anchor,.rooms-grid .room,.rooms-grid .room.w7,.rooms-grid .room.w5{grid-column:1/-1}}
+
+/* ============ CH4 DINING (dark) ============ */
+.dark{background:var(--ink);color:var(--tx-l)}
+.dark .chap-head .en{color:var(--tx-l-mut)}
+.dark .chap-head::after{background:var(--line-l)}
+.dark .chap-head .zh{color:var(--tx-l)}
+.takaan{position:relative;margin:0 calc(var(--gut) * -1)}
+.takaan figure{aspect-ratio:21/10;max-height:86vh}
+.takaan .quote{position:absolute;left:var(--gut);bottom:clamp(24px,5vh,56px);max-width:560px;
+  background:rgba(15,18,13,.78);padding:26px 30px;border-left:2px solid var(--lantern)}
+.takaan .quote h3{font-family:var(--disp);font-size:clamp(20px,2.2vw,30px);letter-spacing:.14em;margin-bottom:10px}
+.takaan .quote p{color:var(--tx-l-mut);font-size:13px}
+.dine-grid{display:grid;grid-template-columns:5fr 6fr;gap:clamp(28px,4vw,70px);margin-top:clamp(56px,9vh,110px);align-items:start}
+.dine-grid figure{aspect-ratio:4/3}
+.dishes{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:14px}
+.dishes figure{aspect-ratio:4/3}
+.dine-copy h3{font-family:var(--disp);font-size:clamp(20px,2.2vw,30px);letter-spacing:.14em;margin-bottom:16px}
+.dine-copy p{color:var(--tx-l-mut);max-width:36em}
+.dine-copy p+p{margin-top:1em}
+.rhythm{margin-top:clamp(56px,9vh,100px);border-top:1px solid var(--line-l)}
+.rhythm li{list-style:none;display:grid;grid-template-columns:110px 200px 1fr;gap:20px;align-items:baseline;
+  padding:20px 2px;border-bottom:1px solid var(--line-l)}
+.rhythm .when{font-family:var(--disp);font-size:20px;letter-spacing:.3em;color:var(--lantern)}
+.rhythm .what{font-size:13px;letter-spacing:.24em}
+.rhythm .how{color:var(--tx-l-mut);font-size:13px}
+@media(max-width:900px){.dine-grid{grid-template-columns:1fr}.rhythm li{grid-template-columns:70px 1fr;}.rhythm .how{grid-column:2}}
+
+/* ============ CH5 ONSEN ============ */
+.onsen{background:var(--ink2)}
+.onsen .split{grid-template-columns:5fr 6fr}
+.onsen .stick h3{color:var(--tx-l)}
+.onsen .stick p{color:var(--tx-l-mut)}
+.ritual{border-top:1px solid var(--line-l);margin-top:30px}
+.ritual li{list-style:none;display:grid;grid-template-columns:64px 90px 1fr;gap:16px;padding:18px 2px;border-bottom:1px solid var(--line-l);align-items:baseline}
+.ritual .no{font-family:var(--disp);color:var(--lantern);font-size:13px;letter-spacing:.2em}
+.ritual .k{font-family:var(--disp);font-size:22px;letter-spacing:.3em}
+.ritual .d{color:var(--tx-l-mut);font-size:13px}
+.onsen .flow figure{aspect-ratio:3/4}
+.onsen .flow figure.wide{aspect-ratio:4/3}
+
+/* ============ CH6 SEASONS ============ */
+.seasons{border-top:1px solid var(--line-d)}
+.seasons li{list-style:none;display:grid;grid-template-columns:14px 130px 220px 1fr;gap:22px;align-items:baseline;
+  padding:24px 2px;border-bottom:1px solid var(--line-d)}
+.seasons .dot{width:9px;height:9px;border-radius:50%;transform:translateY(-1px)}
+.seasons .name{font-family:var(--disp);font-size:clamp(18px,1.8vw,24px);letter-spacing:.24em}
+.seasons .when{font-size:12px;letter-spacing:.2em;color:var(--tx-d-mut)}
+.seasons .note{color:var(--tx-d-mut);font-size:13px}
+@media(max-width:800px){.seasons li{grid-template-columns:14px 1fr;grid-auto-rows:auto}.seasons .when,.seasons .note{grid-column:2}}
+
+/* ============ CH7 ACCESS ============ */
+.access-grid{display:grid;grid-template-columns:5fr 6fr;gap:clamp(28px,4vw,70px);align-items:start}
+.access-grid figure{aspect-ratio:4/3}
+.addr{font-family:var(--disp);font-size:clamp(17px,1.7vw,22px);letter-spacing:.1em;line-height:2;margin:18px 0 8px}
+.addr-en{font-size:12px;letter-spacing:.14em;color:var(--tx-d-mut);margin-bottom:26px}
+.access-list{border-top:1px solid var(--line-d)}
+.access-list li{list-style:none;display:grid;grid-template-columns:120px 1fr;gap:18px;padding:15px 2px;border-bottom:1px solid var(--line-d);font-size:13px}
+.access-list b{font-weight:400;letter-spacing:.26em;color:var(--tx-d)}
+.access-list span{color:var(--tx-d-mut)}
+@media(max-width:900px){.access-grid{grid-template-columns:1fr}}
+
+/* ============ CTA + FOOTER ============ */
+.cta{min-height:72vh;display:flex;align-items:flex-end;isolation:isolate}
+.cta .bg{position:absolute;inset:0;z-index:-1;overflow:hidden;
+  background:linear-gradient(180deg,#141a10 0%,#0d110c 100%)}
+.cta .bg img.img-fail{display:none}
+.cta .bg::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(15,18,13,.7),rgba(15,18,13,.25) 45%,rgba(15,18,13,.85))}
+.cta .wrap{padding-bottom:clamp(60px,10vh,110px);padding-top:140px}
+.cta h2{font-family:var(--disp);font-size:clamp(28px,4.4vw,56px);letter-spacing:.1em;line-height:1.5;margin:20px 0 36px}
+footer{background:var(--ink);border-top:1px solid var(--line-l);padding:56px 0 40px}
+.foot-grid{display:grid;grid-template-columns:2fr 1fr 1fr;gap:40px}
+.foot-grid h4{font-size:11px;letter-spacing:.4em;color:var(--tx-l-mut);margin-bottom:16px;font-weight:400}
+.foot-grid p,.foot-grid a{font-size:12px;color:var(--tx-l-mut);letter-spacing:.1em;display:block;line-height:2.1}
+.foot-grid a:hover{color:var(--lantern)}
+.legal{margin-top:44px;padding-top:20px;border-top:1px solid var(--line-l);font-size:11px;color:var(--tx-l-mut);letter-spacing:.08em;display:flex;gap:24px;flex-wrap:wrap}
+@media(max-width:800px){.foot-grid{grid-template-columns:1fr}}
+
+/* ============ DRAWER ============ */
+.scrim{position:fixed;inset:0;background:rgba(10,12,8,.6);z-index:80;opacity:0;pointer-events:none;transition:opacity .5s}
+.scrim.on{opacity:1;pointer-events:auto}
+.drawer{position:fixed;top:0;right:0;bottom:0;width:min(560px,100%);background:var(--paper);color:var(--tx-d);z-index:90;
+  transform:translateX(102%);transition:transform .65s var(--ease);display:flex;flex-direction:column;box-shadow:-20px 0 60px rgba(0,0,0,.35)}
+.drawer.on{transform:none}
+.dw-head{display:flex;align-items:center;justify-content:space-between;padding:22px 30px;border-bottom:1px solid var(--line-d)}
+.dw-head .t{font-family:var(--disp);letter-spacing:.3em;font-size:16px}
+.dw-head .x{font-size:20px;padding:6px 10px;transition:transform .4s var(--ease)}
+.dw-head .x:hover{transform:rotate(90deg)}
+.dw-steps{display:flex;padding:16px 30px;gap:8px;border-bottom:1px solid var(--line-d);list-style:none}
+.dw-steps li{font-size:10px;letter-spacing:.26em;color:var(--tx-d-mut);display:flex;gap:8px;align-items:center}
+.dw-steps li+li::before{content:"—";color:var(--line-d);margin-right:8px}
+.dw-steps li.on{color:var(--rust)}
+.dw-body{flex:1;overflow-y:auto;padding:28px 30px}
+.dw-pane{display:none}
+.dw-pane.on{display:block;animation:pane .5s var(--ease)}
+@keyframes pane{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+.f-row{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:18px}
+.f-field{display:flex;flex-direction:column;gap:8px;border-bottom:1px solid var(--line-d);padding-bottom:10px}
+.f-field label{font-size:10px;letter-spacing:.32em;color:var(--tx-d-mut)}
+.f-field input,.f-field select{border:none;background:none;font-family:var(--body);font-size:15px;color:var(--tx-d);outline:none;color-scheme:light}
+.dw-note{font-size:11px;color:var(--tx-d-mut);letter-spacing:.06em;margin-top:14px;line-height:1.9}
+.opt{display:block;border:1px solid var(--line-d);padding:16px 18px;margin-bottom:12px;cursor:pointer;transition:border-color .3s,background .3s;position:relative}
+.opt input{position:absolute;opacity:0}
+.opt .r1{display:flex;justify-content:space-between;align-items:baseline;gap:12px}
+.opt .nm{font-family:var(--disp);letter-spacing:.14em;font-size:15px}
+.opt .pr{font-family:var(--disp);font-size:14px;white-space:nowrap}
+.opt .r2{display:flex;gap:16px;font-size:11px;color:var(--tx-d-mut);letter-spacing:.12em;margin-top:6px;flex-wrap:wrap}
+.opt.sel{border-color:var(--rust);background:rgba(162,84,47,.06)}
+.opt.dis{opacity:.42;pointer-events:none}
+.sum-row{display:flex;justify-content:space-between;gap:16px;padding:11px 2px;border-bottom:1px solid var(--line-d);font-size:13px;letter-spacing:.08em}
+.sum-row .l{color:var(--tx-d-mut)}
+.sum-total{display:flex;justify-content:space-between;padding:18px 2px;font-family:var(--disp);font-size:19px;letter-spacing:.06em}
+.dw-foot{border-top:1px solid var(--line-d);padding:18px 30px;display:flex;gap:14px;align-items:center}
+.dw-foot .tot{flex:1;font-size:12px;letter-spacing:.14em;color:var(--tx-d-mut)}
+.dw-foot .tot b{display:block;font-family:var(--disp);font-size:19px;color:var(--tx-d);font-weight:500}
+.dw-back{padding:13px 18px;border:1px solid var(--line-d);font-size:11px;letter-spacing:.3em}
+.dw-next{padding:13px 26px;background:var(--ink);color:var(--paper);font-size:11px;letter-spacing:.3em;transition:background .3s}
+.dw-next:hover{background:var(--moss-d)}
+.done{text-align:left}
+.done .code{font-family:var(--disp);font-size:26px;letter-spacing:.2em;color:var(--rust);margin:14px 0 20px}
+.done h3{font-family:var(--disp);letter-spacing:.2em;font-size:20px;margin-bottom:8px}
+
+@media (prefers-reduced-motion: reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
+  .js [data-rv],.js .lm-i{opacity:1!important;transform:none!important}
+  .plx img{transform:none!important}
+}
+</style>
+</head>
+<body>
+
+<!-- chapter rail -->
+<nav class="rail" id="rail" aria-label="章节导航">
+  <button data-go="garden"><i></i><span>庭园</span></button>
+  <button data-go="arch"><i></i><span>建筑</span></button>
+  <button data-go="stay"><i></i><span>住宿</span></button>
+  <button data-go="dining"><i></i><span>餐饮</span></button>
+  <button data-go="onsen"><i></i><span>温泉</span></button>
+  <button data-go="seasons"><i></i><span>季节</span></button>
+  <button data-go="access"><i></i><span>抵达</span></button>
+</nav>
+
+<header class="site-head" id="siteHead">
+  <a class="brand" href="#top"><span class="en">AMAN KYOTO</span><span class="zh">安缦京都</span></a>
+  <nav class="site-nav">
+    <a href="#garden">庭园</a><a href="#arch">建筑</a><a href="#stay">住宿</a>
+    <a href="#dining">餐饮</a><a href="#onsen">温泉</a><a href="#access">抵达</a>
+    <button class="btn" data-open-book>预 订</button>
+  </nav>
+</header>
+
+<!-- ============ HERO ============ -->
+<section class="hero" id="top">
+  <div class="hero-media"><img src="https://image.qwenlm.ai/public_source/a922b568-d16f-4b15-80a8-5f336f70edde/66a8b8be0-fa74-4a43-a4ba-de53196f81c17098.png" alt="暮色中的安缦京都：下沉式火塘露台，灯笼沿木平台排开，背后是杉林" fetchpriority="high"></div>
+  <div class="hero-vert" aria-hidden="true"><span class="zh">安缦京都 · 鹰峰</span><span class="en">A HIDDEN GARDEN · TAKAGAMINE</span></div>
+  <div class="hero-core">
+    <p class="ovl" data-rv>Kyoto · Takagamine — Est. 2019 by Kerry Hill</p>
+    <h1 data-rv>
+      <span class="lm"><span class="lm-i">森林深处，</span></span>
+      <span class="lm"><span class="lm-i" style="--d:.12s">庭园先于建筑存在。</span></span>
+    </h1>
+    <div class="hero-facts" data-rv style="--d:.3s">
+      <span><b>32</b> 公顷森林</span><span><b>24</b> 间客房与别栋</span>
+      <span>京都站车程 <b>30</b> 分钟</span><span>天然矿泉 <b>温泉</b></span>
+    </div>
+    <form class="bookbar" id="heroBar" data-rv style="--d:.45s">
+      <label>入住 CHECK-IN<input type="date" id="hbIn" required></label>
+      <label>退房 CHECK-OUT<input type="date" id="hbOut" required></label>
+      <label>宾客 GUESTS<select id="hbG"><option>1</option><option selected>2</option><option>3</option><option>4</option></select></label>
+      <button class="go" type="submit">查看空房</button>
+    </form>
+  </div>
+  <div class="scroll-cue" aria-hidden="true"></div>
+</section>
+
+<!-- ============ CH1 GARDEN ============ -->
+<section class="light chap" id="garden" data-ch="0">
+  <div class="wrap">
+    <div class="chap-head" data-rv><span class="no">壹</span><span class="zh">秘密庭园</span><span class="en">THE SECRET GARDEN</span></div>
+    <div class="split">
+      <div class="stick">
+        <p class="ovl" style="color:var(--rust)" data-rv>Before the hotel, the garden</p>
+        <h3 data-rv>一座为织物博物馆而设想、<br>却从未建成的庭园，<br>等来了安缦。</h3>
+        <p data-rv>数十年前，一位京都带商人买下鹰峰山麓的谷地，收集苔藓、岩石与树木，构想一座配得上织物的庭园。博物馆从未落成，庭园却活了下来——石径蜿蜒，苔色入骨，溪流沿谷而下。</p>
+        <p data-rv>1995 年，Kerry Hill 将安缦引至这片谷地。二十余年后开业时，建筑退为配角：低矮的亭台悬于林间，让苔庭继续做它做了半个世纪的主人。每日清晨，住客可随向导步入不对外公开的庭园深处。</p>
+        <div class="fact-grid" data-rv>
+          <div><div class="n num">1970s</div><div class="t">庭园始植年代</div></div>
+          <div><div class="n num">2019</div><div class="t">安缦京都开业</div></div>
+          <div><div class="n num">≈3 ha</div><div class="t">苔庭与石径</div></div>
+          <div><div class="n num">≈29 ha</div><div class="t">环抱杉林</div></div>
+        </div>
+      </div>
+      <div class="flow">
+        <div data-rv><figure class="plx" data-plx="0.1"><img loading="lazy" src="https://image.qwenlm.ai/public_source/a922b568-d16f-4b15-80a8-5f336f70edde/26a8b8be0-fa74-4a43-a4ba-de53196f81c19968.png" alt="覆苔的石阶向上延伸，尽头是透出暖光的黑色木格栅亭阁"></figure><figcaption>苔阶 · 杉林间的亭阁</figcaption></div>
+        <div data-rv><figure class="wide plx" data-plx="0.08"><img loading="lazy" src="https://image.qwenlm.ai/public_source/a922b568-d16f-4b15-80a8-5f336f70edde/46a8b8be0-fa74-4a43-a4ba-de53196f81c19059.png" alt="红叶季：石板小径一侧是炭黑色建筑立面，另一侧是石墙与枫树"></figure><figcaption>十一月 · 石径与枫</figcaption></div>
+        <div data-rv><figure class="sq plx" data-plx="0.12"><img loading="lazy" src="https://image.qwenlm.ai/public_source/a922b568-d16f-4b15-80a8-5f336f70edde/06a8b8be0-fa74-4a43-a4ba-de53196f81c16504.png" alt="踏脚石半没于鲜绿苔地之中"></figure><figcaption>苔，庭园的底色</figcaption></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CH2 ARCHITECTURE ============ -->
+<section class="light chap" id="arch" data-ch="1" style="background:var(--paper2)">
+  <div class="wrap">
+    <div class="chap-head" data-rv><span class="no">贰</span><span class="zh">建筑</span><span class="en">KERRY HILL'S LAST WORK</span></div>
+    <div class="full-bleed" data-rv>
+      <figure class="plx" data-plx="0.07"><img loading="lazy" src="https://image.qwenlm.ai/public_source/a922b568-d16f-4b15-80a8-5f336f70edde/26a8b8be0-fa74-4a43-a4ba-de53196f81c15405.png" alt="暮色中，Living Pavilion 的黑色格栅立面透出灯笼光，前方是火塘露台与杉林"></figure>
+      <div class="wrap"><figcaption>暮色中的 Living Pavilion · 火塘露台</figcaption></div>
+    </div>
+    <div class="arch-grid">
+      <div class="lead" data-rv>
+        <p>这是 Kerry Hill 生前完成的最后一座安缦。他没有「设计场地」，而是让建筑落进既有的林相：炭化木的深、鹰峰石的灰、和纸的暖，构成一种近乎消失的存在感。</p>
+        <p>格栅滤光，深檐接雨。六米高的手工石墙托起苔阶，亭台看似一直长在林间——这正是安缦对「隐」的全部理解。</p>
+        <ul class="mat-list">
+          <li><b>炭化木</b><span>深色格栅与立面，隐入林影</span></li>
+          <li><b>鹰峰石</b><span>手工垒砌的古式石墙与石径</span></li>
+          <li><b>和纸 · 榻榻米</b><span>滤光与赤足的质感</span></li>
+          <li><b>真鍮</b><span>门扉铆钉，随岁月生出铜绿</span></li>
+        </ul>
+      </div>
+      <div data-rv><figure class="plx" data-plx="0.1"><img loading="lazy" src="https://image.qwenlm.ai/public_source/a922b568-d16f-4b15-80a8-5f336f70edde/56a8b8be0-fa74-4a43-a4ba-de53196f81c17624.png" alt="入口门扉：铜绿铆钉的木门，旁侧是巨石与砾石车道"></figure><figcaption>入口门扉 · 铜绿与巨石</figcaption></div>
+      <div data-rv style="--d:.15s"><figure class="plx" data-plx="0.12"><img loading="lazy" src="https://image.qwenlm.ai/public_source/a922b568-d16f-4b15-80a8-5f336f70edde/36a8b8be0-fa74-4a43-a4ba-de53196f81c17098.png" alt="竹垣围合的水庭，水面映出树影与石墙"></figure><figcaption>水庭 · 竹垣</figcaption></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CH3 STAY ============ -->
+<section class="light chap" id="stay" data-ch="2">
+  <div class="wrap">
+    <div class="chap-head" data-rv><span class="no">叁</span><span class="zh">住宿</span><span class="en">ROOMS &amp; PAVILIONS</span></div>
+    <p class="room-desc" style="max-width:44em;margin-bottom:34px" data-rv>仅二十四间客房、套房与别栋，以窗外的风景命名：芒、枫、楢、鹰峰、鹫峰。每一间都含榻榻米起居、床龛式床台与桧木风吕，落地窗将森林借为室内的一部分。</p>
+    <ul class="incl" data-rv>
+      <li><i>含</i>每日双人早餐（Living Pavilion 或房内）</li>
+      <li><i>含</i>房内饮品与个人吧，含酒精类</li>
+      <li><i>含</i>午后茶室抹茶与时令菓子</li>
+      <li><i>含</i>黄昏开胃酒：香槟、清酒与小食</li>
+      <li><i>含</i>秘密庭园向导漫步（每日）</li>
+      <li><i>含</i>Aman Spa 天然温泉入浴</li>
+    </ul>
+
+    <!-- anchor -->
+    <div class="anchor">
+      <div data-rv>
+        <figure class="plx" data-plx="0.06"><img loading="lazy" src="https://image.qwenlm.ai/public_source/a922b568-d16f-4b15-80a8-5f336f70edde/26a8b8be0-fa74-4a43-a4ba-de53196f81c17152.png" alt="鹫峰别栋卧房：低床台面向整面落地窗，窗外是苔坡与林木"></figure>
+        <figure class="bath"><img loading="lazy" src="https://image.qwenlm.ai/public_source/a922b568-d16f-4b15-80a8-5f336f70edde/06a8b8be0-fa74-4a43-a4ba-de53196f81c12343.png" alt="桧木风吕与石壁浴房，毛巾悬于壁龛旁"></figure>
+      </div>
+      <div>
+        <p class="room-tag" data-rv>最隐逸之所 · FLAGSHIP</p>
+        <h3 class="room-name" data-rv>鹫峰别栋<span class="jp">Washigamine Pavilion</span></h3>
+        <div class="specs num" data-rv><b>226㎡</b><span>东向 · 俯瞰全园与比叡山</span><span>独立起居 / 榻榻米间 / 西式餐间</span><span>桧木风吕</span></div>
+        <p class="room-desc" data-rv>位于度假村最高、最私密之处。一条 trekking 小径自别栋直接没入森林，数座私人冥想庭散落在侧——鹫峰之上，庭园与山峦同时属于你。</p>
+        <div class="rate-row num" data-rv><span class="rate">¥560,000 <small>起 / 晚 · 参考价</small></span></div>
+        <button class="btn dark-line" style="margin-top:18px" data-pick="washi" data-open-book data-rv>选择此房</button>
+      </div>
+    </div>
+
+    <!-- grid -->
+    <div class="rooms-grid">
+      <article class="room w7" data-rv>
+        <figure><img loading="lazy" src="https://image.qwenlm.ai/public_source/a922b568-d16f-4b15-80a8-5f336f70edde/36a8b8be0-fa74-4a43-a4ba-de53196f81c19059.png" alt="鹰峰别栋起居：榻榻米、矮桌与坐垫，落地窗外是整片红叶"></figure>
+        <h3 class="room-name">鹰峰别栋<span class="jp">Takagamine Pavilion</span></h3>
+        <div class="specs num"><b>226㎡</b><span>东向 · 悬于六米古石墙之上</span><span>紧邻苔阶</span></div>
+        <p class="room-desc">高台之上，浮于枫与杉的林冠之间；起居、餐间与榻榻米间依次展开。</p>
+        <div class="rate-row num"><span class="rate">¥520,000 <small>起 / 晚</small></span></div>
+        <button class="pick" data-pick="takaP" data-open-book>选择此房 →</button>
+      </article>
+      <article class="room w5" data-rv style="--d:.1s">
+        <figure><img loading="lazy" src="https://image.qwenlm.ai/public_source/a922b568-d16f-4b15-80a8-5f336f70edde/26a8b8be0-fa74-4a43-a4ba-de53196f81c13514.png" alt="鹰峰套房餐间：原木长桌与六把圈椅，窗外绿意满溢"></figure>
+        <h3 class="room-name">鹰峰套房<span class="jp">Takagamine Suite</span></h3>
+        <div class="specs num"><b>165㎡</b><span>起居 + 榻榻米间 + 西式餐间</span></div>
+        <p class="room-desc">套房即宅邸：独立餐间可容私人晚宴，厨房备管家服务。</p>
+        <div class="rate-row num"><span class="rate">¥360,000 <small>起 / 晚</small></span></div>
+        <button class="pick" data-pick="takaS" data-open-book>选择此房 →</button>
+      </article>
+      <article class="room w5" data-rv>
+        <figure><img loading="lazy" src="https://image.qwenlm.ai/public_source/a922b568-d16f-4b15-80a8-5f336f70edde/76a8b8be0-fa74-4a43-a4ba-de53196f81c12791.png" alt="楢客房：榻榻米与书桌，落地窗外红叶与树干交错"></figure>
+        <h3 class="room-name">楢 客房<span class="jp">Nara</span></h3>
+        <div class="specs num"><b>60㎡</b><span>西向 · 苔墙与山侧树影</span><span>国王或双床</span></div>
+        <p class="room-desc">或处庭园之心，或处最幽深处；楢木般安静的房间。</p>
+        <div class="rate-row num"><span class="rate">¥155,000 <small>起 / 晚</small></span></div>
+        <button class="pick" data-pick="nara" data-open-book>选择此房 →</button>
+      </article>
+      <article class="room w7" data-rv style="--d:.1s">
+        <figure><img loading="lazy" src="https://image.qwenlm.ai/public_source/a922b568-d16f-4b15-80a8-5f336f70edde/06a8b8be0-fa74-4a43-a4ba-de53196f81c16636.png" alt="枫客房榻榻米起居角：矮桌坐垫面向整排枫树窗景"></figure>
+        <h3 class="room-name">枫 客房<span class="jp">Kaede</span></h3>
+        <div class="specs num"><b>60㎡</b><span>西向 · 成熟枫树与庭园</span><span>国王或双床</span><span>桧木风吕 · 双盥洗</span></div>
+        <p class="room-desc">一层西向，窗外即是成年枫树——十一月的枫客房，是整座山谷最贵的一幅画。</p>
+        <div class="rate-row num"><span class="rate">¥152,000 <small>起 / 晚</small></span></div>
+        <button class="pick" data-pick="kaede" data-open-book>选择此房 →</button>
+      </article>
+      <article class="room w7" data-rv>
+        <figure><img loading="lazy" src="https://image.qwenlm.ai/public_source/a922b568-d16f-4b15-80a8-5f336f70edde/16a8b8be0-fa74-4a43-a4ba-de53196f81c15185.png" alt="芒客房起居：米色沙发与圆椅面向落地窗，窗外是新绿森林"></figure>
+        <h3 class="room-name">芒 客房<span class="jp">Susuki</span></h3>
+        <div class="specs num"><b>60㎡</b><span>东向 · 神屋川畔 · 俯瞰苔庭</span><span>国王床</span></div>
+        <p class="room-desc">临溪而居，晨光先落在苔庭，再进入房间。</p>
+        <div class="rate-row num"><span class="rate">¥148,000 <small>起 / 晚</small></span></div>
+        <button class="pick" data-pick="susuki" data-open-book>选择此房 →</button>
+      </article>
+      <article class="room w5" data-rv style="--d:.1s">
+        <figure><img loading="lazy" src="https://image.qwenlm.ai/public_source/a922b568-d16f-4b15-80a8-5f336f70edde/16a8b8be0-fa74-4a43-a4ba-de53196f81c14112.png" alt="榻榻米床龛：挂轴与花瓶，光斜照在土墙上"></figure>
+        <h3 class="room-name">芒·露台 客房<span class="jp">Susuki Terrace</span></h3>
+        <div class="specs num"><b>60㎡ + 私人露台</b><span>东向 · 一层</span></div>
+        <p class="room-desc">同一份安静，多一方自己的露台与庭园晨光。</p>
+        <div class="rate-row num"><span class="rate">¥158,000 <small>起 / 晚</small></span></div>
+        <button class="pick" data-pick="susukiT" data-open-book>选择此房 →</button>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CH4 DINING ============ -->
+<section class="dark chap" id="dining" data-ch="3">
+  <div class="wrap">
+    <div class="chap-head" data-rv><span class="no">肆</span><span class="zh">餐饮</span><span class="en">TAKA-AN &amp; THE LIVING PAVILION</span></div>
+  </div>
+  <div class="takaan" data-rv>
+    <figure class="plx" data-plx="0.06"><img loading="lazy" src="https://image.qwenlm.ai/public_source/a922b568-d16f-4b15-80a8-5f336f70edde/66a8b8be0-fa74-4a43-a4ba-de53196f81c11941.png" alt="鹰庵板前：金色格栅天花之下，一列黑皮革圈椅面向桧木长台"></figure>
+    <div class="quote">
+      <h3>鹰庵 TAKA-AN</h3>
+      <p>一席板前，只呈当季。主厨以京都怀石的章法写一份 omakase：先付、向付、烧物、食事，至水物收笔。暮色后的「Evening Taka-An」，则把这场料理拉长为一段山谷里的夜间仪式。</p>
+    </div>
+  </div>
+  <div class="wrap">
+    <div class="dine-grid">
+      <div data-rv>
+        <figure class="plx" data-plx="0.08"><img loading="lazy" src="https://image.qwenlm.ai/public_source/a922b568-d16f-4b15-80a8-5f336f70edde/36a8b8be0-fa74-4a43-a4ba-de53196f81c14248.png" alt="Living Pavilion 内部：黑色锥形火炉居中，和纸吊灯高悬，落地窗外是庭园"></figure>
+        <div class="dishes">
+          <figure><img loading="lazy" src="https://image.qwenlm.ai/public_source/a922b568-d16f-4b15-80a8-5f336f70edde/06a8b8be0-fa74-4a43-a4ba-de53196f81c12289.png" alt="黑漆金缮器上的一贯鲔鱼寿司"></figure>
+          <figure><img loading="lazy" src="https://image.qwenlm.ai/public_source/a922b568-d16f-4b15-80a8-5f336f70edde/16a8b8be0-fa74-4a43-a4ba-de53196f81c11154.png" alt="黑碗清汤中的白色食材，缀一片青叶"></figure>
+        </div>
+      </div>
+      <div class="dine-copy">
+        <h3 data-rv>LIVING PAVILION · 全天候</h3>
+        <p data-rv>火炉居中，和纸灯高悬，落地窗把四季借来佐餐。清晨的「京都早餐」以发酵与 obanzai 小碟开篇：渍物、味噌、刺身与京野菜盛于木盒，主菜在黑毛和牛与烧鱼之间择一，配土锅炊饭或豆乳粥。</p>
+        <p data-rv>午间供应京都风味的西式料理；午后茶室点一盏抹茶与时令菓子；入夜后，露台火塘与黄昏开胃酒同时亮起。</p>
+        <p data-rv style="font-size:12px;letter-spacing:.18em;color:var(--tx-l-mut)">午市 / 下午茶欢迎 6 岁以上宾客 · 晚市欢迎 13 岁以上宾客（住店宾客不限）</p>
+      </div>
+    </div>
+    <ul class="rhythm" data-rv>
+      <li><span class="when">朝</span><span class="what">京都早餐</span><span class="how">obanzai 木盒 · 和牛或烧鱼 · 土锅炊饭 / 豆乳粥</span></li>
+      <li><span class="when">午</span><span class="what">Living Pavilion 午间</span><span class="how">京都风味的西式料理，庭园侧露台视季开放</span></li>
+      <li><span class="when">暮</span><span class="what">茶室抹茶 · 黄昏开胃酒</span><span class="how">每日午后抹茶与时令菓子；入夜香槟、清酒与小食</span></li>
+      <li><span class="when">夜</span><span class="what">鹰庵怀石 / 晚市</span><span class="how">板前 omakase，一席只呈当季</span></li>
+    </ul>
+  </div>
+</section>
+
+<!-- ============ CH5 ONSEN ============ -->
+<section class="dark onsen chap" id="onsen" data-ch="4">
+  <div class="wrap">
+    <div class="chap-head" data-rv><span class="no">伍</span><span class="zh">温泉与康体</span><span class="en">AMAN SPA · ONSEN</span></div>
+    <div class="split">
+      <div class="stick">
+        <p class="ovl" style="color:var(--lantern)" data-rv>Mineral water, from the valley itself</p>
+        <h3 class="disp" style="font-size:clamp(22px,2.4vw,32px);line-height:1.6;letter-spacing:.08em;margin:18px 0 20px" data-rv>泉自谷中来。<br>浴、疗、森、憩，四件事而已。</h3>
+        <p data-rv>安缦京都附近的天然矿泉，是整座 Spa 的哲学原点。室内与露天风吕以岩石围合，泉水富含矿物质；浴毕，于休憩间一盏茶的时间里，让身体完成最后的安静。</p>
+        <ol class="ritual" data-rv>
+          <li><span class="no">01</span><span class="k">浴</span><span class="d">室内 / 露天天然温泉风吕，岩石环抱，男女分浴</span></li>
+          <li><span class="no">02</span><span class="k">疗</span><span class="d">三间私人理疗室：冷压山茶油、京都绿茶、黑豆——本地疗愈食材入方</span></li>
+          <li><span class="no">03</span><span class="k">森</span><span class="d">森林浴漫步与庭园瑜伽、正念，随向导深入三十二公顷林地</span></li>
+          <li><span class="no">04</span><span class="k">憩</span><span class="d">浴后休憩间，茶与静默</span></li>
+        </ol>
+      </div>
+      <div class="flow">
+        <div data-rv><figure class="plx" data-plx="0.09"><img loading="lazy" src="https://image.qwenlm.ai/public_source/a922b568-d16f-4b15-80a8-5f336f70edde/76a8b8be0-fa74-4a43-a4ba-de53196f81c18608.png" alt="露天温泉：岩石围合的泉池，水面如镜，竹垣之外是青苔与树"></figure><figcaption>露天风吕 · 岩与竹垣</figcaption></div>
+        <div data-rv><figure class="wide plx" data-plx="0.1"><img loading="lazy" src="https://image.qwenlm.ai/public_source/a922b568-d16f-4b15-80a8-5f336f70edde/56a8b8be0-fa74-4a43-a4ba-de53196f81c17475.png" alt="林间石坪上，一人于瑜伽垫上做三角式，四周是新绿森林"></figure><figcaption>庭园瑜伽 · 森林浴</figcaption></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CH6 SEASONS ============ -->
+<section class="light chap" id="seasons" data-ch="5">
+  <div class="wrap">
+    <div class="chap-head" data-rv><span class="no">陆</span><span class="zh">季节</span><span class="en">WHEN TO COME</span></div>
+    <ul class="seasons" data-rv>
+      <li><span class="dot" style="background:#c9a3ad"></span><span class="name">樱</span><span class="when num">三月末 — 四月中旬</span><span class="note">京都花季，山谷新绿与樱同至；全年最紧俏的窗。</span></li>
+      <li><span class="dot" style="background:#7d9068"></span><span class="name">新绿</span><span class="when num">四月末 — 五月</span><span class="note">苔色最鲜，溪声最亮；舒适与空房兼得的窗口。</span></li>
+      <li><span class="dot" style="background:#41583c"></span><span class="name">祭</span><span class="when num">七月 · 祇园祭</span><span class="note">山中避暑，入夜下山入祭；蝉时雨是白天的背景音。</span></li>
+      <li><span class="dot" style="background:#a2542f"></span><span class="name">红叶</span><span class="when num">十一月中 — 十二月初</span><span class="note">枫客房与石径进入一年中最盛大的十日。</span></li>
+      <li><span class="dot" style="background:#9aa39b"></span><span class="name">雪</span><span class="when num">十二月 — 二月</span><span class="note">最安静的山谷，偶雪；温泉与围炉的正季。</span></li>
+    </ul>
+  </div>
+</section>
+
+<!-- ============ CH7 ACCESS ============ -->
+<section class="light chap" id="access" data-ch="6" style="background:var(--paper2)">
+  <div class="wrap">
+    <div class="chap-head" data-rv><span class="no">柒</span><span class="zh">抵达</span><span class="en">GETTING HERE</span></div>
+    <div class="access-grid">
+      <div data-rv>
+        <p class="ovl" style="color:var(--rust)">Takagamine · Northern Kyoto</p>
+        <p class="addr">京都市北区 大北山鹫峰町 1<br>安缦京都</p>
+        <p class="addr-en">1 Okitayama Washimine-cho, Kita-ku, Kyoto 603-8458, Japan</p>
+        <ul class="access-list">
+          <li><b>京都站</b><span>车程约 30 分钟，可安排专车</span></li>
+          <li><b>大阪伊丹机场</b><span>车程约 1 小时</span></li>
+          <li><b>市营巴士</b><span>「鹰峰源光庵前」下车，步行约 13 分钟</span></li>
+          <li><b>邻近</b><span>金阁寺数分钟车程；大德寺、鹰峰三寺同处北山文化带</span></li>
+        </ul>
+      </div>
+      <div data-rv style="--d:.12s"><figure class="plx" data-plx="0.08"><img loading="lazy" src="https://image.qwenlm.ai/public_source/a922b568-d16f-4b15-80a8-5f336f70edde/66a8b8be0-fa74-4a43-a4ba-de53196f81c17378.png" alt="黄昏林地中的亭阁，灯笼沿露台点亮，暖光透出格栅"></figure><figcaption>入谷 · 灯笼亮起时</figcaption></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CTA ============ -->
+<section class="cta">
+  <div class="bg"><img loading="lazy" src="https://image.qwenlm.ai/public_source/a922b568-d16f-4b15-80a8-5f336f70edde/56a8b8be0-fa74-4a43-a4ba-de53196f81c19006.png" alt="秋日森林环抱的 Living Pavilion 全景，露台火塘微光"></div>
+  <div class="wrap">
+    <p class="ovl" style="color:var(--lantern)" data-rv>Begin the reservation</p>
+    <h2 data-rv>把一段京都，<br>留在森林深处。</h2>
+    <button class="btn solid" data-open-book data-rv>开始预订</button>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div><h4>AMAN KYOTO · 安缦京都</h4><p>1 Okitayama Washimine-cho, Kita-ku, Kyoto 603-8458, Japan<br>京都市北区大北山鹫峰町 1</p></div>
+      <div><h4>章节</h4><a href="#garden">庭园</a><a href="#arch">建筑</a><a href="#stay">住宿</a><a href="#dining">餐饮</a><a href="#onsen">温泉</a></div>
+      <div><h4>预订</h4><a href="#" data-open-book>查看空房</a><a href="#seasons">季节指南</a><a href="#access">抵达方式</a></div>
+    </div>
+    <div class="legal">
+      <span>本页为独立设计原型，非安缦官方网站；房价与空房为演示数据。</span>
+      <span>事实依据 aman.com 公开资料（2019 开业 · Kerry Hill Architects · 24 客房）。</span>
+      <span>摄影 © Aman 及各方公开报道图片。</span>
+    </div>
+  </div>
+</footer>
+
+<!-- ============ BOOKING DRAWER ============ -->
+<div class="scrim" id="scrim"></div>
+<aside class="drawer" id="drawer" role="dialog" aria-modal="true" aria-label="预订">
+  <div class="dw-head"><span class="t">预订 · RESERVE</span><button class="x" id="dwClose" aria-label="关闭">✕</button></div>
+  <ol class="dw-steps" id="dwSteps">
+    <li data-s="1">日期</li><li data-s="2">客房</li><li data-s="3">体验</li><li data-s="4">确认</li>
+  </ol>
+  <div class="dw-body">
+    <div class="dw-pane" data-pane="1">
+      <div class="f-row">
+        <div class="f-field"><label>入住 CHECK-IN</label><input type="date" id="dIn"></div>
+        <div class="f-field"><label>退房 CHECK-OUT</label><input type="date" id="dOut"></div>
+      </div>
+      <div class="f-row">
+        <div class="f-field"><label>宾客 GUESTS</label><select id="dG"><option>1</option><option selected>2</option><option>3</option><option>4</option></select></div>
+        <div class="f-field"><label>间数 ROOMS</label><select id="dR"><option selected>1</option><option>2</option></select></div>
+      </div>
+      <p class="dw-note">住店均含：每日早餐、午后抹茶、黄昏开胃酒、庭园向导与温泉入浴。房价为演示参考价，税费已含。</p>
+    </div>
+    <div class="dw-pane" data-pane="2"><div id="roomList"></div></div>
+    <div class="dw-pane" data-pane="3"><div id="extraList"></div>
+      <p class="dw-note">体验价格为演示参考价；标注「每人」者将按宾客人数计。</p>
+    </div>
+    <div class="dw-pane" data-pane="4"><div id="summary"></div></div>
+    <div class="dw-pane" data-pane="5">
+      <div class="done">
+        <h3>预订请求已收到</h3>
+        <div class="code" id="doneCode">AK-2026-0000</div>
+        <div id="doneSum"></div>
+        <p class="dw-note" style="margin-top:18px">本页面为设计原型：提交不会发生真实预订。正式确认以安缦官方渠道为准。</p>
+      </div>
+    </div>
+  </div>
+  <div class="dw-foot">
+    <div class="tot">预估合计<b class="num" id="footTotal">—</b></div>
+    <button class="dw-back" id="dwBack">返回</button>
+    <button class="dw-next" id="dwNext">下一步</button>
+  </div>
+</aside>
+
+<script>
+(function(){
+"use strict";
+var RM = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+/* ---------- data ---------- */
+var ROOMS = [
+ {id:'washi',  nm:'鹫峰别栋', jp:'Washigamine Pavilion', sqm:226, cap:4, rate:560000, tag:'东向 · 俯瞰全园与比叡山 · trekking 小径'},
+ {id:'takaP',  nm:'鹰峰别栋', jp:'Takagamine Pavilion',  sqm:226, cap:4, rate:520000, tag:'悬于六米古石墙 · 紧邻苔阶'},
+ {id:'takaS',  nm:'鹰峰套房', jp:'Takagamine Suite',     sqm:165, cap:3, rate:360000, tag:'独立起居 / 榻榻米 / 西式餐间'},
+ {id:'susukiT',nm:'芒·露台 客房', jp:'Susuki Terrace',   sqm:60,  cap:2, rate:158000, tag:'东向一层 · 私人露台'},
+ {id:'nara',   nm:'楢 客房', jp:'Nara',                  sqm:60,  cap:2, rate:155000, tag:'西向 · 苔墙与山侧树影'},
+ {id:'kaede',  nm:'枫 客房', jp:'Kaede',                 sqm:60,  cap:2, rate:152000, tag:'西向 · 成熟枫树窗景'},
+ {id:'susuki', nm:'芒 客房', jp:'Susuki',                sqm:60,  cap:2, rate:148000, tag:'东向 · 神屋川畔 · 俯瞰苔庭'}
+];
+var EXTRAS = [
+ {id:'kaiseki', nm:'鹰庵 怀石晚餐', pr:42000, per:true,  d:'板前 omakase · 每人'},
+ {id:'spa',     nm:'Aman Spa 90 分钟理疗', pr:48000, per:true, d:'山茶油 / 京都绿茶入方 · 每人'},
+ {id:'forest',  nm:'私人森林浴向导', pr:30000, per:false, d:'90 分钟 · 每组'},
+ {id:'car',     nm:'京都站专车接送', pr:35000, per:false, d:'单程 · 每车'}
+];
+var S = { in:null, out:null, g:2, r:1, room:'susuki', extras:{}, step:1 };
+
+/* ---------- helpers ---------- */
+function $(s,c){return (c||document).querySelector(s)}
+function $$(s,c){return Array.prototype.slice.call((c||document).querySelectorAll(s))}
+function yen(n){return '¥' + n.toLocaleString('ja-JP')}
+function iso(d){return d.toISOString().slice(0,10)}
+function nights(){ if(!S.in||!S.out) return 0; var a=new Date(S.in), b=new Date(S.out); return Math.round((b-a)/864e5); }
+function total(){
+  var room = ROOMS.filter(function(r){return r.id===S.room})[0];
+  var n = nights(), t = room ? room.rate*n*S.r : 0;
+  EXTRAS.forEach(function(e){ if(S.extras[e.id]) t += e.per ? e.pr*S.g : e.pr; });
+  return t;
+}
+
+/* ---------- image fault tolerance ---------- */
+$$('img').forEach(function(im){
+  im.addEventListener('error',function(){ im.classList.add('img-fail'); });
+});
+
+/* ---------- dates default ---------- */
+var today = new Date();
+var dIn = new Date(today.getTime()+7*864e5), dOut = new Date(today.getTime()+9*864e5);
+S.in = iso(dIn); S.out = iso(dOut);
+function syncDates(){
+  $('#hbIn').value = S.in;  $('#dIn').value = S.in;
+  $('#hbOut').value = S.out; $('#dOut').value = S.out;
+  $('#dIn').min = $('#hbIn').min = iso(today);
+  $('#dOut').min = $('#hbOut').min = S.in;
+  $('#hbG').value = S.g; $('#dG').value = S.g;
+}
+
+/* ---------- reveal ---------- */
+var io = new IntersectionObserver(function(es){ es.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('rv-in'); io.unobserve(e.target);} }); },{threshold:.18});
+$$('[data-rv]').forEach(function(el){ io.observe(el); });
+
+/* ---------- parallax ---------- */
+var plx = $$('.plx');
+function onPlx(){
+  if(RM) return;
+  var vh = window.innerHeight;
+  plx.forEach(function(f){
+    var r = f.getBoundingClientRect();
+    if(r.bottom<-80||r.top>vh+80) return;
+    var sp = parseFloat(f.getAttribute('data-plx'))||.1;
+    var y = (r.top + r.height/2 - vh/2) * -sp;
+    var img = f.querySelector('img');
+    if(img) img.style.transform = 'translate3d(0,'+y.toFixed(1)+'px,0) scale(1.12)';
+  });
+}
+var tick=false;
+window.addEventListener('scroll',function(){ if(!tick){ tick=true; requestAnimationFrame(function(){ onPlx(); tick=false; }); } },{passive:true});
+onPlx();
+
+/* ---------- header + rail ---------- */
+var head = $('#siteHead');
+window.addEventListener('scroll',function(){ head.classList.toggle('scrolled', window.scrollY>40); },{passive:true});
+var rail = $('#rail'), railBtns = $$('.rail button');
+var chSecs = ['garden','arch','stay','dining','onsen','seasons','access'].map(function(id){return document.getElementById(id)});
+var chIO = new IntersectionObserver(function(es){
+  es.forEach(function(e){ if(e.isIntersecting){
+    var i = chSecs.indexOf(e.target);
+    railBtns.forEach(function(b,j){ b.classList.toggle('on', j===i); });
+    rail.classList.toggle('dark-mode', e.target.classList.contains('light'));
+  }});
+},{rootMargin:'-45% 0px -45% 0px'});
+chSecs.forEach(function(s){ chIO.observe(s); });
+railBtns.forEach(function(b){ b.addEventListener('click',function(){ document.getElementById(b.getAttribute('data-go')).scrollIntoView({behavior:RM?'auto':'smooth'}); }); });
+
+/* ---------- drawer ---------- */
+var drawer=$('#drawer'), scrim=$('#scrim');
+function openDrawer(){ drawer.classList.add('on'); scrim.classList.add('on'); document.body.style.overflow='hidden'; goStep(S.step); }
+function closeDrawer(){ drawer.classList.remove('on'); scrim.classList.remove('on'); document.body.style.overflow=''; }
+$('#dwClose').addEventListener('click',closeDrawer);
+scrim.addEventListener('click',closeDrawer);
+document.addEventListener('keydown',function(e){ if(e.key==='Escape') closeDrawer(); });
+$$('[data-open-book]').forEach(function(b){ b.addEventListener('click',function(e){ e.preventDefault(); var p=b.getAttribute('data-pick'); if(p) S.room=p; openDrawer(); }); });
+
+function goStep(n){
+  S.step=n;
+  $$('.dw-pane').forEach(function(p){ p.classList.toggle('on', +p.getAttribute('data-pane')===n); });
+  $$('#dwSteps li').forEach(function(li){ li.classList.toggle('on', +li.getAttribute('data-s')===n || (n===5&&+li.getAttribute('data-s')===4)); });
+  $('#dwBack').style.visibility = (n===1||n===5)?'hidden':'visible';
+  $('#dwNext').textContent = n===4 ? '提交预订请求' : (n===5?'关闭':'下一步');
+  if(n===2) renderRooms();
+  if(n===3) renderExtras();
+  if(n===4) renderSummary();
+  updateTotal();
+}
+$('#dwBack').addEventListener('click',function(){ if(S.step>1) goStep(S.step-1); });
+$('#dwNext').addEventListener('click',function(){
+  if(S.step===1){
+    if(!S.in||!S.out||nights()<1){ alert('请选择有效的入住与退房日期（至少一晚）。'); return; }
+    goStep(2);
+  } else if(S.step===2){ if(!S.room){ alert('请选择一间客房。'); return; } goStep(3); }
+  else if(S.step===3){ goStep(4); }
+  else if(S.step===4){ finishBooking(); }
+  else closeDrawer();
+});
+function finishBooking(){
+  var code='AK-2026-'+Math.floor(1000+Math.random()*9000);
+  $('#doneCode').textContent=code;
+  $('#doneSum').innerHTML=$('#summary').innerHTML;
+  goStep(5);
+}
+
+/* inputs -> state */
+[['#hbIn','#dIn','in'],['#hbOut','#dOut','out']].forEach(function(tr){
+  [$(tr[0]),$(tr[1])].forEach(function(inp){
+    inp.addEventListener('change',function(){
+      S[tr[2]]=inp.value;
+      $(tr[0]).value=inp.value; $(tr[1]).value=inp.value;
+      if(tr[2]==='in'){ $('#dOut').min=$('#hbOut').min=inp.value; if(S.out<=S.in){ S.out=''; $('#dOut').value=''; $('#hbOut').value=''; } }
+      updateTotal();
+    });
+  });
+});
+[$('#hbG'),$('#dG')].forEach(function(sel){ sel.addEventListener('change',function(){ S.g=+sel.value; $('#hbG').value=sel.value; $('#dG').value=sel.value; renderRooms(); updateTotal(); }); });
+$('#dR').addEventListener('change',function(){ S.r=+$('#dR').value; updateTotal(); });
+
+/* render rooms */
+function renderRooms(){
+  var html = ROOMS.map(function(r){
+    var full = S.g > r.cap;
+    var sel = S.room===r.id;
+    return '<label class="opt'+(sel?' sel':'')+(full?' dis':'')+'"><input type="radio" name="room" value="'+r.id+'"'+(sel?' checked':'')+(full?' disabled':'')+'>'
+      +'<span class="r1"><span class="nm">'+r.nm+' <span style="font-size:11px;color:var(--tx-d-mut)">'+r.jp+'</span></span><span class="pr num">'+yen(r.rate)+' / 晚</span></span>'
+      +'<span class="r2 num"><span>'+r.sqm+'㎡</span><span>宜住 '+r.cap+' 人</span><span>'+r.tag+'</span>'+(full?'<span style="color:var(--rust)">当前人数超出</span>':'')+'</span></label>';
+  }).join('');
+  $('#roomList').innerHTML=html;
+  $$('#roomList input').forEach(function(i){ i.addEventListener('change',function(){ S.room=i.value; renderRooms(); updateTotal(); }); });
+}
+function renderExtras(){
+  $('#extraList').innerHTML = EXTRAS.map(function(e){
+    return '<label class="opt'+(S.extras[e.id]?' sel':'')+'"><input type="checkbox" data-x="'+e.id+'"'+(S.extras[e.id]?' checked':'')+'>'
+      +'<span class="r1"><span class="nm">'+e.nm+'</span><span class="pr num">'+yen(e.pr)+'</span></span>'
+      +'<span class="r2"><span>'+e.d+'</span></span></label>';
+  }).join('');
+  $$('#extraList input').forEach(function(i){ i.addEventListener('change',function(){ S.extras[i.getAttribute('data-x')]=i.checked; renderExtras(); updateTotal(); }); });
+}
+function renderSummary(){
+  var room = ROOMS.filter(function(r){return r.id===S.room})[0];
+  var n = nights();
+  var rows = '<div class="sum-row"><span class="l">日期</span><span class="num">'+S.in+' → '+S.out+' · '+n+' 晚</span></div>'
+    +'<div class="sum-row"><span class="l">宾客</span><span class="num">'+S.g+' 人 · '+S.r+' 间</span></div>'
+    +'<div class="sum-row"><span class="l">客房</span><span>'+room.nm+' '+room.jp+'</span></div>'
+    +'<div class="sum-row"><span class="l">房费</span><span class="num">'+yen(room.rate)+' × '+n+' 晚'+(S.r>1?' × '+S.r+' 间':'')+'</span></div>';
+  EXTRAS.forEach(function(e){ if(S.extras[e.id]) rows += '<div class="sum-row"><span class="l">体验</span><span>'+e.nm+' · <span class="num">'+yen(e.per?e.pr*S.g:e.pr)+'</span></span></div>'; });
+  rows += '<div class="sum-total"><span>合计（演示参考价）</span><span class="num">'+yen(total())+'</span></div>';
+  $('#summary').innerHTML = rows;
+}
+function updateTotal(){
+  var room = ROOMS.filter(function(r){return r.id===S.room})[0];
+  $('#footTotal').textContent = (room && nights()>0) ? yen(total()) : '—';
+}
+
+/* hero bar submit */
+$('#heroBar').addEventListener('submit',function(e){ e.preventDefault(); openDrawer(); goStep(2); });
+
+syncDates(); renderRooms(); updateTotal(); goStep(1);
+})();
+</script>
+</body>
+</html>

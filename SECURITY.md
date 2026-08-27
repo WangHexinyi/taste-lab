@@ -2,7 +2,7 @@
 
 ## Supported version
 
-Security fixes target the current Skill under `skills/design-taste-frontend/` and the GitHub Pages gallery. Historical snapshots under `archive/` are retained for provenance and may not receive backports.
+Security fixes target the current Prompt Lab release, the current Agent Lab package and the GitHub Pages gallery. Historical snapshots under `archive/` and versioned Agent directories are retained for provenance and may not receive backports.
 
 ## Reporting a vulnerability
 

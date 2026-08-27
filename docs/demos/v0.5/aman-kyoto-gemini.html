@@ -1,0 +1,2371 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Aman Kyoto | 安缦京都 — 鹰峰隐世之所</title>
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&family=Noto+Serif+JP:wght@300;400;600&family=Noto+Serif+SC:wght@300;400;600&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+  <style>
+    /* -------------------------------------------------------------
+       1. DESIGN SYSTEM & TOKENS (KYOTO NATURAL MATERIALITY)
+       ------------------------------------------------------------- */
+    :root {
+      --bg-dark: #121311;
+      --bg-dark-elevated: #1a1c19;
+      --bg-dark-card: #20231f;
+      --bg-light: #f5f3ee;
+      --bg-light-surface: #eae6dd;
+      --bg-light-subtle: #fbfaf7;
+      
+      --text-bright: #fbf9f5;
+      --text-muted: #9e9c94;
+      --text-dim: #686963;
+      
+      --text-dark-primary: #181a17;
+      --text-dark-muted: #62645c;
+      --text-dark-dim: #8e9086;
+      
+      --accent-bronze: #bba282;
+      --accent-bronze-dark: #8c7355;
+      --accent-moss: #3a4537;
+      --accent-moss-light: #52614e;
+      --accent-stone: #d8d4c9;
+      
+      --border-dark: rgba(255, 255, 255, 0.08);
+      --border-dark-hover: rgba(255, 255, 255, 0.2);
+      --border-light: rgba(24, 26, 23, 0.1);
+      
+      --font-display: 'Cinzel', 'Noto Serif SC', serif;
+      --font-serif-sc: 'Noto Serif SC', 'Noto Serif JP', serif;
+      --font-serif-jp: 'Noto Serif JP', serif;
+      --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      
+      --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+      --ease-smooth: cubic-bezier(0.25, 1, 0.5, 1);
+      --transition-base: all 0.4s var(--ease-smooth);
+      --site-max-width: 1440px;
+    }
+
+    /* -------------------------------------------------------------
+       2. RESET & GLOBAL STYLES
+       ------------------------------------------------------------- */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      font-size: 16px;
+      background-color: var(--bg-dark);
+      color: var(--text-bright);
+      text-rendering: optimizeLegibility;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    body {
+      font-family: var(--font-sans);
+      font-weight: 400;
+      line-height: 1.7;
+      overflow-x: hidden;
+      background-color: var(--bg-dark);
+      selection-background-color: var(--accent-bronze);
+      selection-color: #000;
+    }
+
+    ::selection {
+      background: var(--accent-bronze);
+      color: var(--bg-dark);
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+      transition: var(--transition-base);
+    }
+
+    img {
+      max-width: 100%;
+      height: auto;
+      display: block;
+      object-fit: cover;
+    }
+
+    button {
+      font-family: inherit;
+      cursor: pointer;
+      border: none;
+      background: none;
+      outline: none;
+      transition: var(--transition-base);
+    }
+
+    .container {
+      width: 100%;
+      max-width: var(--site-max-width);
+      margin: 0 auto;
+      padding: 0 40px;
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        padding: 0 20px;
+      }
+    }
+
+    /* -------------------------------------------------------------
+       3. NAVIGATION & TICKER HEADER
+       ------------------------------------------------------------- */
+    .site-header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 900;
+      transition: background-color 0.5s var(--ease-smooth), backdrop-filter 0.5s, border-color 0.5s;
+      border-bottom: 1px solid transparent;
+    }
+
+    .site-header.scrolled {
+      background-color: rgba(18, 19, 17, 0.92);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border-dark);
+    }
+
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 90px;
+      transition: height 0.4s var(--ease-smooth);
+    }
+
+    .site-header.scrolled .nav-inner {
+      height: 72px;
+    }
+
+    .nav-brand {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .brand-logo {
+      font-family: var(--font-display);
+      font-size: 1.4rem;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      font-weight: 500;
+      color: var(--text-bright);
+    }
+
+    .brand-sub {
+      font-size: 0.65rem;
+      letter-spacing: 0.25em;
+      color: var(--accent-bronze);
+      font-family: var(--font-serif-sc);
+      margin-top: 2px;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 36px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-size: 0.8rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      font-weight: 400;
+      position: relative;
+      padding: 6px 0;
+    }
+
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 0;
+      height: 1px;
+      background: var(--accent-bronze);
+      transition: width 0.3s var(--ease-out-expo);
+    }
+
+    .nav-links a:hover {
+      color: var(--text-bright);
+    }
+
+    .nav-links a:hover::after {
+      width: 100%;
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .kyoto-time-badge {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.75rem;
+      color: var(--accent-bronze);
+      letter-spacing: 0.08em;
+      padding: 6px 12px;
+      border: 1px solid rgba(187, 162, 130, 0.25);
+      border-radius: 2px;
+      font-family: var(--font-sans);
+    }
+
+    .btn-reserve-nav {
+      padding: 10px 24px;
+      background: var(--accent-bronze);
+      color: var(--bg-dark);
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      border-radius: 1px;
+      transition: background 0.3s, transform 0.2s;
+    }
+
+    .btn-reserve-nav:hover {
+      background: #cfb99b;
+      transform: translateY(-1px);
+    }
+
+    .mobile-menu-btn {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      padding: 8px;
+    }
+
+    .mobile-menu-btn span {
+      width: 24px;
+      height: 1px;
+      background: var(--text-bright);
+    }
+
+    /* -------------------------------------------------------------
+       4. HERO SECTION (ATMOSPHERIC FOREST SANCTUARY)
+       ------------------------------------------------------------- */
+    .hero {
+      position: relative;
+      height: 100vh;
+      min-height: 720px;
+      display: flex;
+      align-items: flex-end;
+      padding-bottom: 90px;
+      overflow: hidden;
+    }
+
+    .hero-media-layer {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+    }
+
+    .hero-media-layer img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transform: scale(1.04);
+      transition: transform 12s cubic-bezier(0.1, 0.8, 0.2, 1);
+      filter: brightness(0.8) contrast(1.05);
+    }
+
+    .hero:hover .hero-media-layer img {
+      transform: scale(1.0);
+    }
+
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        180deg,
+        rgba(18, 19, 17, 0.45) 0%,
+        rgba(18, 19, 17, 0.15) 40%,
+        rgba(18, 19, 17, 0.85) 90%,
+        rgba(18, 19, 17, 1) 100%
+      );
+      z-index: 2;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 3;
+      width: 100%;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.4fr 0.8fr;
+      align-items: flex-end;
+      gap: 40px;
+    }
+
+    .hero-geo-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 0.72rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--accent-bronze);
+      margin-bottom: 18px;
+    }
+
+    .hero-geo-tag::before {
+      content: '';
+      display: inline-block;
+      width: 24px;
+      height: 1px;
+      background: var(--accent-bronze);
+    }
+
+    .hero-title {
+      font-family: var(--font-display);
+      font-size: clamp(2.4rem, 5vw, 4.2rem);
+      line-height: 1.15;
+      font-weight: 400;
+      letter-spacing: 0.06em;
+      color: var(--text-bright);
+      margin-bottom: 20px;
+    }
+
+    .hero-title span.kanji {
+      font-family: var(--font-serif-jp);
+      font-size: 0.75em;
+      font-weight: 300;
+      margin-left: 12px;
+      color: rgba(255, 255, 255, 0.75);
+      letter-spacing: 0.1em;
+    }
+
+    .hero-lead {
+      font-family: var(--font-serif-sc);
+      font-size: 1.05rem;
+      color: #cfceca;
+      max-width: 580px;
+      line-height: 1.9;
+      font-weight: 300;
+    }
+
+    .hero-sidebar {
+      border-left: 1px solid rgba(255, 255, 255, 0.15);
+      padding-left: 32px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .hero-stat-item {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .hero-stat-label {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      color: var(--accent-bronze);
+    }
+
+    .hero-stat-value {
+      font-size: 1.1rem;
+      font-family: var(--font-serif-sc);
+      color: var(--text-bright);
+      margin-top: 4px;
+    }
+
+    /* -------------------------------------------------------------
+       5. INTERACTIVE BOOKING SEARCH BAR (ANCHOR ENGINE)
+       ------------------------------------------------------------- */
+    .booking-bar-wrapper {
+      position: relative;
+      z-index: 100;
+      margin-top: -45px;
+      padding: 0 40px;
+    }
+
+    @media (max-width: 768px) {
+      .booking-bar-wrapper {
+        padding: 0 20px;
+        margin-top: 20px;
+      }
+    }
+
+    .booking-engine-bar {
+      background: var(--bg-dark-elevated);
+      border: 1px solid rgba(187, 162, 130, 0.3);
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.6);
+      display: grid;
+      grid-template-columns: 1.2fr 1.2fr 1.2fr 1.4fr auto;
+      align-items: center;
+      padding: 8px 12px 8px 24px;
+      border-radius: 2px;
+    }
+
+    .engine-field {
+      padding: 14px 18px;
+      border-right: 1px solid var(--border-dark);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      cursor: pointer;
+      position: relative;
+      transition: background-color 0.2s;
+    }
+
+    .engine-field:hover {
+      background: rgba(255, 255, 255, 0.02);
+    }
+
+    .engine-field label {
+      font-size: 0.65rem;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      color: var(--accent-bronze);
+      font-weight: 500;
+      margin-bottom: 4px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .engine-field .field-value {
+      font-size: 0.95rem;
+      color: var(--text-bright);
+      font-weight: 400;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .engine-field .field-meta {
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    .engine-field select {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      cursor: pointer;
+      width: 100%;
+      height: 100%;
+    }
+
+    .btn-engine-check {
+      background: var(--accent-bronze);
+      color: var(--bg-dark);
+      padding: 20px 36px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      border-radius: 1px;
+      white-space: nowrap;
+      transition: all 0.3s;
+    }
+
+    .btn-engine-check:hover {
+      background: #cfb99b;
+      transform: translateY(-1px);
+    }
+
+    /* -------------------------------------------------------------
+       6. CHAPTER 01: ARCHITECTURE & NATURE (THE ESSENCE)
+       ------------------------------------------------------------- */
+    .section-spacing {
+      padding: 130px 0;
+      position: relative;
+    }
+
+    .section-header-compact {
+      margin-bottom: 60px;
+    }
+
+    .section-meta-tag {
+      font-size: 0.72rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--accent-bronze);
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+
+    .section-meta-tag::before {
+      content: '';
+      width: 16px;
+      height: 1px;
+      background: var(--accent-bronze);
+    }
+
+    .section-title-large {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 3.5vw, 3rem);
+      font-weight: 400;
+      letter-spacing: 0.04em;
+      color: var(--text-bright);
+      line-height: 1.25;
+    }
+
+    .section-title-large span.sub-kanji {
+      display: block;
+      font-family: var(--font-serif-jp);
+      font-size: 0.5em;
+      font-weight: 300;
+      color: var(--accent-bronze);
+      letter-spacing: 0.15em;
+      margin-top: 6px;
+    }
+
+    /* Narrative Split Grid */
+    .narrative-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+    }
+
+    .narrative-prose {
+      font-family: var(--font-serif-sc);
+      font-size: 1.05rem;
+      line-height: 2.1;
+      color: #b7b5ad;
+      font-weight: 300;
+    }
+
+    .narrative-prose p + p {
+      margin-top: 24px;
+    }
+
+    .narrative-prose strong {
+      color: var(--text-bright);
+      font-weight: 400;
+    }
+
+    .architecture-lens-stack {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 20px;
+      position: relative;
+    }
+
+    .lens-card {
+      position: relative;
+      overflow: hidden;
+      border-radius: 1px;
+      background: var(--bg-dark-card);
+    }
+
+    .lens-card img {
+      width: 100%;
+      height: 100%;
+      aspect-ratio: 4/5;
+      object-fit: cover;
+      transition: transform 0.8s var(--ease-out-expo), filter 0.8s;
+      filter: brightness(0.9);
+    }
+
+    .lens-card:hover img {
+      transform: scale(1.04);
+      filter: brightness(1);
+    }
+
+    .lens-caption {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      padding: 24px;
+      background: linear-gradient(180deg, transparent 0%, rgba(18, 19, 17, 0.95) 100%);
+    }
+
+    .lens-caption h4 {
+      font-family: var(--font-display);
+      font-size: 0.95rem;
+      letter-spacing: 0.1em;
+      color: var(--text-bright);
+      margin-bottom: 4px;
+    }
+
+    .lens-caption p {
+      font-size: 0.75rem;
+      color: var(--accent-bronze);
+      letter-spacing: 0.05em;
+    }
+
+    /* -------------------------------------------------------------
+       7. CHAPTER 02: PAVILIONS & SUITES (INTERACTIVE EXPLORER)
+       ------------------------------------------------------------- */
+    .section-light-wrapper {
+      background-color: var(--bg-light);
+      color: var(--text-dark-primary);
+      padding: 130px 0;
+    }
+
+    .section-light-wrapper .section-meta-tag {
+      color: var(--accent-bronze-dark);
+    }
+
+    .section-light-wrapper .section-meta-tag::before {
+      background: var(--accent-bronze-dark);
+    }
+
+    .section-light-wrapper .section-title-large {
+      color: var(--text-dark-primary);
+    }
+
+    .section-light-wrapper .section-title-large span.sub-kanji {
+      color: var(--accent-bronze-dark);
+    }
+
+    /* Pavilion Tab Controller */
+    .pavilion-controls {
+      display: flex;
+      gap: 12px;
+      border-bottom: 1px solid var(--border-light);
+      padding-bottom: 20px;
+      margin-bottom: 50px;
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+
+    .pavilion-controls::-webkit-scrollbar {
+      display: none;
+    }
+
+    .tab-btn {
+      padding: 10px 24px;
+      font-family: var(--font-display);
+      font-size: 0.85rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--text-dark-muted);
+      border: 1px solid transparent;
+      border-radius: 1px;
+      white-space: nowrap;
+      transition: all 0.3s;
+    }
+
+    .tab-btn:hover {
+      color: var(--text-dark-primary);
+    }
+
+    .tab-btn.active {
+      background: var(--text-dark-primary);
+      color: var(--bg-light);
+      border-color: var(--text-dark-primary);
+    }
+
+    /* Pavilion Showcase Showcase Grid */
+    .pavilion-display-card {
+      display: grid;
+      grid-template-columns: 1.3fr 1fr;
+      gap: 60px;
+      align-items: center;
+      background: #ffffff;
+      border: 1px solid var(--border-light);
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.04);
+      overflow: hidden;
+    }
+
+    .pavilion-gallery {
+      position: relative;
+      height: 100%;
+      min-height: 480px;
+    }
+
+    .pavilion-gallery img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .pavilion-specs-pane {
+      padding: 50px 60px 50px 0;
+    }
+
+    @media (max-width: 900px) {
+      .pavilion-display-card {
+        grid-template-columns: 1fr;
+      }
+      .pavilion-specs-pane {
+        padding: 40px;
+      }
+    }
+
+    .pavilion-type-badge {
+      display: inline-block;
+      font-size: 0.68rem;
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      color: var(--accent-bronze-dark);
+      font-weight: 600;
+      margin-bottom: 12px;
+    }
+
+    .pavilion-name {
+      font-family: var(--font-display);
+      font-size: 2.2rem;
+      letter-spacing: 0.04em;
+      color: var(--text-dark-primary);
+      margin-bottom: 8px;
+    }
+
+    .pavilion-name-jp {
+      font-family: var(--font-serif-jp);
+      font-size: 1.1rem;
+      color: var(--text-dark-muted);
+      margin-bottom: 20px;
+    }
+
+    .pavilion-desc {
+      font-family: var(--font-serif-sc);
+      font-size: 0.95rem;
+      line-height: 1.9;
+      color: var(--text-dark-muted);
+      margin-bottom: 30px;
+    }
+
+    .spec-matrix {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      padding: 24px 0;
+      border-top: 1px solid var(--border-light);
+      border-bottom: 1px solid var(--border-light);
+      margin-bottom: 36px;
+    }
+
+    .spec-item {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .spec-label {
+      font-size: 0.65rem;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: var(--text-dark-dim);
+    }
+
+    .spec-val {
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: var(--text-dark-primary);
+      margin-top: 4px;
+      font-family: var(--font-sans);
+    }
+
+    .pavilion-action-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    .price-anchor {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .price-anchor .from-label {
+      font-size: 0.65rem;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: var(--text-dark-dim);
+    }
+
+    .price-anchor .amount {
+      font-size: 1.5rem;
+      font-family: var(--font-sans);
+      font-weight: 600;
+      color: var(--text-dark-primary);
+    }
+
+    .price-anchor .amount span {
+      font-size: 0.8rem;
+      font-weight: 400;
+      color: var(--text-dark-muted);
+    }
+
+    .btn-select-suite {
+      padding: 14px 32px;
+      background: var(--text-dark-primary);
+      color: #ffffff;
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      border-radius: 1px;
+      transition: all 0.3s;
+    }
+
+    .btn-select-suite:hover {
+      background: var(--accent-bronze-dark);
+    }
+
+    /* -------------------------------------------------------------
+       8. CHAPTER 03: GASTRONOMY (THE LIVING PAVILION & TAKA-AN)
+       ------------------------------------------------------------- */
+    .dining-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+      margin-top: 60px;
+    }
+
+    .dining-card {
+      background: var(--bg-dark-card);
+      border: 1px solid var(--border-dark);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.4s var(--ease-smooth), border-color 0.4s;
+    }
+
+    .dining-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(187, 162, 130, 0.4);
+    }
+
+    .dining-media-frame {
+      position: relative;
+      width: 100%;
+      height: 380px;
+      overflow: hidden;
+    }
+
+    .dining-media-frame img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.8s var(--ease-out-expo);
+    }
+
+    .dining-card:hover .dining-media-frame img {
+      transform: scale(1.05);
+    }
+
+    .dining-tag {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      background: rgba(18, 19, 17, 0.85);
+      backdrop-filter: blur(8px);
+      padding: 6px 14px;
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent-bronze);
+      border: 1px solid var(--border-dark);
+    }
+
+    .dining-body {
+      padding: 40px;
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .dining-title {
+      font-family: var(--font-display);
+      font-size: 1.6rem;
+      letter-spacing: 0.05em;
+      color: var(--text-bright);
+      margin-bottom: 6px;
+    }
+
+    .dining-subtitle {
+      font-family: var(--font-serif-jp);
+      font-size: 0.9rem;
+      color: var(--accent-bronze);
+      margin-bottom: 18px;
+    }
+
+    .dining-prose {
+      font-family: var(--font-serif-sc);
+      font-size: 0.95rem;
+      line-height: 1.85;
+      color: #a8a69e;
+      margin-bottom: 28px;
+    }
+
+    .dining-highlights {
+      list-style: none;
+      border-top: 1px solid var(--border-dark);
+      padding-top: 20px;
+      margin-bottom: 28px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .dining-highlights li {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .dining-highlights li::before {
+      content: '—';
+      color: var(--accent-bronze);
+    }
+
+    .btn-reserve-table {
+      align-self: flex-start;
+      padding: 10px 24px;
+      border: 1px solid var(--border-dark-hover);
+      color: var(--text-bright);
+      font-size: 0.72rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      transition: all 0.3s;
+    }
+
+    .btn-reserve-table:hover {
+      background: var(--accent-bronze);
+      color: var(--bg-dark);
+      border-color: var(--accent-bronze);
+    }
+
+    /* -------------------------------------------------------------
+       9. CHAPTER 04: ONSEN & FOREST WELLNESS (SANCTUARY FOR SENSES)
+       ------------------------------------------------------------- */
+    .wellness-immersion {
+      position: relative;
+      background: var(--bg-dark-elevated);
+      border-top: 1px solid var(--border-dark);
+      border-bottom: 1px solid var(--border-dark);
+      overflow: hidden;
+    }
+
+    .wellness-layout {
+      display: grid;
+      grid-template-columns: 1fr 1.2fr;
+      gap: 70px;
+      align-items: center;
+    }
+
+    .wellness-info {
+      padding: 100px 0;
+    }
+
+    .wellness-media-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      padding: 60px 0;
+    }
+
+    .wellness-media-item {
+      position: relative;
+      overflow: hidden;
+      border-radius: 1px;
+    }
+
+    .wellness-media-item:first-child {
+      transform: translateY(30px);
+    }
+
+    .wellness-media-item img {
+      width: 100%;
+      height: 380px;
+      object-fit: cover;
+      filter: contrast(1.05) brightness(0.9);
+      transition: transform 0.6s var(--ease-smooth);
+    }
+
+    .wellness-media-item:hover img {
+      transform: scale(1.03);
+    }
+
+    .wellness-feature-list {
+      margin: 36px 0;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+
+    .wellness-pill {
+      border: 1px solid var(--border-dark);
+      background: rgba(255, 255, 255, 0.02);
+      padding: 18px 20px;
+    }
+
+    .wellness-pill h5 {
+      font-family: var(--font-display);
+      font-size: 0.85rem;
+      letter-spacing: 0.08em;
+      color: var(--accent-bronze);
+      margin-bottom: 6px;
+    }
+
+    .wellness-pill p {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    /* -------------------------------------------------------------
+       10. CHAPTER 05: CURATED KYOTO JOURNEYS
+       ------------------------------------------------------------- */
+    .journeys-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      margin-top: 50px;
+    }
+
+    .journey-card {
+      background: var(--bg-dark-card);
+      border: 1px solid var(--border-dark);
+      padding: 36px 30px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-height: 320px;
+      position: relative;
+      transition: all 0.3s;
+    }
+
+    .journey-card:hover {
+      border-color: var(--accent-bronze);
+      background: #242722;
+    }
+
+    .journey-index {
+      font-family: var(--font-display);
+      font-size: 0.8rem;
+      color: var(--accent-bronze);
+      letter-spacing: 0.2em;
+      margin-bottom: 24px;
+    }
+
+    .journey-name {
+      font-family: var(--font-serif-sc);
+      font-size: 1.25rem;
+      color: var(--text-bright);
+      margin-bottom: 12px;
+      font-weight: 400;
+    }
+
+    .journey-desc {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      line-height: 1.8;
+      margin-bottom: 24px;
+    }
+
+    .journey-duration {
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: var(--accent-bronze);
+      border-top: 1px solid var(--border-dark);
+      padding-top: 16px;
+    }
+
+    /* -------------------------------------------------------------
+       11. INTERACTIVE RESERVATION DRAWER (MODAL EXPERT SYSTEM)
+       ------------------------------------------------------------- */
+    .booking-modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(10, 11, 9, 0.85);
+      backdrop-filter: blur(8px);
+      z-index: 1000;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.4s var(--ease-smooth);
+    }
+
+    .booking-modal-backdrop.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .booking-drawer {
+      position: fixed;
+      top: 0;
+      right: 0;
+      width: 100%;
+      max-width: 640px;
+      height: 100vh;
+      background: var(--bg-dark-elevated);
+      border-left: 1px solid rgba(187, 162, 130, 0.3);
+      z-index: 1001;
+      display: flex;
+      flex-direction: column;
+      transform: translateX(100%);
+      transition: transform 0.5s var(--ease-out-expo);
+      box-shadow: -20px 0 60px rgba(0, 0, 0, 0.8);
+    }
+
+    .booking-drawer.active {
+      transform: translateX(0);
+    }
+
+    .drawer-header {
+      padding: 30px 40px;
+      border-bottom: 1px solid var(--border-dark);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: #151614;
+    }
+
+    .drawer-header h3 {
+      font-family: var(--font-display);
+      font-size: 1.25rem;
+      letter-spacing: 0.12em;
+      color: var(--text-bright);
+    }
+
+    .drawer-header p {
+      font-size: 0.75rem;
+      color: var(--accent-bronze);
+      letter-spacing: 0.1em;
+      margin-top: 2px;
+    }
+
+    .btn-close-drawer {
+      font-size: 1.5rem;
+      color: var(--text-muted);
+      padding: 4px;
+      line-height: 1;
+    }
+
+    .btn-close-drawer:hover {
+      color: var(--text-bright);
+    }
+
+    .drawer-body {
+      padding: 40px;
+      overflow-y: auto;
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 32px;
+    }
+
+    .drawer-section-title {
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      color: var(--accent-bronze);
+      margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .drawer-section-title::after {
+      content: '';
+      flex-grow: 1;
+      height: 1px;
+      background: var(--border-dark);
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .form-group label {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--text-muted);
+    }
+
+    .form-input, .form-select {
+      background: var(--bg-dark-card);
+      border: 1px solid var(--border-dark);
+      color: var(--text-bright);
+      padding: 12px 14px;
+      font-size: 0.85rem;
+      border-radius: 1px;
+      font-family: inherit;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .form-input:focus, .form-select:focus {
+      border-color: var(--accent-bronze);
+    }
+
+    /* Add-on experiences selector in drawer */
+    .addon-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 16px;
+      border: 1px solid var(--border-dark);
+      background: rgba(255, 255, 255, 0.015);
+      border-radius: 1px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .addon-item:hover {
+      background: rgba(255, 255, 255, 0.04);
+      border-color: var(--border-dark-hover);
+    }
+
+    .addon-item.selected {
+      border-color: var(--accent-bronze);
+      background: rgba(187, 162, 130, 0.08);
+    }
+
+    .addon-details h6 {
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: var(--text-bright);
+    }
+
+    .addon-details span {
+      font-size: 0.72rem;
+      color: var(--text-muted);
+    }
+
+    .addon-price {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--accent-bronze);
+    }
+
+    /* Calculation Receipt Box */
+    .pricing-summary-card {
+      background: #171916;
+      border: 1px solid var(--border-dark);
+      padding: 24px;
+      border-radius: 1px;
+    }
+
+    .summary-line {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      margin-bottom: 8px;
+    }
+
+    .summary-line.total {
+      border-top: 1px solid var(--border-dark);
+      padding-top: 14px;
+      margin-top: 14px;
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: var(--text-bright);
+    }
+
+    .summary-line.total .total-price {
+      color: var(--accent-bronze);
+      font-size: 1.3rem;
+    }
+
+    .drawer-footer {
+      padding: 24px 40px;
+      border-top: 1px solid var(--border-dark);
+      background: #151614;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .btn-confirm-booking {
+      width: 100%;
+      padding: 16px;
+      background: var(--accent-bronze);
+      color: var(--bg-dark);
+      font-size: 0.85rem;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      border-radius: 1px;
+      transition: all 0.3s;
+    }
+
+    .btn-confirm-booking:hover {
+      background: #cfb99b;
+    }
+
+    .booking-guarantee-note {
+      text-align: center;
+      font-size: 0.68rem;
+      color: var(--text-dim);
+      letter-spacing: 0.05em;
+    }
+
+    /* Booking Confirmation Modal */
+    .confirmation-toast {
+      position: fixed;
+      top: 30px;
+      left: 50%;
+      transform: translateX(-50%) translateY(-100px);
+      background: var(--accent-moss);
+      color: #fff;
+      padding: 16px 32px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 2px;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+      z-index: 2000;
+      font-size: 0.85rem;
+      letter-spacing: 0.08em;
+      transition: transform 0.5s var(--ease-out-expo);
+    }
+
+    .confirmation-toast.show {
+      transform: translateX(-50%) translateY(0);
+    }
+
+    /* -------------------------------------------------------------
+       12. FOOTER & LOCATION SANCTUARY DETAILS
+       ------------------------------------------------------------- */
+    .site-footer {
+      background: #0d0e0c;
+      border-top: 1px solid var(--border-dark);
+      padding: 90px 0 40px;
+      color: var(--text-muted);
+    }
+
+    .footer-top-grid {
+      display: grid;
+      grid-template-columns: 1.5fr 1fr 1fr 1fr;
+      gap: 60px;
+      margin-bottom: 70px;
+    }
+
+    .footer-brand h4 {
+      font-family: var(--font-display);
+      font-size: 1.4rem;
+      letter-spacing: 0.25em;
+      color: var(--text-bright);
+      margin-bottom: 8px;
+    }
+
+    .footer-brand p {
+      font-size: 0.82rem;
+      color: var(--accent-bronze);
+      line-height: 1.8;
+      max-width: 320px;
+    }
+
+    .footer-col h5 {
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      color: var(--text-bright);
+      margin-bottom: 20px;
+    }
+
+    .footer-col ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .footer-col a {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+    }
+
+    .footer-col a:hover {
+      color: var(--accent-bronze);
+    }
+
+    .footer-bottom-bar {
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+      padding-top: 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.72rem;
+      color: var(--text-dim);
+    }
+
+    /* -------------------------------------------------------------
+       13. RESPONSIVE BREAKPOINTS
+       ------------------------------------------------------------- */
+    @media (max-width: 1024px) {
+      .hero-grid {
+        grid-template-columns: 1fr;
+      }
+      .booking-engine-bar {
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+        padding: 20px;
+      }
+      .btn-engine-check {
+        grid-column: span 2;
+      }
+      .narrative-grid {
+        grid-template-columns: 1fr;
+        gap: 40px;
+      }
+      .wellness-layout {
+        grid-template-columns: 1fr;
+      }
+      .dining-grid, .journeys-grid {
+        grid-template-columns: 1fr;
+      }
+      .footer-top-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 40px;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .nav-links, .kyoto-time-badge {
+        display: none;
+      }
+      .mobile-menu-btn {
+        display: flex;
+      }
+      .booking-engine-bar {
+        grid-template-columns: 1fr;
+      }
+      .btn-engine-check {
+        grid-column: span 1;
+      }
+      .footer-top-grid {
+        grid-template-columns: 1fr;
+      }
+      .booking-drawer {
+        max-width: 100%;
+      }
+      .drawer-body, .drawer-header, .drawer-footer {
+        padding: 24px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ============================================================
+       SITE HEADER (STICKY LUXURY NAVIGATION & KYOTO TIME)
+       ============================================================ -->
+  <header class="site-header" id="siteHeader">
+    <div class="container">
+      <nav class="nav-inner">
+        <a href="#hero" class="nav-brand">
+          <span class="brand-logo">Aman Kyoto</span>
+          <span class="brand-sub">安缦京都 · 鷹峯隠里</span>
+        </a>
+
+        <ul class="nav-links">
+          <li><a href="#sanctuary">隐世庄园</a></li>
+          <li><a href="#pavilions">庭阁房型</a></li>
+          <li><a href="#dining">京都旬味</a></li>
+          <li><a href="#wellness">天然温泉</a></li>
+          <li><a href="#journeys">私享探索</a></li>
+        </ul>
+
+        <div class="nav-actions">
+          <div class="kyoto-time-badge" id="kyotoClock">
+            <span>KYOTO</span>
+            <span id="kyotoTimeDisplay">--:-- JST</span>
+          </div>
+          <button class="btn-reserve-nav" onclick="openBookingDrawer()">预订客房</button>
+          <button class="mobile-menu-btn" onclick="openBookingDrawer()" aria-label="Toggle Menu">
+            <span></span>
+            <span></span>
+            <span></span>
+          </button>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ============================================================
+       HERO CANVAS (ATMOSPHERIC ARRIVAL)
+       ============================================================ -->
+  <section class="hero" id="hero">
+    <div class="hero-media-layer">
+      <!-- Authentic Kyoto forested moss stone garden -->
+      <img src="https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?q=85&w=2400&auto=format&fit=crop" alt="Aman Kyoto Secret Forest Path and Moss Garden" />
+    </div>
+    <div class="hero-overlay"></div>
+
+    <div class="container hero-content">
+      <div class="hero-grid">
+        <div>
+          <div class="hero-geo-tag">Takagamine, North Kyoto · 35.0542° N, 135.7289° E</div>
+          <h1 class="hero-title">
+            Forest Sanctuary<br/>
+            Hidden in Kyoto<span class="kanji">鷹峯深林</span>
+          </h1>
+          <p class="hero-lead">
+            坐落于京都左大文字山脚下的鹰峰隐世森林中。Kerry Hill 以现代极简主义致敬传统日式旅馆，在八十英亩密林与青苔巨石间，构筑当代静谧居所。
+          </p>
+        </div>
+
+        <div class="hero-sidebar">
+          <div class="hero-stat-item">
+            <span class="hero-stat-label">Estate Area</span>
+            <span class="hero-stat-value">32 公顷秘密森林与苔藓庭园</span>
+          </div>
+          <div class="hero-stat-item">
+            <span class="hero-stat-label">Architectural Vision</span>
+            <span class="hero-stat-value">Kerry Hill 建筑事务所遗作</span>
+          </div>
+          <div class="hero-stat-item">
+            <span class="hero-stat-label">Water Source</span>
+            <span class="hero-stat-value">地下天然矿物偏硅酸温泉涌泉</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       INTERACTIVE BOOKING SEARCH ENGINE (DESKTOP / MOBILE STICKY)
+       ============================================================ -->
+  <div class="booking-bar-wrapper">
+    <div class="container">
+      <div class="booking-engine-bar">
+        
+        <!-- Check In / Out -->
+        <div class="engine-field">
+          <label>
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+            入住 / 退房日期
+          </label>
+          <div class="field-value" id="barDateRange">2026.10.15 — 10.17</div>
+          <div class="field-meta">共 2 晚 · 金秋红叶季</div>
+          <input type="date" id="dateInputTrigger" style="position:absolute;opacity:0;inset:0;cursor:pointer;" onchange="handleDateSelect(this.value)">
+        </div>
+
+        <!-- Suite Selector -->
+        <div class="engine-field">
+          <label>
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path></svg>
+            下榻房型
+          </label>
+          <div class="field-value" id="barPavilionName">萤阁 Hotaru Pavilion</div>
+          <div class="field-meta">60 m² · 森林苔庭景观</div>
+          <select id="barPavilionSelect" onchange="updateEnginePavilion(this.value)">
+            <option value="hotaru">萤阁 (Hotaru Pavilion)</option>
+            <option value="kaede">枫阁 (Kaede Pavilion)</option>
+            <option value="nara">楢阁 (Nara Pavilion)</option>
+            <option value="washigamine">鹫峰阁 (Washigamine Villa)</option>
+          </select>
+        </div>
+
+        <!-- Guests Selector -->
+        <div class="engine-field">
+          <label>
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle></svg>
+            下榻人数
+          </label>
+          <div class="field-value" id="barGuestsDisplay">2 位成人, 0 位儿童</div>
+          <div class="field-meta">特大床 / 桧木风吕</div>
+          <select id="barGuestsSelect" onchange="updateGuestsDisplay(this.value)">
+            <option value="1">1 位贵宾</option>
+            <option value="2" selected>2 位成人</option>
+            <option value="3">3 位贵宾 (含加床)</option>
+            <option value="4">4 位贵宾 (适合连通套房)</option>
+          </select>
+        </div>
+
+        <!-- Curated Inclusions -->
+        <div class="engine-field">
+          <label>
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 14 14"></polyline></svg>
+            礼遇与体验
+          </label>
+          <div class="field-value" id="barExperienceBadge">每日京都京料理早餐 + 私享温泉</div>
+          <div class="field-meta">含安缦尊享管家接送礼遇</div>
+        </div>
+
+        <!-- Submit CTA -->
+        <button class="btn-engine-check" onclick="openBookingDrawer()">
+          查询实时空房
+        </button>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================================
+       CHAPTER 01: THE SANCTUARY & ARCHITECTURE
+       ============================================================ -->
+  <section class="section-spacing" id="sanctuary">
+    <div class="container">
+      
+      <div class="section-header-compact">
+        <div class="section-meta-tag">Chapter 01 · Architectural Philosophy</div>
+        <h2 class="section-title-large">
+          A Living Heritage in Moss & Cedar
+          <span class="sub-kanji">巨石、青苔与雪松木构的永恒对话</span>
+        </h2>
+      </div>
+
+      <div class="narrative-grid">
+        <div class="narrative-prose">
+          <p>
+            安缦京都的土地原为日本著名和服织造收藏家的私家私家庭园。几十年来，未被破坏的天然密林、盘根错节的日本雪松、漫山遍野的珍稀青苔，以及从日本各地搜集而来的巨型花岗岩铺路石，共同构建了一座宛如时间停滞的密境。
+          </p>
+          <p>
+            已故建筑大师 <strong>Kerry Hill</strong> 采用极其克制的几何形式，将 26 间独立的现代木质亭阁轻盈置于林间台地。建筑外立面通体采用深色雪松木格栅，与周围树林的垂直肌理完美融合；落地玻璃窗将流动的四季光影与苍翠苔藓彻底引入室内。
+          </p>
+          <p>
+            这里不仅是一处避世之所，更是一座隐于京都北郊的建筑艺术馆——微风吹拂树梢的声音、山泉流经石缝的脆鸣，构成没有喧嚣的静谧韵律。
+          </p>
+        </div>
+
+        <div class="architecture-lens-stack">
+          <div class="lens-card">
+            <!-- Modern Japanese minimalist pavilion in forest -->
+            <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=85&w=1200&auto=format&fit=crop" alt="Aman Kyoto Pavilion Exterior Architecture" />
+            <div class="lens-caption">
+              <h4>亭阁外立面设计</h4>
+              <p>深炭色雪松格栅与几何极简轮廓</p>
+            </div>
+          </div>
+          <div class="lens-card" style="margin-top: 40px;">
+            <!-- Authentic moss stones path -->
+            <img src="https://images.unsplash.com/photo-1503899036084-c55cdd92da26?q=85&w=1000&auto=format&fit=crop" alt="Historical Granite Stone Pathways in Kyoto" />
+            <div class="lens-caption">
+              <h4>古董花岗岩古道</h4>
+              <p>承载数十年苔藓滋养的石板路</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ============================================================
+       CHAPTER 02: PAVILIONS & SUITES (INTERACTIVE EXPLORER)
+       ============================================================ -->
+  <section class="section-light-wrapper" id="pavilions">
+    <div class="container">
+
+      <div class="section-header-compact">
+        <div class="section-meta-tag">Chapter 02 · Accommodations</div>
+        <h2 class="section-title-large">
+          The Forest Pavilions
+          <span class="sub-kanji">极简侘寂与桧木香气充盈的隐世空间</span>
+        </h2>
+      </div>
+
+      <!-- Interactive Tab Selector -->
+      <div class="pavilion-controls">
+        <button class="tab-btn active" onclick="switchPavilionTab('hotaru', this)">萤阁 Hotaru</button>
+        <button class="tab-btn" onclick="switchPavilionTab('kaede', this)">枫阁 Kaede</button>
+        <button class="tab-btn" onclick="switchPavilionTab('nara', this)">楢阁 Nara</button>
+        <button class="tab-btn" onclick="switchPavilionTab('washigamine', this)">鹫峰阁 Washigamine</button>
+      </div>
+
+      <!-- Dynamic Pavilion Showcase Card -->
+      <div class="pavilion-display-card" id="pavilionCardContent">
+        
+        <div class="pavilion-gallery">
+          <img id="pavilionImage" src="https://images.unsplash.com/photo-1590490360182-c33d57733427?q=85&w=1600&auto=format&fit=crop" alt="Hotaru Pavilion interior with forest view" />
+        </div>
+
+        <div class="pavilion-specs-pane">
+          <span class="pavilion-type-badge" id="pavilionTag">Signature Garden Pavilion</span>
+          <h3 class="pavilion-name" id="pavilionTitle">Hotaru Pavilion</h3>
+          <div class="pavilion-name-jp" id="pavilionJpTitle">萤阁 · 临溪近林</div>
+          
+          <p class="pavilion-desc" id="pavilionDesc">
+            位于度假村中心地势较低处，紧邻清幽山涧溪流。房内配有定制落地大玻璃窗、手工和纸灯笼屏风与传统榻榻米起居区，宽敞的浴室中央设有一整块日本扁柏（桧木）雕琢而成的深浸式浴缸。
+          </p>
+
+          <div class="spec-matrix">
+            <div class="spec-item">
+              <span class="spec-label">室内面积</span>
+              <span class="spec-val" id="specArea">60 平方米</span>
+            </div>
+            <div class="spec-item">
+              <span class="spec-label">景观视角</span>
+              <span class="spec-val" id="specView">青苔庭园 / 山涧</span>
+            </div>
+            <div class="spec-item">
+              <span class="spec-label">特色配置</span>
+              <span class="spec-val" id="specBath">纯天然桧木浴缸</span>
+            </div>
+          </div>
+
+          <div class="pavilion-action-row">
+            <div class="price-anchor">
+              <span class="from-label">每晚参考价格</span>
+              <span class="amount" id="specPrice">¥ 280,000 <span>/ 晚起 (含税费及早餐)</span></span>
+            </div>
+            <button class="btn-select-suite" onclick="selectAndBookCurrentPavilion()">立即配置此房型</button>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ============================================================
+       CHAPTER 03: GASTRONOMY (THE LIVING PAVILION & TAKA-AN)
+       ============================================================ -->
+  <section class="section-spacing" id="dining">
+    <div class="container">
+
+      <div class="section-header-compact">
+        <div class="section-meta-tag">Chapter 03 · Culinary Artistry</div>
+        <h2 class="section-title-large">
+          The Seasonal Flavours of Kyoto
+          <span class="sub-kanji">致敬本阿弥光悦的艺术美学与旬之味觉</span>
+        </h2>
+      </div>
+
+      <div class="dining-grid">
+        
+        <!-- Dining 01: The Living Pavilion by Aman -->
+        <article class="dining-card">
+          <div class="dining-media-frame">
+            <span class="dining-tag">All-Day Dining & Afternoon Tea</span>
+            <img src="https://images.unsplash.com/photo-1553621042-f6e147245754?q=85&w=1200&auto=format&fit=crop" alt="The Living Pavilion by Aman Dining Experience" />
+          </div>
+          <div class="dining-body">
+            <div>
+              <h3 class="dining-title">The Living Pavilion by Aman</h3>
+              <div class="dining-subtitle">安缦起居阁 · 中央壁炉与森林露台</div>
+              <p class="dining-prose">
+                起居阁坐落于庭园中央，设有舒适的室内中央壁炉与户外林间露台。提供以京都本地传统“家庭料理（Obanzai）”为灵感的元气早餐、定制西式美馔，以及盛装于传统双层重箱（Jubako）中的时令下午茶点。
+              </p>
+              <ul class="dining-highlights">
+                <li>京丹后有机农场直供晨采蔬菜</li>
+                <li>宇治手采玉露与定制抹茶和菓子</li>
+                <li>全天候开放，落地玻璃饱览枫林四季变幻</li>
+              </ul>
+            </div>
+            <button class="btn-reserve-table" onclick="openBookingDrawer()">预约起居阁席位</button>
+          </div>
+        </article>
+
+        <!-- Dining 02: Taka-an (Kaiseki) -->
+        <article class="dining-card">
+          <div class="dining-media-frame">
+            <span class="dining-tag">Bespoke Kaiseki & Omakase</span>
+            <img src="https://images.unsplash.com/photo-1579871494447-9811cf80d66c?q=85&w=1200&auto=format&fit=crop" alt="Taka-an Kaiseki Artistry" />
+          </div>
+          <div class="dining-body">
+            <div>
+              <h3 class="dining-title">Taka-an</h3>
+              <div class="dining-subtitle">鹰庵 · 顶级正统怀石料理</div>
+              <p class="dining-prose">
+                致敬 16 世纪在鹰峰开创艺术村落的国宝级宗师本阿弥光悦。主厨将严选的日本顶级食材（如若狭湾野生鲜鱼、近江特选和牛、秋季丹波松茸）转化为视觉与味蕾的双重诗篇。
+              </p>
+              <ul class="dining-highlights">
+                <li>每日仅设少量专属吧台与私密包厢席位</li>
+                <li>严格遵循“一期一会”的时令怀石菜单</li>
+                <li>搭配京都伏见清酒酿造厂限量私藏纯米大吟酿</li>
+              </ul>
+            </div>
+            <button class="btn-reserve-table" onclick="openBookingDrawer()">预约鹰庵怀石晚餐</button>
+          </div>
+        </article>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ============================================================
+       CHAPTER 04: ONSEN & FOREST WELLNESS (SANCTUARY FOR SENSES)
+       ============================================================ -->
+  <section class="wellness-immersion" id="wellness">
+    <div class="container">
+      <div class="wellness-layout">
+        
+        <div class="wellness-info">
+          <div class="section-meta-tag">Chapter 04 · Thermal Wellness</div>
+          <h2 class="section-title-large">
+            Pure Mineral Onsen
+            <span class="sub-kanji">源自地底深处的纯净偏硅酸矿物温泉</span>
+          </h2>
+          
+          <div class="narrative-prose" style="margin-top: 24px;">
+            <p>
+              安缦京都的水疗中心从当地天然涌出的温泉水中汲取能量。富含偏硅酸等天然矿物质的温泉水温润亲肤，具有极佳的舒缓与焕活效果。
+            </p>
+            <p>
+              露天温泉池由当地花岗岩巨石环抱，四周被参天雪松与枫树遮蔽。在此浸浴，伴随袅袅升起的温泉水汽与树叶摩挲的声响，感受身体与京都大自然的彻底融合。
+            </p>
+          </div>
+
+          <div class="wellness-feature-list">
+            <div class="wellness-pill">
+              <h5>天然露天岩风吕</h5>
+              <p>冷热矿物温泉交替，四季皆可在林间感受私密露天汤泉。</p>
+            </div>
+            <div class="wellness-pill">
+              <h5>京都绿茶及清酒水疗</h5>
+              <p>结合本地手工压榨山茶花油、京都绿茶与温热清酒的焕活理疗。</p>
+            </div>
+          </div>
+
+          <button class="btn-reserve-table" onclick="openBookingDrawer()" style="background: var(--accent-bronze); color: var(--bg-dark); border-color: var(--accent-bronze);">预约私享温泉疗程</button>
+        </div>
+
+        <div class="wellness-media-grid">
+          <div class="wellness-media-item">
+            <!-- Steaming outdoor stone onsen in nature -->
+            <img src="https://images.unsplash.com/photo-1540555700478-4be289fbecef?q=85&w=1000&auto=format&fit=crop" alt="Natural Stone Onsen Hot Spring in Forest" />
+          </div>
+          <div class="wellness-media-item">
+            <!-- Minimalist luxury ofuro bath / spa details -->
+            <img src="https://images.unsplash.com/photo-1584622650111-993a426fbf0a?q=85&w=1000&auto=format&fit=crop" alt="Aman Kyoto Hinoki Cypress Bath Experience" />
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       CHAPTER 05: CURATED KYOTO JOURNEYS
+       ============================================================ -->
+  <section class="section-spacing" id="journeys">
+    <div class="container">
+
+      <div class="section-header-compact">
+        <div class="section-meta-tag">Chapter 05 · Exclusive Aman Journeys</div>
+        <h2 class="section-title-large">
+          Curated Forest & Cultural Encounters
+          <span class="sub-kanji">仅向安缦住客开放的古都非公开展览与修禅体验</span>
+        </h2>
+      </div>
+
+      <div class="journeys-grid">
+        
+        <div class="journey-card">
+          <div>
+            <div class="journey-index">01 / ZEN MEDITATION</div>
+            <h3 class="journey-name">大德寺塔头清晨私人参禅</h3>
+            <p class="journey-desc">
+              在古刹尚未对公众开放的清晨，由安缦专属向导陪同前往大德寺私人古塔头。在住持带领下静坐修禅，并体验正统里千家茶道仪式。
+            </p>
+          </div>
+          <div class="journey-duration">时长 3.5 小时 · 需提前 7 天预约</div>
+        </div>
+
+        <div class="journey-card">
+          <div>
+            <div class="journey-index">02 / NATURE IMMERSION</div>
+            <h3 class="journey-name">鹰峰山脉林间行禅与森林浴</h3>
+            <p class="journey-desc">
+              由植物学者带领探索安缦庄园深处的 32 公顷秘密林地，辨识百年珍稀苔藓、野鸟栖息地，并在山顶观景台俯瞰京都盆地全貌。
+            </p>
+          </div>
+          <div class="journey-duration">时长 2.0 小时 · 每日晨间开放</div>
+        </div>
+
+        <div class="journey-card">
+          <div>
+            <div class="journey-index">03 / ARTISAN CRAFT</div>
+            <h3 class="journey-name">本阿弥光悦流金继修复工坊</h3>
+            <p class="journey-desc">
+              探访隐居于鹰峰的京都传统莳绘金继匠人工作室。在大师指点下亲手使用天然生漆与纯金粉修复陶器碎片，领悟侘寂修复之美。
+            </p>
+          </div>
+          <div class="journey-duration">时长 4.0 小时 · 包含定制陶器成品</div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ============================================================
+       INTERACTIVE BOOKING DRAWER / RESERVATION MODAL
+       ============================================================ -->
+  <div class="booking-modal-backdrop" id="bookingBackdrop" onclick="closeBookingDrawer()"></div>
+
+  <aside class="booking-drawer" id="bookingDrawer" role="dialog" aria-modal="true">
+    
+    <div class="drawer-header">
+      <div>
+        <h3>Reservation & Experience</h3>
+        <p>定制您的安缦京都隐世之旅</p>
+      </div>
+      <button class="btn-close-drawer" onclick="closeBookingDrawer()" aria-label="Close Reservation Drawer">&times;</button>
+    </div>
+
+    <div class="drawer-body">
+
+      <!-- Section: Dates & Stay Duration -->
+      <div>
+        <div class="drawer-section-title">01. 预订日期与行程</div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>入住日期</label>
+            <input type="date" class="form-input" id="checkInDate" value="2026-10-15" onchange="calculateBookingTotal()">
+          </div>
+          <div class="form-group">
+            <label>退房日期</label>
+            <input type="date" class="form-input" id="checkOutDate" value="2026-10-17" onchange="calculateBookingTotal()">
+          </div>
+        </div>
+      </div>
+
+      <!-- Section: Pavilion Choice -->
+      <div>
+        <div class="drawer-section-title">02. 庭阁套房选择</div>
+        <div class="form-group">
+          <label>房型选择</label>
+          <select class="form-select" id="drawerPavilionSelect" onchange="calculateBookingTotal()">
+            <option value="hotaru" data-rate="280000" selected>萤阁 Hotaru Pavilion (60m² · 苔庭景观)</option>
+            <option value="kaede" data-rate="320000">枫阁 Kaede Pavilion (60m² · 枫林红叶全景)</option>
+            <option value="nara" data-rate="360000">楢阁 Nara Pavilion (60m² · 高台绝景)</option>
+            <option value="washigamine" data-rate="880000">鹫峰阁 Washigamine Villa (241m² · 双卧总统别墅)</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Section: Guests Configuration -->
+      <div>
+        <div class="drawer-section-title">03. 下榻宾客</div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>成人人数</label>
+            <select class="form-select" id="drawerAdults">
+              <option value="1">1 位成人</option>
+              <option value="2" selected>2 位成人</option>
+              <option value="3">3 位成人 (+¥35,000 加床)</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>儿童 (12岁以下)</label>
+            <select class="form-select" id="drawerChildren">
+              <option value="0" selected>无儿童随行</option>
+              <option value="1">1 位儿童</option>
+              <option value="2">2 位儿童</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <!-- Section: Add-on Bespoke Experiences -->
+      <div>
+        <div class="drawer-section-title">04. 尊享礼遇与加选体验</div>
+        <div style="display:flex; flex-direction:column; gap:10px;">
+          
+          <div class="addon-item selected" onclick="toggleAddon(this, 0)" data-cost="0">
+            <div class="addon-details">
+              <h6>每日双人和风晨光早餐 (Obanzai Breakfast)</h6>
+              <span>已包含于客房价格中 · 起居阁或客房内送餐</span>
+            </div>
+            <div class="addon-price">包含</div>
+          </div>
+
+          <div class="addon-item" onclick="toggleAddon(this, 55000)" data-cost="55000">
+            <div class="addon-details">
+              <h6>鹰庵双人主厨定制怀石晚餐 (Taka-an Kaiseki)</h6>
+              <span>时令顶级食材 · 10道式定制餐单及清酒配餐</span>
+            </div>
+            <div class="addon-price">+ ¥55,000</div>
+          </div>
+
+          <div class="addon-item" onclick="toggleAddon(this, 38000)" data-cost="38000">
+            <div class="addon-details">
+              <h6>大德寺清晨私人禅修与里千家茶道体验</h6>
+              <span>专属向导陪同 · 包含往返私家车接送</span>
+            </div>
+            <div class="addon-price">+ ¥38,000</div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Section: Guest Contact Details -->
+      <div>
+        <div class="drawer-section-title">05. 预订贵宾信息</div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>贵宾姓名 (拼音/英文)</label>
+            <input type="text" class="form-input" id="guestName" placeholder="e.g. WANG / JIANAN" value="ZHANG / MIN">
+          </div>
+          <div class="form-group">
+            <label>联系电话</label>
+            <input type="tel" class="form-input" id="guestPhone" placeholder="+86 138-0000-0000" value="+86 186-8888-9999">
+          </div>
+        </div>
+        <div class="form-group" style="margin-top:12px;">
+          <label>电子邮箱 (用于接收预订确认函)</label>
+          <input type="email" class="form-input" id="guestEmail" placeholder="guest@example.com" value="res.kyoto@aman-vip.com">
+        </div>
+      </div>
+
+      <!-- Real-time Cost Breakdown -->
+      <div class="pricing-summary-card">
+        <div class="summary-line">
+          <span>客房费用 (<span id="calcNights">2</span> 晚)</span>
+          <span id="calcRoomSubtotal">¥ 560,000</span>
+        </div>
+        <div class="summary-line">
+          <span>尊享增值体验</span>
+          <span id="calcAddonsSubtotal">¥ 0</span>
+        </div>
+        <div class="summary-line">
+          <span>京都府住宿税与服务费 (15%)</span>
+          <span id="calcTaxSubtotal">¥ 84,000</span>
+        </div>
+        <div class="summary-line total">
+          <span>预计总计金额 (JPY)</span>
+          <span class="total-price" id="calcFinalTotal">¥ 644,000</span>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="drawer-footer">
+      <button class="btn-confirm-booking" onclick="submitReservation()">
+        确认并提交预订申请
+      </button>
+      <div class="booking-guarantee-note">
+        入住前 14 天可免费取消 · 尊享安缦 24 小时管家一对一专属行程确认
+      </div>
+    </div>
+
+  </aside>
+
+  <!-- Notification Toast -->
+  <div class="confirmation-toast" id="confirmToast">
+    ✓ 预订申请已成功提交！确认函与行程明细已发送至您的电子邮箱。
+  </div>
+
+  <!-- ============================================================
+       SITE FOOTER
+       ============================================================ -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-top-grid">
+        
+        <div class="footer-brand">
+          <h4>AMAN KYOTO</h4>
+          <p>
+            1 Okitayama Washimine-cho, Kita-ku, Kyoto 603-8458, Japan<br/>
+            日本京都府京都市北区大北山鹫峰町1番
+          </p>
+        </div>
+
+        <div class="footer-col">
+          <h5>探索度假村</h5>
+          <ul>
+            <li><a href="#sanctuary">隐世庄园哲学</a></li>
+            <li><a href="#pavilions">庭阁与总统别墅</a></li>
+            <li><a href="#dining">起居阁与鹰庵餐厅</a></li>
+            <li><a href="#wellness">天然露天矿物温泉</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h5>联系与协助</h5>
+          <ul>
+            <li><a href="tel:+81754961333">+81 (0)75 496 1333</a></li>
+            <li><a href="mailto:amankyoto@aman.com">amankyoto@aman.com</a></li>
+            <li><a href="#pavilions">京都车站礼宾接送指南</a></li>
+            <li><a href="#pavilions">私人包机及直升机接驳</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h5>安缦全球精选</h5>
+          <ul>
+            <li><a href="#">Aman Tokyo (安缦东京)</a></li>
+            <li><a href="#">Amanemu (安缦伊沐)</a></li>
+            <li><a href="#">Amanpulo (安缦普罗)</a></li>
+            <li><a href="#">Amanyangyun (养云安缦)</a></li>
+          </ul>
+        </div>
+
+      </div>
+
+      <div class="footer-bottom-bar">
+        <div>© 2026 AMAN RESORTS SERVICES CORP. ALL RIGHTS RESERVED.</div>
+        <div style="display:flex; gap:24px;">
+          <a href="#">隐私权政策</a>
+          <a href="#">使用条款</a>
+          <a href="#">可持续发展承诺</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ============================================================
+       CLIENT-SIDE JAVASCRIPT CONTROLLER (ROBUST & STATEFUL)
+       ============================================================ -->
+  <script>
+    // -------------------------------------------------------------
+    // 1. DATA DICTIONARY FOR PAVILIONS
+    // -------------------------------------------------------------
+    const pavilionData = {
+      hotaru: {
+        title: "Hotaru Pavilion",
+        jpTitle: "萤阁 · 临溪近林",
+        tag: "Signature Garden Pavilion",
+        image: "https://images.unsplash.com/photo-1590490360182-c33d57733427?q=85&w=1600&auto=format&fit=crop",
+        desc: "位于度假村中心地势较低处，紧邻清幽山涧溪流。房内配有定制落地大玻璃窗、手工和纸灯笼屏风与传统榻榻米起居区，宽敞的浴室中央设有一整块日本扁柏（桧木）雕琢而成的深浸式浴缸。",
+        area: "60 平方米",
+        view: "青苔庭园 / 山涧",
+        bath: "纯天然桧木浴缸",
+        price: "¥ 280,000",
+        rateValue: 280000
+      },
+      kaede: {
+        title: "Kaede Pavilion",
+        jpTitle: "枫阁 · 枫林红叶全景",
+        tag: "Seasonal Foliage Pavilion",
+        image: "https://images.unsplash.com/photo-1503899036084-c55cdd92da26?q=85&w=1600&auto=format&fit=crop",
+        desc: "位于古老枫树丛簇拥的坡地之上，秋季时推窗即可饱览漫山层林尽染的红枫绝景。室内采用大面积自然采光设计，配备定制雪松木家具及专属禅意茶具。",
+        area: "60 平方米",
+        view: "百年枫树密林",
+        bath: "双人宽体桧木汤池",
+        price: "¥ 320,000",
+        rateValue: 320000
+      },
+      nara: {
+        title: "Nara Pavilion",
+        jpTitle: "楢阁 · 高台绝景",
+        tag: "Elevated Hillside Pavilion",
+        image: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=85&w=1600&auto=format&fit=crop",
+        desc: "坐落于庄园地势最高处，享有俯瞰整座安缦京都森林与远方左大文字山脉的开阔视野。极尽私密的地理位置，是追求深度冥想与宁静避世宾客的至臻之选。",
+        area: "60 平方米",
+        view: "鹰峰山景与林海",
+        bath: "观景桧木风吕",
+        price: "¥ 360,000",
+        rateValue: 360000
+      },
+      washigamine: {
+        title: "Washigamine Pavilion",
+        jpTitle: "鹫峰阁 · 双卧总统别墅",
+        tag: "Presidential Forest Residence",
+        image: "https://images.unsplash.com/photo-1545569341-9eb8b30979d9?q=85&w=1600&auto=format&fit=crop",
+        desc: "安缦京都最具代表性的旗舰宅邸。拥有两间配备独立卫浴的主卧套房、日式榻榻米客厅、独立用餐区与专属备餐厨房，被私家苔藓古园与参天古树全方位环绕。",
+        area: "241 平方米",
+        view: "全景专属古庭园",
+        bath: "双独立极品桧木汤殿",
+        price: "¥ 880,000",
+        rateValue: 880000
+      }
+    };
+
+    let currentSelectedPavilionKey = 'hotaru';
+
+    // -------------------------------------------------------------
+    // 2. PAVILION TAB SWITCHER
+    // -------------------------------------------------------------
+    function switchPavilionTab(key, btnElement) {
+      if (!pavilionData[key]) return;
+      currentSelectedPavilionKey = key;
+      const data = pavilionData[key];
+
+      // Update button active state
+      const buttons = document.querySelectorAll('.pavilion-controls .tab-btn');
+      buttons.forEach(b => b.classList.remove('active'));
+      if (btnElement) btnElement.classList.add('active');
+
+      // Update content with smooth transition
+      const img = document.getElementById('pavilionImage');
+      img.style.opacity = '0.4';
+      img.style.transform = 'scale(0.98)';
+      
+      setTimeout(() => {
+        img.src = data.image;
+        document.getElementById('pavilionTag').textContent = data.tag;
+        document.getElementById('pavilionTitle').textContent = data.title;
+        document.getElementById('pavilionJpTitle').textContent = data.jpTitle;
+        document.getElementById('pavilionDesc').textContent = data.desc;
+        document.getElementById('specArea').textContent = data.area;
+        document.getElementById('specView').textContent = data.view;
+        document.getElementById('specBath').textContent = data.bath;
+        document.getElementById('specPrice').innerHTML = `${data.price} <span>/ 晚起 (含税费及早餐)</span>`;
+        
+        img.style.opacity = '1';
+        img.style.transform = 'scale(1)';
+      }, 200);
+
+      // Sync with search bar
+      const barSelect = document.getElementById('barPavilionSelect');
+      if (barSelect) barSelect.value = key;
+      const barName = document.getElementById('barPavilionName');
+      if (barName) barName.textContent = data.title;
+    }
+
+    function selectAndBookCurrentPavilion() {
+      // Sync to drawer and open
+      const drawerSelect = document.getElementById('drawerPavilionSelect');
+      if (drawerSelect) drawerSelect.value = currentSelectedPavilionKey;
+      openBookingDrawer();
+      calculateBookingTotal();
+    }
+
+    function updateEnginePavilion(val) {
+      if (pavilionData[val]) {
+        switchPavilionTab(val, document.querySelectorAll('.pavilion-controls .tab-btn')[['hotaru','kaede','nara','washigamine'].indexOf(val)]);
+      }
+    }
+
+    function updateGuestsDisplay(val) {
+      const display = document.getElementById('barGuestsDisplay');
+      if (val == 1) display.textContent = "1 位成人";
+      else if (val == 2) display.textContent = "2 位成人, 0 位儿童";
+      else if (val == 3) display.textContent = "3 位贵宾 (含加床)";
+      else display.textContent = "4 位贵宾 (多卧配置)";
+    }
+
+    function handleDateSelect(val) {
+      if (!val) return;
+      document.getElementById('barDateRange').textContent = `${val} 起 (2 晚)`;
+      document.getElementById('checkInDate').value = val;
+      calculateBookingTotal();
+    }
+
+    // -------------------------------------------------------------
+    // 3. BOOKING DRAWER CONTROLLER & PRICE ENGINE
+    // -------------------------------------------------------------
+    function openBookingDrawer() {
+      document.getElementById('bookingBackdrop').classList.add('active');
+      document.getElementById('bookingDrawer').classList.add('active');
+      document.body.style.overflow = 'hidden';
+      calculateBookingTotal();
+    }
+
+    function closeBookingDrawer() {
+      document.getElementById('bookingBackdrop').classList.remove('active');
+      document.getElementById('bookingDrawer').classList.remove('active');
+      document.body.style.overflow = '';
+    }
+
+    function toggleAddon(element, cost) {
+      element.classList.toggle('selected');
+      calculateBookingTotal();
+    }
+
+    function calculateBookingTotal() {
+      const checkInVal = document.getElementById('checkInDate').value;
+      const checkOutVal = document.getElementById('checkOutDate').value;
+      
+      const d1 = new Date(checkInVal);
+      const d2 = new Date(checkOutVal);
+      let nights = Math.ceil((d2 - d1) / (1000 * 60 * 60 * 24));
+      if (isNaN(nights) || nights < 1) nights = 1;
+
+      document.getElementById('calcNights').textContent = nights;
+
+      // Pavilion Rate
+      const pavilionSelect = document.getElementById('drawerPavilionSelect');
+      const selectedOption = pavilionSelect.options[pavilionSelect.selectedIndex];
+      const ratePerNight = parseInt(selectedOption.getAttribute('data-rate'), 10) || 280000;
+      
+      const roomSubtotal = ratePerNight * nights;
+      document.getElementById('calcRoomSubtotal').textContent = `¥ ${roomSubtotal.toLocaleString()}`;
+
+      // Addons
+      let addonsSubtotal = 0;
+      const selectedAddons = document.querySelectorAll('.addon-item.selected');
+      selectedAddons.forEach(item => {
+        addonsSubtotal += parseInt(item.getAttribute('data-cost'), 10) || 0;
+      });
+      document.getElementById('calcAddonsSubtotal').textContent = `¥ ${addonsSubtotal.toLocaleString()}`;
+
+      // Tax & Service Charge (15%)
+      const taxAndService = Math.round((roomSubtotal + addonsSubtotal) * 0.15);
+      document.getElementById('calcTaxSubtotal').textContent = `¥ ${taxAndService.toLocaleString()}`;
+
+      // Final Total
+      const grandTotal = roomSubtotal + addonsSubtotal + taxAndService;
+      document.getElementById('calcFinalTotal').textContent = `¥ ${grandTotal.toLocaleString()}`;
+    }
+
+    function submitReservation() {
+      const guestName = document.getElementById('guestName').value.trim();
+      const guestEmail = document.getElementById('guestEmail').value.trim();
+
+      if (!guestName || !guestEmail) {
+        alert('请完善贵宾姓名与电子邮箱，以便安缦管家团队联系您。');
+        return;
+      }
+
+      closeBookingDrawer();
+      const toast = document.getElementById('confirmToast');
+      toast.classList.add('show');
+      setTimeout(() => {
+        toast.classList.remove('show');
+      }, 5000);
+    }
+
+    // -------------------------------------------------------------
+    // 4. HEADER SCROLL EFFECT & KYOTO REAL-TIME CLOCK
+    // -------------------------------------------------------------
+    window.addEventListener('scroll', () => {
+      const header = document.getElementById('siteHeader');
+      if (window.scrollY > 50) {
+        header.classList.add('scrolled');
+      } else {
+        header.classList.remove('scrolled');
+      }
+    });
+
+    function updateKyotoClock() {
+      const now = new Date();
+      // UTC + 9 (Japan Standard Time)
+      const options = {
+        timeZone: 'Asia/Tokyo',
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit',
+        hour12: false
+      };
+      const jstString = new Intl.DateTimeFormat([], options).format(now);
+      const clockElem = document.getElementById('kyotoTimeDisplay');
+      if (clockElem) {
+        clockElem.textContent = `${jstString} JST`;
+      }
+    }
+
+    setInterval(updateKyotoClock, 1000);
+    updateKyotoClock();
+
+    // Initialize default calculation
+    calculateBookingTotal();
+  </script>
+</body>
+</html>

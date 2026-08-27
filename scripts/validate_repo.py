@@ -6,22 +6,58 @@ from __future__ import annotations
 import re
 import sys
 from html.parser import HTMLParser
-from pathlib import Path
+from pathlib import Path, PurePosixPath
 from urllib.parse import unquote, urlparse
+from zipfile import BadZipFile, ZipFile
 
 
 ROOT = Path(__file__).resolve().parents[1]
-CANONICAL = ROOT / "skills" / "design-taste-frontend" / "SKILL.md"
-ARCHIVES = {
+PROMPT_ARCHIVES = {
     "v0.0": ROOT / "archive" / "v0.0" / "TasteSkill.md",
     "v0.1": ROOT / "archive" / "v0.1" / "TasteSkill--V10.2.md",
     "v0.2": ROOT / "archive" / "v0.2" / "OpenSkill.md",
     "v0.3": ROOT / "archive" / "v0.3" / "TASTE_SKILL_V3_SINGLE_FILE_TEST.md",
     "v0.4": ROOT / "archive" / "v0.4" / "TASTE_SKILL_V3.4_SINGLE_FILE_TEST.md",
+    "v0.5": ROOT / "archive" / "v0.5" / "TASTE_SKILL_V4.1_LITE_SINGLE_FILE_TEST.md",
+    "v0.6": ROOT / "archive" / "v0.6" / "taste_frontend_v4_4_web_rules.md",
+    "v0.7": ROOT / "archive" / "v0.7" / "TasteSkillAdaptive.md",
 }
-DEMO_COUNTS = {"v0.0": 1, "v0.1": 1, "v0.2": 3, "v0.3": 2, "v0.4": 1}
-PREVIEW_COUNTS = {"v0.1": 1, "v0.2": 3, "v0.3": 2, "v0.4": 1}
-ANIMATION_COUNTS = {"v0.1": 1, "v0.2": 3, "v0.3": 2, "v0.4": 1}
+DEMO_COUNTS = {
+    "v0.0": 1,
+    "v0.1": 1,
+    "v0.2": 3,
+    "v0.3": 2,
+    "v0.4": 1,
+    "v0.5": 2,
+    "v0.6": 2,
+    "v0.7": 2,
+}
+PREVIEW_COUNTS = {
+    "v0.1": 1,
+    "v0.2": 3,
+    "v0.3": 2,
+    "v0.4": 1,
+    "v0.5": 2,
+    "v0.6": 2,
+    "v0.7": 2,
+}
+AGENT_VERSIONS = {
+    "a0.1": (
+        ROOT / "agent" / "a0.1" / "taste-frontend",
+        ROOT / "agent" / "downloads" / "taste_frontend_A0.1_portable_bundle.zip",
+        "4.2-portable",
+    ),
+    "a0.2": (
+        ROOT / "agent" / "a0.2" / "taste-frontend",
+        ROOT / "agent" / "downloads" / "taste_frontend_A0.2_spatial_experiment_bundle.zip",
+        "4.3-spatial-experiment",
+    ),
+    "a0.3": (
+        ROOT / "agent" / "a0.3" / "taste-frontend",
+        ROOT / "agent" / "downloads" / "taste_frontend_A0.3_bundle.zip",
+        "4.4-composition-motion-experiment",
+    ),
+}
 SECRET_PATTERNS = (
     re.compile(r"gh[pousr]_[A-Za-z0-9]{20,}"),
     re.compile(r"sk-[A-Za-z0-9]{20,}"),
@@ -56,33 +92,11 @@ class PageParser(HTMLParser):
         return "".join(self.title_parts).strip()
 
 
-def validate_skill(errors: list[str]) -> None:
-    if not CANONICAL.is_file():
-        errors.append(f"missing canonical Skill: {CANONICAL.relative_to(ROOT)}")
-        return
-    text = CANONICAL.read_text(encoding="utf-8")
-    lines = text.splitlines()
-    if not lines or lines[0] != "---":
-        errors.append("canonical SKILL.md must begin with YAML frontmatter")
-        return
-    try:
-        end = lines.index("---", 1)
-    except ValueError:
-        errors.append("canonical SKILL.md has no closing frontmatter delimiter")
-        return
-    frontmatter = "\n".join(lines[1:end])
-    if not re.search(r"^name:\s*design-taste-frontend\s*$", frontmatter, re.MULTILINE):
-        errors.append("canonical Skill name must be design-taste-frontend")
-    if not re.search(r"^description:\s*\S.+$", frontmatter, re.MULTILINE):
-        errors.append("canonical Skill needs a non-empty description")
-    if text != ARCHIVES["v0.4"].read_text(encoding="utf-8"):
-        errors.append("canonical Skill must match the archived V0.4 snapshot")
-
-
-def validate_archive_and_demos(errors: list[str]) -> None:
-    for version, path in ARCHIVES.items():
+def validate_prompt_archives_and_demos(errors: list[str]) -> None:
+    for version, path in PROMPT_ARCHIVES.items():
         if not path.is_file() or path.stat().st_size == 0:
-            errors.append(f"missing archive file for {version}: {path.relative_to(ROOT)}")
+            errors.append(f"missing prompt archive for {version}: {path.relative_to(ROOT)}")
+
     for version, expected in DEMO_COUNTS.items():
         directory = ROOT / "docs" / "demos" / version
         files = sorted(directory.glob("*.html")) if directory.is_dir() else []
@@ -97,24 +111,70 @@ def validate_archive_and_demos(errors: list[str]) -> None:
                 continue
             if not parser.title:
                 errors.append(f"missing HTML title: {path.relative_to(ROOT)}")
+
+
+def validate_previews(errors: list[str]) -> None:
     for version, expected in PREVIEW_COUNTS.items():
         directory = ROOT / "docs" / "previews" / version
-        files = sorted(directory.glob("*.jpg")) if directory.is_dir() else []
-        if len(files) != expected:
-            errors.append(f"{version} expected {expected} README preview(s), found {len(files)}")
-        for path in files:
+        static_files = sorted(directory.glob("*.jpg")) if directory.is_dir() else []
+        animated_files = sorted(directory.glob("*.webp")) if directory.is_dir() else []
+        if len(static_files) != expected:
+            errors.append(f"{version} expected {expected} static preview(s), found {len(static_files)}")
+        if len(animated_files) != expected:
+            errors.append(f"{version} expected {expected} animated preview(s), found {len(animated_files)}")
+        for path in static_files:
             if path.stat().st_size < 10_000:
-                errors.append(f"preview is unexpectedly small: {path.relative_to(ROOT)}")
-    for version, expected in ANIMATION_COUNTS.items():
-        directory = ROOT / "docs" / "previews" / version
-        files = sorted(directory.glob("*.webp")) if directory.is_dir() else []
-        if len(files) != expected:
-            errors.append(f"{version} expected {expected} animated preview(s), found {len(files)}")
-        for path in files:
+                errors.append(f"static preview is unexpectedly small: {path.relative_to(ROOT)}")
+        for path in animated_files:
             if path.stat().st_size < 100_000:
                 errors.append(f"animated preview is unexpectedly small: {path.relative_to(ROOT)}")
             if path.stat().st_size >= 10_000_000:
                 errors.append(f"animated preview exceeds the GitHub inline-media budget: {path.relative_to(ROOT)}")
+
+
+def validate_agent_versions(errors: list[str]) -> None:
+    for version, (folder, bundle, package_version) in AGENT_VERSIONS.items():
+        skill = folder / "SKILL.md"
+        if not skill.is_file():
+            errors.append(f"missing Agent Skill entrypoint for {version}: {skill.relative_to(ROOT)}")
+            continue
+        text = skill.read_text(encoding="utf-8")
+        if not re.search(r"^name:\s*taste-frontend\s*$", text, re.MULTILINE):
+            errors.append(f"{version} Agent Skill name must be taste-frontend")
+        version_pattern = rf'^\s*version:\s*["\']?{re.escape(package_version)}["\']?\s*$'
+        if not re.search(version_pattern, text, re.MULTILINE):
+            errors.append(f"{version} Agent Skill metadata version must be {package_version}")
+        if not bundle.is_file():
+            errors.append(f"missing original Agent bundle for {version}: {bundle.relative_to(ROOT)}")
+            continue
+
+        try:
+            with ZipFile(bundle) as archive:
+                zipped: dict[str, bytes] = {}
+                for info in archive.infolist():
+                    if info.is_dir():
+                        continue
+                    entry = PurePosixPath(info.filename)
+                    if not entry.parts or entry.parts[0] != "taste-frontend" or ".." in entry.parts:
+                        errors.append(f"unsafe or unexpected ZIP entry in {bundle.name}: {info.filename}")
+                        continue
+                    relative = PurePosixPath(*entry.parts[1:]).as_posix()
+                    zipped[relative] = archive.read(info)
+        except BadZipFile as exc:
+            errors.append(f"invalid Agent bundle {bundle.relative_to(ROOT)}: {exc}")
+            continue
+
+        extracted = {
+            path.relative_to(folder).as_posix(): path.read_bytes()
+            for path in folder.rglob("*")
+            if path.is_file()
+        }
+        if zipped.keys() != extracted.keys():
+            errors.append(f"expanded source file list does not match {bundle.name}")
+            continue
+        for relative, payload in zipped.items():
+            if payload != extracted[relative]:
+                errors.append(f"expanded source differs from {bundle.name}: {relative}")
 
 
 def validate_gallery_links(errors: list[str]) -> None:
@@ -136,15 +196,16 @@ def validate_gallery_links(errors: list[str]) -> None:
 def validate_readme_previews(errors: list[str]) -> None:
     readme = (ROOT / "README.md").read_text(encoding="utf-8")
     refs = re.findall(r'src="(docs/previews/[^"]+\.webp)"', readme)
-    if len(refs) != 7 or len(set(refs)) != 7:
-        errors.append(f"README must embed 7 unique animated previews, found {len(set(refs))}")
+    expected = sum(PREVIEW_COUNTS.values())
+    if len(refs) != expected or len(set(refs)) != expected:
+        errors.append(f"README must embed {expected} unique animated previews, found {len(set(refs))}")
     for ref in refs:
         if not (ROOT / ref).is_file():
             errors.append(f"README references a missing animated preview: {ref}")
 
 
 def validate_secrets(errors: list[str]) -> None:
-    suffixes = {".md", ".html", ".yml", ".yaml", ".py", ".txt"}
+    suffixes = {".md", ".html", ".yml", ".yaml", ".py", ".js", ".mjs", ".json", ".txt"}
     for path in ROOT.rglob("*"):
         if not path.is_file() or ".git" in path.parts or path.suffix.lower() not in suffixes:
             continue
@@ -156,8 +217,9 @@ def validate_secrets(errors: list[str]) -> None:
 
 def main() -> int:
     errors: list[str] = []
-    validate_skill(errors)
-    validate_archive_and_demos(errors)
+    validate_prompt_archives_and_demos(errors)
+    validate_previews(errors)
+    validate_agent_versions(errors)
     validate_gallery_links(errors)
     validate_readme_previews(errors)
     validate_secrets(errors)
@@ -165,7 +227,10 @@ def main() -> int:
         for error in errors:
             print(f"ERROR: {error}", file=sys.stderr)
         return 1
-    print("Taste Lab validation passed: canonical Skill, 5 archives, 8 gallery pages, 7 static and 7 animated WebP previews, links and secret scan.")
+    print(
+        "Taste Lab validation passed: 8 prompt archives, 14 prompt-track pages, "
+        "13 static and animated previews, 3 byte-matched Agent bundles, links and secret scan."
+    )
     return 0
 
 

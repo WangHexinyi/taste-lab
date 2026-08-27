@@ -1,0 +1,886 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NOMAD / 27 — Between Signals · International Festival of Contemporary Art, Sound & Digital Image · Porto Vela</title>
+<meta name="description" content="NOMAD / 27 — Between Signals. Seven days of contemporary art, sound, film, performance and installation across four venues in the coastal city of Porto Vela. 12–18 July 2027.">
+<meta property="og:title" content="NOMAD / 27 — Between Signals">
+<meta property="og:description" content="What remains between image, sound, body and space? 12–18 July 2027, Porto Vela.">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#E7EAE7">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23101615'/%3E%3Crect x='6' y='14' width='20' height='4' fill='%23FF4B00'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wdth,wght@0,62..125,100..900;1,62..125,100..900&family=Newsreader:ital,opsz,wght@0,6..72,300..700;1,6..72,300..700&family=Spline+Sans+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"Festival","name":"NOMAD / 27 — Between Signals","startDate":"2027-07-12","endDate":"2027-07-18","location":{"@type":"Place","name":"Porto Vela","address":"Porto Vela coastal district"},"description":"International festival of contemporary art, sound and digital image. Seven days, four venues."}
+</script>
+<style>
+/* ============ TOKENS ============ */
+:root{
+  --fog:#E7EAE7; --paper:#F1F3F0; --ink:#101615; --ink2:#1B2422;
+  --deep:#0C1413; --deep2:#12201E;
+  --salt:#C9D1CD; --line:rgba(16,22,21,.16); --lined:rgba(231,234,231,.16);
+  --signal:#FF4B00; --sea:#0E3938; --mute:#5A6B66;
+  --disp:"Archivo",system-ui,sans-serif; --serif:"Newsreader",Georgia,serif; --mono:"Spline Sans Mono",ui-monospace,monospace;
+  --ease:cubic-bezier(.22,1,.36,1); --wrap:1480px; --pad:clamp(20px,4vw,56px);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+@media (prefers-reduced-motion:no-preference){html{scroll-behavior:smooth}}
+body{background:var(--fog);color:var(--ink);font-family:var(--disp);font-size:16px;line-height:1.55;font-optical-sizing:auto}
+img{display:block;max-width:100%;height:auto}
+a{color:inherit}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+::selection{background:var(--signal);color:var(--fog)}
+.wrap{max-width:var(--wrap);margin:0 auto;padding-inline:var(--pad)}
+.skip{position:absolute;left:-999px;top:0;background:var(--ink);color:var(--fog);padding:10px 16px;z-index:200}
+.skip:focus{left:12px;top:12px}
+:focus-visible{outline:2px solid var(--signal);outline-offset:3px}
+/* type roles */
+.disp{font-family:var(--disp);font-stretch:125%;font-weight:800;text-transform:uppercase;letter-spacing:-.015em;line-height:.92}
+.mono{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase}
+.serif{font-family:var(--serif)}
+/* reveal */
+[data-rv]{opacity:0;transform:translateY(26px);transition:opacity .9s var(--ease) var(--d,0s),transform .9s var(--ease) var(--d,0s)}
+[data-rv].in{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){[data-rv]{opacity:1;transform:none;transition:none}}
+/* ============ HEADER ============ */
+#siteHeader{position:fixed;inset:0 0 auto 0;z-index:100;transition:background .4s var(--ease),box-shadow .4s}
+#siteHeader .bar{display:flex;align-items:center;gap:28px;height:64px}
+#siteHeader.scrolled{background:rgba(231,234,231,.92);backdrop-filter:blur(8px);box-shadow:0 1px 0 var(--line)}
+.wordmark{font-stretch:125%;font-weight:900;text-transform:uppercase;letter-spacing:-.02em;font-size:19px;text-decoration:none}
+.wordmark em{font-style:normal;color:var(--signal)}
+nav.main{display:flex;gap:22px;margin-left:auto}
+nav.main a{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;text-decoration:none;position:relative;padding:6px 0}
+nav.main a::after{content:"";position:absolute;left:0;bottom:0;height:2px;width:0;background:var(--signal);transition:width .35s var(--ease)}
+nav.main a:hover::after{width:100%}
+.hmeta{font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--mute)}
+.btn{display:inline-flex;align-items:center;gap:10px;background:var(--ink);color:var(--fog);padding:13px 22px;font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;text-decoration:none;border:1px solid var(--ink);transition:background .3s,color .3s,transform .3s var(--ease)}
+.btn:hover{background:var(--signal);border-color:var(--signal);color:var(--ink)}
+.btn.ghost{background:transparent;color:var(--ink)}
+.btn.ghost:hover{background:var(--ink);color:var(--fog)}
+.btn svg{display:block}
+#burger{display:none;margin-left:auto;width:44px;height:44px;position:relative;z-index:130}
+#burger span{position:absolute;left:10px;right:10px;height:2px;background:var(--ink);transition:transform .4s var(--ease),opacity .3s;top:17px}
+#burger span+span{top:26px}
+body.menu-open #burger span:first-child{transform:translateY(4.5px) rotate(45deg)}
+body.menu-open #burger span:last-child{transform:translateY(-4.5px) rotate(-45deg)}
+#mmenu{position:fixed;inset:0;background:var(--deep);color:var(--fog);z-index:120;display:flex;flex-direction:column;justify-content:center;padding:96px var(--pad) 48px;clip-path:inset(0 0 100% 0);transition:clip-path .6s var(--ease);visibility:hidden}
+body.menu-open #mmenu{clip-path:inset(0 0 0% 0);visibility:visible}
+#mmenu a{font-stretch:125%;font-weight:800;text-transform:uppercase;font-size:clamp(2rem,8vw,3.4rem);text-decoration:none;padding:10px 0;border-bottom:1px solid var(--lined);display:flex;justify-content:space-between;align-items:baseline}
+#mmenu a small{font-family:var(--mono);font-size:11px;letter-spacing:.16em;color:var(--salt)}
+#mmenu a:hover{color:var(--signal)}
+/* ============ HERO ============ */
+#top{min-height:100svh;display:flex;flex-direction:column;position:relative}
+.hero-type{flex:1;display:flex;flex-direction:column;justify-content:flex-end;padding-top:96px}
+.hero-kicker{display:flex;flex-wrap:wrap;gap:14px 28px;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--line);padding-bottom:14px;margin-bottom:clamp(18px,3vh,36px)}
+.hero-kicker .mono{color:var(--mute)}
+h1.title{font-size:clamp(3.4rem,13.5vw,12.5rem)}
+h1.title .hl{display:block;overflow:hidden}
+h1.title .hl-in{display:block;transform:translateY(112%);transition:transform 1.1s var(--ease)}
+h1.title .hl:nth-child(2) .hl-in{transition-delay:.12s}
+body.loaded h1.title .hl-in{transform:none}
+h1.title .sig{color:var(--signal)}
+.hero-facts{display:grid;grid-template-columns:repeat(4,auto) auto;gap:14px clamp(20px,4vw,64px);justify-content:space-between;align-items:end;padding:clamp(16px,3vh,32px) 0}
+.hero-facts .f b{display:block;font-stretch:125%;font-weight:800;font-size:clamp(1.2rem,2.6vw,2rem);line-height:1}
+.hero-facts .f span{font-family:var(--mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--mute)}
+.hero-cta{display:flex;gap:12px;flex-wrap:wrap}
+#waveStrip{height:84px;position:relative}
+#waveCanvas{position:absolute;inset:0;width:100%;height:100%}
+.hero-sea{height:clamp(200px,34vh,420px);overflow:hidden;position:relative}
+.hero-sea img{width:100%;height:100%;object-fit:cover;object-position:50% 62%;filter:saturate(.85) contrast(1.06)}
+.hero-sea figcaption{position:absolute;right:var(--pad);bottom:12px;font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--salt);mix-blend-mode:difference}
+.playhead{position:absolute;top:0;bottom:0;width:1px;background:var(--signal);left:0;opacity:0;pointer-events:none}
+body.loaded .playhead{animation:sweep 2.4s var(--ease) .5s 1}
+@keyframes sweep{0%{left:0;opacity:.9}100%{left:100%;opacity:0}}
+@media (prefers-reduced-motion:reduce){.playhead{display:none}}
+/* ============ SECTION SHELL ============ */
+section{position:relative}
+.shead{display:flex;align-items:baseline;gap:20px;border-top:2px solid var(--ink);padding-top:16px;margin-bottom:clamp(32px,6vh,64px)}
+.shead .idx{font-family:var(--mono);font-size:12px;letter-spacing:.16em;color:var(--signal)}
+.shead h2{font-size:clamp(2rem,5.4vw,4.2rem)}
+.shead .note{margin-left:auto;font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--mute);text-align:right}
+/* ============ 01 THEME ============ */
+#theme{padding:clamp(72px,12vh,140px) 0 clamp(64px,10vh,120px)}
+.theme-grid{display:grid;grid-template-columns:5fr 7fr;gap:clamp(32px,5vw,88px)}
+.theme-sticky{position:sticky;top:96px;align-self:start}
+.theme-sticky .q{font-family:var(--serif);font-style:italic;font-size:clamp(1.3rem,2.4vw,1.9rem);line-height:1.35;color:var(--ink2);margin-top:18px}
+.theme-sticky .mono{color:var(--mute)}
+.theme-lede{font-family:var(--serif);font-size:clamp(1.15rem,1.9vw,1.5rem);line-height:1.6;font-weight:400}
+.theme-lede p+p{margin-top:1.2em}
+.theme-lede em{font-style:italic}
+.movements{margin-top:clamp(32px,5vh,56px);border-top:1px solid var(--line)}
+.movement{display:grid;grid-template-columns:180px 1fr;gap:20px;padding:20px 0;border-bottom:1px solid var(--line);align-items:baseline;transition:padding-left .35s var(--ease)}
+.movement:hover{padding-left:12px}
+.movement h3{font-stretch:125%;font-weight:800;text-transform:uppercase;font-size:clamp(1.3rem,2.4vw,1.9rem)}
+.movement:nth-child(1) h3{color:var(--signal)}
+.movement p{font-family:var(--serif);font-size:1.05rem;color:var(--ink2)}
+/* ============ 02 ARTISTS ============ */
+#artists{padding:clamp(64px,10vh,120px) 0;background:var(--paper);border-block:1px solid var(--line)}
+.feat{display:grid;grid-template-columns:7fr 5fr;gap:clamp(24px,4vw,64px);align-items:end;margin-bottom:clamp(48px,8vh,88px)}
+.feat figure{overflow:hidden;position:relative}
+.feat img{width:100%;aspect-ratio:16/10;object-fit:cover;filter:saturate(.8) contrast(1.08);transform:scale(1.06);transition:transform 1.4s var(--ease)}
+.feat figure.in img{transform:scale(1)}
+.feat figcaption{position:absolute;left:0;bottom:0;background:var(--ink);color:var(--salt);font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;padding:8px 14px}
+.feat .fk{color:var(--signal)}
+.feat h3{font-size:clamp(2rem,4.6vw,3.6rem);margin:10px 0 4px}
+.feat .proj{font-family:var(--serif);font-style:italic;font-size:clamp(1.1rem,1.8vw,1.4rem);color:var(--ink2)}
+.feat .bio{font-family:var(--serif);margin:16px 0 22px;color:var(--ink2);max-width:52ch}
+.feat .meta{font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--mute);display:block;margin-bottom:18px}
+/* scroller */
+.strip{display:grid;grid-auto-flow:column;grid-auto-columns:clamp(260px,30vw,400px);gap:clamp(16px,2vw,28px);overflow-x:auto;scroll-snap-type:x mandatory;padding:4px 4px 18px;scrollbar-width:thin}
+.strip::-webkit-scrollbar{height:6px}
+.strip::-webkit-scrollbar-thumb{background:var(--salt)}
+.scard{scroll-snap-align:start;text-align:left;display:flex;flex-direction:column;gap:10px;padding:0}
+.scard figure{overflow:hidden}
+.scard img{aspect-ratio:4/3;width:100%;object-fit:cover;filter:saturate(.8) contrast(1.07);transition:transform 1s var(--ease)}
+.scard:hover img{transform:scale(1.045)}
+.scard .nm{font-stretch:125%;font-weight:800;text-transform:uppercase;font-size:1.25rem;line-height:1}
+.scard .pj{font-family:var(--serif);font-style:italic;color:var(--ink2)}
+.scard .mt{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--mute)}
+.strip-hint{font-family:var(--mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--mute);margin:0 0 10px}
+/* index */
+.index{margin-top:clamp(40px,7vh,72px);border-top:2px solid var(--ink)}
+.irow{display:grid;grid-template-columns:52px 2.2fr 1.4fr 1fr 1.8fr 60px 28px;gap:16px;align-items:center;width:100%;text-align:left;padding:16px 4px;border-bottom:1px solid var(--line);transition:background .3s,padding-left .3s var(--ease)}
+.irow:hover{background:rgba(16,22,21,.045);padding-left:14px}
+.irow .n{font-family:var(--mono);font-size:11px;color:var(--mute)}
+.irow .nm{font-stretch:118%;font-weight:700;text-transform:uppercase;font-size:1.05rem;letter-spacing:0}
+.irow .ds{font-family:var(--serif);font-style:italic;color:var(--ink2);font-size:.98rem}
+.irow .or{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--mute)}
+.irow .pj{font-family:var(--serif);font-size:.98rem}
+.irow .vn{font-family:var(--mono);font-size:10px;letter-spacing:.14em;color:var(--sea)}
+.irow svg{display:block;transition:transform .3s var(--ease)}
+.irow:hover svg{transform:translateX(6px)}
+/* ============ 03 VENUES ============ */
+#venues{padding:clamp(72px,12vh,140px) 0 0}
+.v-intro{font-family:var(--serif);font-size:clamp(1.1rem,1.8vw,1.4rem);max-width:64ch;margin-bottom:clamp(40px,7vh,72px)}
+.venue{margin-bottom:clamp(56px,10vh,110px)}
+.v-tag{display:flex;gap:10px;flex-wrap:wrap;margin:14px 0}
+.v-tag span{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;border:1px solid var(--line);padding:6px 10px}
+/* V1 full-bleed */
+.v1 figure{height:clamp(380px,72vh,720px);overflow:hidden;position:relative}
+.v1 img{width:100%;height:100%;object-fit:cover;filter:saturate(.75) contrast(1.1)}
+.v1 .vbar{position:absolute;inset:auto 0 0 0;background:rgba(12,20,19,.88);color:var(--fog);display:grid;grid-template-columns:auto 1fr auto;gap:24px;align-items:center;padding:20px var(--pad)}
+.v1 .vbar h3{font-size:clamp(1.6rem,3.6vw,3rem)}
+.v1 .vbar p{font-family:var(--serif);color:var(--salt);max-width:60ch}
+.v1 .vbar .vn{font-family:var(--mono);font-size:12px;letter-spacing:.2em;color:var(--signal)}
+.v-sub{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(20px,3vw,48px);padding:26px 0;border-bottom:1px solid var(--line)}
+.v-sub h4{font-family:var(--mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--mute);margin-bottom:10px}
+.v-sub p{font-family:var(--serif);font-size:.98rem;color:var(--ink2)}
+/* V2 split light */
+.v2 .grid{display:grid;grid-template-columns:6fr 6fr;gap:clamp(24px,4vw,72px);align-items:center}
+.v2 img{aspect-ratio:4/3;object-fit:cover;width:100%;filter:grayscale(1) contrast(1.12)}
+.v2 h3,.v3 h3,.v4 h3{font-size:clamp(1.8rem,4vw,3.2rem)}
+.v-num{font-family:var(--mono);font-size:12px;letter-spacing:.2em;color:var(--signal)}
+.v-txt p{font-family:var(--serif);color:var(--ink2);margin:14px 0;max-width:56ch}
+/* V3 dark */
+.v3{background:var(--deep);color:var(--fog);margin-inline:calc(50% - 50vw);padding:clamp(56px,9vh,100px) calc(50vw - 50% + var(--pad))}
+.v3 .grid{display:grid;grid-template-columns:6fr 6fr;gap:clamp(24px,4vw,72px);align-items:center}
+.v3 img{aspect-ratio:16/11;width:100%;object-fit:cover;filter:saturate(.7) contrast(1.12) brightness(.92)}
+.v3 p{font-family:var(--serif);color:var(--salt);margin:14px 0;max-width:56ch}
+.v3 .stats{display:flex;gap:clamp(18px,3vw,48px);margin-top:22px;border-top:1px solid var(--lined);padding-top:18px}
+.v3 .stats b{display:block;font-stretch:125%;font-weight:800;font-size:clamp(1.4rem,2.6vw,2.2rem)}
+.v3 .stats span{font-family:var(--mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--mute)}
+/* V4 wide */
+.v4 figure{overflow:hidden;height:clamp(300px,52vh,520px)}
+.v4 img{width:100%;height:100%;object-fit:cover;object-position:50% 40%;filter:saturate(.85) contrast(1.1)}
+.v4 .head{display:flex;flex-wrap:wrap;align-items:baseline;gap:18px;margin-bottom:16px}
+.v4 .free{display:inline-block;background:var(--signal);color:var(--ink);font-family:var(--mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;padding:7px 12px}
+.v4 p{font-family:var(--serif);max-width:64ch;color:var(--ink2)}
+/* ============ 04 PROGRAMME ============ */
+#programme{padding:clamp(72px,12vh,140px) 0;background:var(--fog)}
+.controls{display:flex;flex-direction:column;gap:14px;margin-bottom:26px}
+.daytabs{display:flex;gap:8px;overflow-x:auto;padding-bottom:6px;scrollbar-width:none}
+.daytabs::-webkit-scrollbar{display:none}
+.dtab{flex:0 0 auto;border:1px solid var(--line);padding:12px 18px;text-align:left;transition:background .3s,color .3s,border-color .3s}
+.dtab b{display:block;font-stretch:125%;font-weight:800;text-transform:uppercase;font-size:1rem;line-height:1}
+.dtab span{font-family:var(--mono);font-size:10px;letter-spacing:.14em}
+.dtab[aria-selected="true"]{background:var(--ink);color:var(--fog);border-color:var(--ink)}
+.dtab[aria-selected="true"] span{color:var(--signal)}
+.chips{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.chips .lbl{font-family:var(--mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--mute);margin-right:6px}
+.chip{border:1px solid var(--line);padding:8px 14px;font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;transition:all .25s}
+.chip[aria-pressed="true"]{background:var(--signal);border-color:var(--signal);color:var(--ink)}
+#evCount{font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--mute);margin:6px 0 14px}
+.evlist{border-top:2px solid var(--ink)}
+.ev{border-bottom:1px solid var(--line)}
+.ev-row{display:grid;grid-template-columns:86px 1fr auto 30px;gap:18px;align-items:center;width:100%;text-align:left;padding:18px 4px;position:relative;transition:background .3s}
+.ev-row:hover{background:rgba(16,22,21,.045)}
+.ev-row::before{content:"";position:absolute;left:0;top:0;bottom:0;width:0;background:var(--signal);transition:width .3s var(--ease)}
+.ev-row:hover::before{width:4px}
+.ev-time{font-family:var(--mono);font-size:13px;letter-spacing:.06em}
+.ev-main .t{font-stretch:118%;font-weight:700;text-transform:uppercase;font-size:1.08rem;letter-spacing:0}
+.ev-main .a{font-family:var(--serif);font-style:italic;color:var(--ink2)}
+.ev-side{display:flex;gap:8px;align-items:center;flex-wrap:wrap;justify-content:flex-end}
+.tag{font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;display:inline-flex;align-items:center;gap:6px;padding:5px 9px;border:1px solid var(--line)}
+.tag i{width:7px;height:7px;background:var(--tc,var(--ink));display:inline-block}
+.tag.night{background:var(--ink);color:var(--fog);border-color:var(--ink)}
+.tag.venue{color:var(--sea);border-color:transparent;padding-left:0}
+.ev-x svg{display:block;transition:transform .4s var(--ease)}
+.ev.open .ev-x svg{transform:rotate(45deg)}
+.ev-body{display:grid;grid-template-rows:0fr;transition:grid-template-rows .5s var(--ease)}
+.ev.open .ev-body{grid-template-rows:1fr}
+.ev-body>div{overflow:hidden}
+.ev-body p{font-family:var(--serif);color:var(--ink2);max-width:70ch;padding:0 4px 20px 104px}
+.prog-note{margin-top:22px;font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--mute)}
+/* ============ 05 TICKETS ============ */
+#tickets{padding:clamp(72px,12vh,140px) 0;background:var(--paper);border-block:1px solid var(--line)}
+.pass{display:grid;grid-template-columns:2.1fr 2fr 1fr auto;gap:clamp(18px,3vw,48px);align-items:center;padding:clamp(22px,4vh,38px) 4px;border-bottom:1px solid var(--line);transition:background .3s}
+.pass:first-of-type{border-top:2px solid var(--ink)}
+.pass:hover{background:rgba(255,75,0,.05)}
+.pass h3{font-size:clamp(1.5rem,3vw,2.4rem)}
+.pass .inc{font-family:var(--serif);color:var(--ink2);font-size:.98rem}
+.pass .inc li{list-style:none;position:relative;padding-left:18px;margin:4px 0}
+.pass .inc li::before{content:"";position:absolute;left:0;top:.62em;width:8px;height:2px;background:var(--signal)}
+.pass .price b{display:block;font-stretch:125%;font-weight:800;font-size:clamp(1.6rem,3vw,2.4rem)}
+.pass .price span{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--mute)}
+.tnotes{display:grid;grid-template-columns:repeat(4,1fr);gap:clamp(18px,3vw,40px);margin-top:clamp(28px,5vh,48px)}
+.tnotes h4{font-family:var(--mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--signal);margin-bottom:10px}
+.tnotes p{font-family:var(--serif);font-size:.95rem;color:var(--ink2)}
+/* ============ 06 ABOUT ============ */
+#about{padding:clamp(72px,12vh,140px) 0}
+.about-grid{display:grid;grid-template-columns:7fr 5fr;gap:clamp(32px,5vw,88px)}
+.statement{font-family:var(--serif);font-size:clamp(1.05rem,1.6vw,1.3rem);line-height:1.65}
+.statement p+p{margin-top:1.1em}
+.statement .sig-line{margin-top:2em;font-style:italic;color:var(--mute)}
+.team h4,.partners h4{font-family:var(--mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--mute);margin:26px 0 12px}
+.team li,.partners li{list-style:none;display:flex;justify-content:space-between;gap:12px;border-bottom:1px solid var(--line);padding:9px 0;font-size:.95rem}
+.team li span:first-child{font-weight:600}
+.team li span:last-child,.partners li span:last-child{font-family:var(--serif);font-style:italic;color:var(--ink2);text-align:right}
+.about-img{margin-top:30px;overflow:hidden}
+.about-img img{aspect-ratio:3/2;width:100%;object-fit:cover;filter:saturate(.8) contrast(1.05)}
+.about-img figcaption{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--mute);padding-top:8px}
+/* ============ FOOTER ============ */
+footer{background:var(--deep);color:var(--fog);padding:clamp(64px,10vh,110px) 0 32px}
+.f-mark{font-size:clamp(3rem,11vw,10rem);color:transparent;-webkit-text-stroke:1px var(--salt);line-height:.9;margin-bottom:clamp(36px,6vh,64px)}
+.f-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:clamp(24px,3vw,48px);padding-bottom:clamp(36px,6vh,64px);border-bottom:1px solid var(--lined)}
+.f-grid h4{font-family:var(--mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--signal);margin-bottom:14px}
+.f-grid p,.f-grid li{font-family:var(--serif);color:var(--salt);font-size:.95rem;list-style:none;margin:6px 0}
+.f-grid a{color:var(--salt);text-decoration:none;border-bottom:1px solid var(--lined)}
+.f-grid a:hover{color:var(--signal);border-color:var(--signal)}
+#nlForm{display:flex;border-bottom:1px solid var(--salt);margin-top:8px}
+#nlForm input{flex:1;background:none;border:0;color:var(--fog);font-family:var(--mono);font-size:12px;padding:10px 0;letter-spacing:.06em}
+#nlForm input:focus{outline:none}
+#nlForm button{color:var(--signal);font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;padding:0 4px}
+#nlMsg{font-family:var(--mono);font-size:11px;color:var(--signal);margin-top:10px;letter-spacing:.1em}
+.f-bottom{display:flex;flex-wrap:wrap;gap:12px 32px;justify-content:space-between;padding-top:26px;font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--mute)}
+/* ============ DIALOGS ============ */
+dialog{border:0;padding:0;background:transparent;max-width:none;max-height:none}
+dialog::backdrop{background:rgba(12,20,19,.6)}
+#dossier{width:min(1080px,94vw);margin:auto;background:var(--fog);color:var(--ink)}
+.dz-grid{display:grid;grid-template-columns:5fr 7fr;max-height:86vh}
+.dz-media{position:relative;overflow:hidden;background:var(--deep)}
+.dz-media img{width:100%;height:100%;object-fit:cover;filter:saturate(.8) contrast(1.08)}
+.dz-body{padding:clamp(24px,4vw,52px);overflow:auto;position:relative}
+.dz-body h3{font-size:clamp(1.8rem,3.6vw,3rem);margin:6px 0 2px}
+.dz-body .proj{font-family:var(--serif);font-style:italic;font-size:1.2rem;color:var(--ink2)}
+.dz-body .bio{font-family:var(--serif);margin:18px 0;max-width:58ch;color:var(--ink2)}
+.dz-chips{display:flex;gap:8px;flex-wrap:wrap;margin:14px 0}
+.dz-appear{margin-top:18px;border-top:1px solid var(--line)}
+.dz-appear h4{font-family:var(--mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--mute);padding-top:14px}
+.dz-appear li{list-style:none;display:flex;gap:14px;padding:9px 0;border-bottom:1px solid var(--line);font-size:.92rem}
+.dz-appear .mono{color:var(--sea)}
+.dz-close{position:absolute;top:14px;right:14px;width:44px;height:44px;background:var(--ink);color:var(--fog);display:grid;place-items:center;z-index:5}
+.dz-close:hover{background:var(--signal);color:var(--ink)}
+.dz-nav{display:flex;gap:8px;margin-top:22px}
+.dz-nav button{border:1px solid var(--line);padding:10px 16px;font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase}
+.dz-nav button:hover{background:var(--ink);color:var(--fog)}
+#notice{width:min(520px,92vw);margin:auto;background:var(--ink);color:var(--fog);padding:36px}
+#notice h3{font-size:1.5rem;margin-bottom:12px}
+#notice p{font-family:var(--serif);color:var(--salt)}
+#noticeClose{margin-top:24px}
+/* ============ RESPONSIVE ============ */
+@media (max-width:1080px){
+  .irow{grid-template-columns:40px 2fr 1.6fr 40px 24px}
+  .irow .or,.irow .vn{display:none}
+  .pass{grid-template-columns:1.6fr 1fr auto;grid-template-rows:auto auto}
+  .pass .inc{grid-column:1/-1}
+  .tnotes{grid-template-columns:repeat(2,1fr)}
+}
+@media (max-width:900px){
+  nav.main,.hmeta,#siteHeader .btn{display:none}
+  #burger{display:block}
+  .theme-grid,.feat,.v2 .grid,.v3 .grid,.about-grid{grid-template-columns:1fr}
+  .theme-sticky{position:static}
+  .feat{align-items:start}
+  .v1 .vbar{grid-template-columns:1fr;gap:10px}
+  .v-sub{grid-template-columns:1fr}
+  .f-grid{grid-template-columns:1fr 1fr}
+  .dz-grid{grid-template-columns:1fr;overflow:auto}
+  .dz-media{height:280px}
+  .ev-body p{padding-left:4px}
+  .ev-row{grid-template-columns:64px 1fr 26px}
+  .ev-side{grid-column:2;justify-content:flex-start}
+  .movement{grid-template-columns:1fr;gap:6px}
+}
+@media (max-width:560px){
+  .hero-facts{grid-template-columns:1fr 1fr}
+  .irow{grid-template-columns:32px 1fr 24px}
+  .irow .ds,.irow .pj{display:none}
+  .pass{grid-template-columns:1fr auto}
+  .tnotes{grid-template-columns:1fr}
+  .f-grid{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<header id="siteHeader">
+  <div class="wrap bar">
+    <a class="wordmark" href="#top">NOMAD<em>/</em>27</a>
+    <nav class="main" aria-label="Primary">
+      <a href="#theme">Theme</a><a href="#artists">Artists</a><a href="#venues">Venues</a>
+      <a href="#programme">Programme</a><a href="#tickets">Tickets</a><a href="#about">About</a>
+    </nav>
+    <span class="hmeta">12–18 Jul 2027 · Porto Vela</span>
+    <a class="btn" href="#tickets">Passes</a>
+    <button id="burger" aria-label="Menu" aria-expanded="false"><span></span><span></span></button>
+  </div>
+</header>
+
+<div id="mmenu" aria-hidden="true">
+  <nav aria-label="Mobile">
+    <a href="#theme">Theme <small>01</small></a>
+    <a href="#artists">Artists <small>02</small></a>
+    <a href="#venues">Venues <small>03</small></a>
+    <a href="#programme">Programme <small>04</small></a>
+    <a href="#tickets">Tickets <small>05</small></a>
+    <a href="#about">About <small>06</small></a>
+  </nav>
+</div>
+
+<main id="main">
+<!-- ================= HERO ================= -->
+<section id="top" aria-label="Festival opening">
+  <div class="wrap hero-type">
+    <div class="hero-kicker">
+      <span class="mono">27th Edition — International Festival of Contemporary Art, Sound &amp; Digital Image</span>
+      <span class="mono">Porto Vela · Coastal District</span>
+    </div>
+    <h1 class="title disp">
+      <span class="hl"><span class="hl-in">Between</span></span>
+      <span class="hl"><span class="hl-in">Signals<span class="sig">_</span></span></span>
+    </h1>
+    <div class="hero-facts">
+      <div class="f"><b>07</b><span>Days</span></div>
+      <div class="f"><b>04</b><span>Venues</span></div>
+      <div class="f"><b>40+</b><span>Projects</span></div>
+      <div class="f"><b>19</b><span>Countries</span></div>
+      <div class="hero-cta">
+        <a class="btn" href="#programme">Explore programme</a>
+        <a class="btn ghost" href="#tickets">Passes &amp; access</a>
+      </div>
+    </div>
+  </div>
+  <div id="waveStrip" aria-hidden="true"><canvas id="waveCanvas"></canvas></div>
+  <figure class="hero-sea">
+    <img src="https://image.qwenlm.ai/public_source/5bcef5bd-9bc9-4a33-9bb1-1c19f9ca6440/0597e2f31-f6b9-4840-9fb0-16413a744c566573.png" alt="Dusk over the harbour of Porto Vela; the sea meets an orange horizon lined with distant cranes." fetchpriority="high" width="1600" height="1067">
+    <figcaption>Porto Vela, dockside — 21:47</figcaption>
+    <span class="playhead"></span>
+  </figure>
+</section>
+
+<!-- ================= 01 THEME ================= -->
+<section id="theme">
+  <div class="wrap">
+    <div class="shead" data-rv><span class="idx">01</span><h2 class="disp">The Theme</h2><span class="note">Curatorial introduction</span></div>
+    <div class="theme-grid">
+      <div class="theme-sticky" data-rv>
+        <span class="mono">Edition 27 — 2027</span>
+        <p class="q">“What remains between image, sound, body and space, once the signal has moved on?”</p>
+      </div>
+      <div>
+        <div class="theme-lede" data-rv>
+          <p>Porto Vela has always been a receiving city. Cranes on the horizon, antennae on the pier, radio bleeding over the breakwater in three languages and static. For seven days, NOMAD’s twenty-seventh edition settles into this coastline — into its turbine hall, its sea museum, its buried cistern and its public square — and listens back.</p>
+          <p><em>Between Signals</em> is not a programme about technology. It is a programme about residue: the afterimage a projection leaves on a harbour wall; the low frequency a cistern holds long after the last chord; the choreography of a crowd crossing a square at dusk. Forty artists from nineteen countries work across four venues, each chosen for what its architecture already knows how to say.</p>
+          <p>Works drift between the four movements below. A film is heard before it is seen. A dance is a broadcast. A scaffold becomes an antenna. We ask you to move the way signals move — by day on foot between venues, by night on frequency.</p>
+        </div>
+        <div class="movements">
+          <div class="movement" data-rv><h3>Image</h3><p>Projections, film programmes and video work that treat the screen as a membrane, not a window.</p></div>
+          <div class="movement" data-rv style="--d:.06s"><h3>Sound</h3><p>A twenty-four-channel cistern, a pier-length speaker array, and listening sessions at the waterline.</p></div>
+          <div class="movement" data-rv style="--d:.12s"><h3>Body</h3><p>Performance and dance that read the body as both receiver and transmitter.</p></div>
+          <div class="movement" data-rv style="--d:.18s"><h3>Space</h3><p>Architectural interventions that retune the city’s existing structures rather than add to them.</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 02 ARTISTS ================= -->
+<section id="artists">
+  <div class="wrap">
+    <div class="shead" data-rv><span class="idx">02</span><h2 class="disp">Artists &amp; Projects</h2><span class="note">12 commissioned works</span></div>
+
+    <div class="feat">
+      <figure data-rv>
+        <img src="https://image.qwenlm.ai/public_source/5bcef5bd-9bc9-4a33-9bb1-1c19f9ca6440/0597e2f31-f6b9-4840-9fb0-16413a744c561810.png" alt="A submerged hall of concrete columns lit amber, mirrored in still water — the Cistern prepared for a listening session." width="1600" height="1067" loading="lazy">
+        <figcaption>Tidal Memory — 24-channel installation, The Cistern</figcaption>
+      </figure>
+      <div data-rv style="--d:.1s">
+        <span class="mono fk" style="color:var(--signal)">Featured — Sound movement</span>
+        <h3 class="disp">Mira Okonkwo-Lange</h3>
+        <p class="proj">Tidal Memory</p>
+        <span class="meta">Lagos / Berlin · The Cistern · Days 2, 5, 7</span>
+        <p class="bio">Okonkwo-Lange records the infra-low of ports and tide stations and recomposes it as slow, architectural listening. For Porto Vela she suspends twenty-four channels at water level inside the Cistern, where the room’s nine-second reverberation becomes the final instrument.</p>
+        <button class="btn js-dossier" data-artist="okonkwo">Open dossier</button>
+      </div>
+    </div>
+
+    <p class="strip-hint" data-rv>Selected projects — drag / scroll →</p>
+    <div class="strip" id="artistStrip" data-rv></div>
+
+    <div class="index" id="artistIndex" data-rv></div>
+    <noscript><p class="prog-note">JavaScript is required for the interactive programme. Highlights: Mira Okonkwo-Lange — Tidal Memory (Cistern); Ensemble Halocline — Saltation (Halle 9); Kaori Tsunoda — Afterimage Coast (Museu do Mar).</p></noscript>
+  </div>
+</section>
+
+<!-- ================= 03 VENUES ================= -->
+<section id="venues">
+  <div class="wrap">
+    <div class="shead" data-rv><span class="idx">03</span><h2 class="disp">Venues</h2><span class="note">Four structures, one coastline</span></div>
+    <p class="v-intro" data-rv>Each venue keeps its own weather. The festival adds almost nothing — light, sound, seating, a door left open — and lets the buildings do what they have always done: hold, amplify, shelter and signal.</p>
+  </div>
+
+  <article class="venue v1">
+    <figure data-rv>
+      <img src="https://image.qwenlm.ai/public_source/5bcef5bd-9bc9-4a33-9bb1-1c19f9ca644c569228.png" data-plx="0.05" alt="The raw concrete nave of Halle 9, daylight falling through a single open doorway." width="1200" height="620" loading="lazy" onerror="this.onerror=null;this.src='https://image.qwenlm.ai/public_source/5bcef5bd-9bc9-4a33-9bb1-1c19f9ca6440/1597e2f31-f6b9-4840-9fb0-16413a744c569228.png'">
+      <div class="vbar">
+        <span class="vn">V1</span>
+        <h3 class="disp">Halle 9 — Old Turbine Works</h3>
+        <p>A riveted-steel nave the length of a cargo ship. Large-scale installation, performance premieres and the night programme.</p>
+      </div>
+    </figure>
+    <div class="wrap v-sub">
+      <div data-rv><h4>Character</h4><p>1912 turbine hall, 18 m trusses, crane rails intact. The room answers sound with a long metallic tail.</p></div>
+      <div data-rv style="--d:.06s"><h4>Hosts</h4><p>Latent Harbour · Ghost Bandwidth · Saltation · Carrier Wave night sets.</p></div>
+      <div data-rv style="--d:.12s"><h4>Access</h4><p>Step-free from Doca Norte. Hearing loop at night sets. Capacity 1,800.</p></div>
+    </div>
+  </article>
+
+  <article class="venue v2 wrap">
+    <div class="grid">
+      <div class="v-txt" data-rv>
+        <span class="v-num">V2</span>
+        <h3 class="disp">Museu do Mar</h3>
+        <div class="v-tag"><span>Seaside museum</span><span>Screening room</span><span>Auditorium</span></div>
+        <p>White galleries hung over the water. The museum carries the IMAGE movement: film and video programmes by day, talks in the auditorium, and a quiet room on level two for anyone who needs the festival to lower its voice.</p>
+        <p>Captioned screenings on Days 2 and 6. Capacity 420.</p>
+      </div>
+      <figure data-rv style="--d:.1s">
+        <img src="https://image.qwenlm.ai/public_source/5bcef5bd-9bc9-4a33-9bb1-1c19f9ca6440/0597e2f31-f6b9-4840-9fb0-16413a744c561005.png" alt="The white volumes of the Museu do Mar reflected in a still pool, in monochrome." width="1200" height="900" loading="lazy">
+      </figure>
+    </div>
+  </article>
+
+  <article class="venue v3">
+    <div class="grid">
+      <figure data-rv>
+        <img src="https://image.qwenlm.ai/public_source/5bcef5bd-9bc9-4a33-9bb1-1c19f9ca6440/2597e2f31-f6b9-4840-9fb0-16413a744c561733.png" alt="Monumental concrete columns of the underground Cistern, two figures walking at water level." width="1600" height="1067" loading="lazy">
+      </figure>
+      <div class="v-txt" data-rv style="--d:.1s">
+        <span class="v-num">V3</span>
+        <h3 class="disp">The Cistern</h3>
+        <div class="v-tag" style="color:var(--salt)"><span style="border-color:var(--lined)">Underground theatre</span><span style="border-color:var(--lined)">Sound art</span></div>
+        <p>Buried beneath the breakwater, forty-four columns standing in shallow water. The city’s old reservoir is now its most careful listening room: sessions are silent, seated, and limited to one hundred and twenty bodies.</p>
+        <p>Reached by a single stair of twenty-four steps; access companions admitted in addition to capacity.</p>
+        <div class="stats">
+          <div><b>−14 m</b><span>Below sea level</span></div>
+          <div><b>44</b><span>Columns</span></div>
+          <div><b>9 s</b><span>Reverberation</span></div>
+        </div>
+      </div>
+    </div>
+  </article>
+
+  <article class="venue v4 wrap">
+    <div class="head" data-rv>
+      <span class="v-num">V4</span>
+      <h3 class="disp">Farol Plaza</h3>
+      <span class="free">Free public programme</span>
+    </div>
+    <figure data-rv>
+      <img src="https://image.qwenlm.ai/public_source/5bcef5bd-9bc9-4a33-9bb1-1c19f9ca6440/0597e2f31-f6b9-4840-9fb0-16413a744c566010.png" data-plx="0.04" alt="The lighthouse at Farol Plaza throwing an orange beam across the night sky." width="1600" height="900" loading="lazy">
+    </figure>
+    <div class="v-tag"><span>Open square</span><span>Lighthouse beam</span><span>98.6 FM transmitter</span></div>
+    <p data-rv>The public face of the edition. Outdoor performance at dusk, open talks, night screenings on the harbour wall, and Open Channel — a microphone wired to 98.6 FM that anyone may take after dark. No ticket, no door, no dark.</p>
+  </article>
+</section>
+
+<!-- ================= 04 PROGRAMME ================= -->
+<section id="programme">
+  <div class="wrap">
+    <div class="shead" data-rv><span class="idx">04</span><h2 class="disp">Programme</h2><span class="note">12–18 July · Seven days</span></div>
+    <div class="controls" data-rv>
+      <div class="daytabs" id="dayTabs" role="tablist" aria-label="Festival days"></div>
+      <div class="chips" id="typeChips" aria-label="Filter by type"><span class="lbl">Type</span></div>
+      <div class="chips" id="venueChips" aria-label="Filter by venue"><span class="lbl">Venue</span></div>
+    </div>
+    <p id="evCount" aria-live="polite"></p>
+    <div class="evlist" id="evList"></div>
+    <p class="prog-note">Installations open daily 12:00–20:00 at all venues · Cistern sessions by ballot from 3 May · All times local.</p>
+  </div>
+</section>
+
+<!-- ================= 05 TICKETS ================= -->
+<section id="tickets">
+  <div class="wrap">
+    <div class="shead" data-rv><span class="idx">05</span><h2 class="disp">Passes</h2><span class="note">Box office opens 3 May 2027, 10:00</span></div>
+
+    <div class="pass" data-rv>
+      <h3 class="disp">Full Signal</h3>
+      <ul class="inc"><li>All seven days, all four venues</li><li>Reserved Cistern listening sessions</li><li>Night live programmes &amp; the Long Night</li><li>Printed programme &amp; frequency map</li></ul>
+      <div class="price"><b>€120</b><span>Concession €80</span></div>
+      <button class="btn js-reserve" data-pass="Full Signal">Reserve</button>
+    </div>
+    <div class="pass" data-rv>
+      <h3 class="disp">Night Receiver</h3>
+      <ul class="inc"><li>Every night from 22:00</li><li>Halle 9 live sets &amp; Cistern late sessions (standby)</li><li>Plaza night programme &amp; harbour-wall screenings</li></ul>
+      <div class="price"><b>€45</b><span>Flat rate</span></div>
+      <button class="btn js-reserve" data-pass="Night Receiver">Reserve</button>
+    </div>
+    <div class="pass" data-rv>
+      <h3 class="disp">Day Pass</h3>
+      <ul class="inc"><li>One calendar day, all venues</li><li>Cistern sessions on standby only</li><li>Includes that day’s night programme</li></ul>
+      <div class="price"><b>€28</b><span>Concession €18</span></div>
+      <button class="btn js-reserve" data-pass="Day Pass">Reserve</button>
+    </div>
+    <div class="pass" data-rv>
+      <h3 class="disp">Public Programme</h3>
+      <ul class="inc"><li>Farol Plaza installations &amp; outdoor performance</li><li>Open talks &amp; harbour-wall screenings</li><li>Open Channel participation after dusk</li></ul>
+      <div class="price"><b>Free</b><span>No ticket required</span></div>
+      <a class="btn ghost" href="#venues">See venues</a>
+    </div>
+
+    <div class="tnotes">
+      <div data-rv><h4>Concessions</h4><p>Students, under-26, over-65, Porto Vela residents and holders of a cultural pass. ID at first scan.</p></div>
+      <div data-rv style="--d:.06s"><h4>Cistern ballot</h4><p>Listening sessions are free with any pass but capped at 120. Ballot opens 3 May; results by 20 June.</p></div>
+      <div data-rv style="--d:.12s"><h4>Access</h4><p>Access-companion tickets are free on every pass. Quiet room at Museu do Mar, level two.</p></div>
+      <div data-rv style="--d:.18s"><h4>Refunds</h4><p>Passes are transferable until 1 July. Weather never cancels the plaza programme — it joins it.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 06 ABOUT ================= -->
+<section id="about">
+  <div class="wrap">
+    <div class="shead" data-rv><span class="idx">06</span><h2 class="disp">About NOMAD</h2><span class="note">Curatorial statement &amp; credits</span></div>
+    <div class="about-grid">
+      <div class="statement" data-rv>
+        <p>NOMAD began in 2001 as a weekend of radio art and documentary film in a disused customs shed. It has returned every year since, never to the same building twice. The festival’s only fixed address is its method: arrive in a city, listen to what its structures already transmit, and answer with work made for those rooms and no others.</p>
+        <p>The twenty-seventh edition is the first to stay a full week in one place. Porto Vela earned the exception. A port that decommissioned its cranes but kept them standing, a museum built to face the weather, a reservoir buried under its own breakwater — the city is an archive of signals that never fully switched off.</p>
+        <p>We commissioned accordingly. Nothing here is a tour stop. Every installation is site-tuned, every performance rehearsed in the room it premieres in, every film programme cut against the grain of its screen — sea light on white walls, sodium light on harbour stone.</p>
+        <p>Between Signals is an invitation to attend to the interval: the space between transmission and reception where meaning is actually made. Bring good shoes. The frequencies are within walking distance of each other.</p>
+        <p class="sig-line">— Selma Andrade, Artistic Director</p>
+      </div>
+      <aside data-rv style="--d:.1s">
+        <div class="team">
+          <h4>Direction &amp; curation</h4>
+          <ul>
+            <li><span>Selma Andrade</span><span>Artistic Director</span></li>
+            <li><span>Jonas Reiter</span><span>Sound programme</span></li>
+            <li><span>Yuki Hanashima</span><span>Film &amp; video</span></li>
+            <li><span>Marta Costa</span><span>Performance &amp; public programme</span></li>
+            <li><span>Ana Brum · Theo Lindt</span><span>Production, Oficina NOMAD</span></li>
+            <li><span>R. Okafor</span><span>Technical direction</span></li>
+          </ul>
+          <h4>Produced with</h4>
+          <ul>
+            <li><span>City of Porto Vela</span><span>Host city</span></li>
+            <li><span>Vela Cultural Foundation</span><span>Lead partner</span></li>
+            <li><span>North Atlantic Arts Fund</span><span>Commissions</span></li>
+            <li><span>Rádio Maré 98.6</span><span>Open Channel</span></li>
+            <li><span>Doca Shipyard Trust</span><span>Halle 9</span></li>
+          </ul>
+        </div>
+        <figure class="about-img">
+          <img src="https://image.qwenlm.ai/public_source/5bcef5bd-9bc9-4a33-9bb1-1c19f9ca6440/2597e2f31-f6b9-4840-9fb0-16413a744c562324.png" alt="Production workshop in a brick hall: local volunteers and the NOMAD team assembling equipment at wooden tables." width="1600" height="1067" loading="lazy">
+          <figcaption>Open Channel assembly week, Doca Norte — March 2027</figcaption>
+        </figure>
+      </aside>
+    </div>
+  </div>
+</section>
+</main>
+
+<!-- ================= FOOTER ================= -->
+<footer>
+  <div class="wrap">
+    <p class="f-mark disp" aria-hidden="true">NOMAD/27</p>
+    <div class="f-grid">
+      <div>
+        <h4>Visit</h4>
+        <ul>
+          <li>Halle 9 — Doca Norte, Armazém 9</li>
+          <li>Museu do Mar — Av. da Margem 1</li>
+          <li>The Cistern — Quebra-Mar (via Museu)</li>
+          <li>Farol Plaza — Praça do Farol</li>
+        </ul>
+        <p style="margin-top:10px">Tram 4 to Doca · ferry from Old Town every 20 min · night shuttle between venues after 22:00.</p>
+      </div>
+      <div>
+        <h4>Access</h4>
+        <p>Step-free routes at Halle 9, Museu &amp; Plaza. Cistern reached by 24-step stair. Hearing loop: Museu auditorium, Halle 9 night sets. Captioned screenings D2 &amp; D6. Full access guide at the box office.</p>
+      </div>
+      <div>
+        <h4>Contact</h4>
+        <ul>
+          <li><a href="mailto:hello@nomad27.org">hello@nomad27.org</a></li>
+          <li><a href="mailto:press@nomad27.org">press@nomad27.org</a></li>
+          <li>+351 270 270 270</li>
+          <li style="margin-top:10px"><a href="#top">Instagram</a> · <a href="#top">Are.na</a> · <a href="#top">YouTube</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Signal digest</h4>
+        <p>One transmission per month until July 2027. Programme drops first.</p>
+        <form id="nlForm">
+          <input type="email" required placeholder="your@frequency.fm" aria-label="Email address">
+          <button type="submit">Tune in</button>
+        </form>
+        <p id="nlMsg" role="status"></p>
+      </div>
+    </div>
+    <div class="f-bottom">
+      <span>© 2027 NOMAD Foundation · Porto Vela</span>
+      <span>Between Signals — Edition 27</span>
+      <span>Concept commission; artists &amp; programme are fictional</span>
+    </div>
+  </div>
+</footer>
+
+<!-- ================= DOSSIER DIALOG ================= -->
+<dialog id="dossier" aria-label="Artist dossier">
+  <div class="dz-grid" id="dzGrid"></div>
+</dialog>
+<dialog id="notice" aria-label="Notice">
+  <h3 class="disp" id="noticeTitle">Notice</h3>
+  <p id="noticeText"></p>
+  <button class="btn ghost" id="noticeClose" style="color:var(--fog);border-color:var(--lined)">Close</button>
+</dialog>
+
+<script>
+"use strict";
+const RM = matchMedia("(prefers-reduced-motion: reduce)");
+/* ---------- DATA ---------- */
+const IMG = {
+  tidal:"0597e2f31-f6b9-4840-9fb0-16413a744c561810.png", halocline:"0597e2f31-f6b9-4840-9fb0-16413a744c567250.png",
+  tsunoda:"3597e2f31-f6b9-4840-9fb0-16413a744c563061.png", latent:"3597e2f31-f6b9-4840-9fb0-16413a744c566357.png",
+  malak:"2597e2f31-f6b9-4840-9fb0-16413a744c563761.png", meridian:"0597e2f31-f6b9-4840-9fb0-16413a744c567425.png",
+  ronfeldt:"0597e2f31-f6b9-4840-9fb0-16413a744c566896.png", aguirre:"2597e2f31-f6b9-4840-9fb0-16413a744c566015.png",
+  brzak:"0597e2f31-f6b9-4840-9fb0-16413a744c568948.png", park:"1597e2f31-f6b9-4840-9fb0-16413a744c569912.png",
+  vandamme:"5597e2f31-f6b9-4840-9fb0-16413a744c561077.png", ortiz:"3597e2f31-f6b9-4840-9fb0-16413a744c565704.png",
+  antena:"4597e2f31-f6b9-4840-9fb0-16413a744c563823.png", pier:"3597e2f31-f6b9-4840-9fb0-16413a744c563970.png"
+};
+const U = f => "https://image.qwenlm.ai/public_source/5bcef5bd-9bc9-4a33-9bb1-1c19f9ca6440/" + f;
+const A = [
+ {id:"okonkwo",name:"Mira Okonkwo-Lange",disc:"Sound artist",origin:"Lagos / Berlin",project:"Tidal Memory",medium:"24-channel sound installation",venue:"CIS",days:"2 · 5 · 7",type:"SOUND",img:IMG.tidal,feat:true,alt:"Amber-lit submerged columns mirrored in water.",bio:"Okonkwo-Lange records the infra-low of ports and tide stations and recomposes it as slow, architectural listening. For Porto Vela she suspends twenty-four channels at water level inside the Cistern, where the room’s nine-second reverberation becomes the final instrument."},
+ {id:"halocline",name:"Ensemble Halocline",disc:"Performance ensemble",origin:"Copenhagen",project:"Saltation",medium:"Dance with infrasound, 6 performers",venue:"H9",days:"1 · 4 · 6",type:"PERFORMANCE",img:IMG.halocline,feat:true,alt:"A dancer in white mid-turn inside a dark industrial hall.",bio:"Led by choreographer Ingrid Voss and sound designer Poul Ankjer, the ensemble pairs group dance with infrasound, so rhythm arrives through the floor before the ear. Saltation was developed with dancers of the Porto Vela municipal ballet."},
+ {id:"tsunoda",name:"Kaori Tsunoda",disc:"Filmmaker",origin:"Tokyo",project:"Afterimage Coast",medium:"16 mm triptych, 74 min",venue:"MUM",days:"1 · 4 · 7",type:"FILM",img:IMG.tsunoda,feat:true,alt:"Profile portrait in soft window light.",bio:"Tsunoda films coastlines scheduled for redevelopment, letting the camera hold what planning documents forget. Afterimage Coast was shot across three winters on the Porto Vela breakwater, and is projected where the sea light still reaches the walls."},
+ {id:"ronfeldt",name:"Vera Rönfeldt",disc:"Media artist",origin:"Hamburg",project:"Latent Harbour",medium:"Generative projection, 40 m wall",venue:"H9",days:"1–7",type:"INSTALLATION",img:IMG.latent,feat:true,alt:"A long steel-columned hall receding into darkness.",bio:"Rönfeldt trained generative models on harbour archives — manifests, weather logs, postcards — to render a port that never existed. Latent Harbour projects this phantom harbour along the entire north wall of Halle 9, regenerating with the real tide table each day."},
+ {id:"malak",name:"Hana Malak",disc:"Choreographer",origin:"Cairo / Paris",project:"Chorus of Antennae",medium:"Outdoor performance, 40 performers",venue:"PLA",days:"2 · 5",type:"PERFORMANCE",img:IMG.malak,feat:true,alt:"Monochrome figure in a dynamic pose against a white cyclorama.",bio:"Malak’s crowd choreographies treat a public square as a single body. Chorus of Antennae gathers forty local performers under the lighthouse, moving to the interference pattern of the square’s own radio traffic, sampled live."},
+ {id:"meridian",name:"DUO MERIDIAN",disc:"Audiovisual duo",origin:"Montréal / Lyon",project:"Carrier Wave",medium:"Live AV set, salvaged monitor wall",venue:"H9",days:"1 · 3 · 5",type:"SOUND",img:IMG.meridian,feat:true,alt:"Modular synthesizer patch bay with red, yellow and blue cables.",bio:"Performing with a wall of salvaged broadcast monitors and a single modular system, Meridian tune every set to the resonant frequency of the room. Carrier Wave opens and closes the festival’s night programme."},
+ {id:"aguirre",name:"Tomás Aguirre",disc:"Architect",origin:"Buenos Aires",project:"Pier Studies",medium:"Scaffold intervention, 120 m",venue:"PLA",days:"1–7",type:"INSTALLATION",img:IMG.pier,feat:false,alt:"Modular scaffolding erected as public furniture along a walkway.",bio:"Aguirre works with the city’s existing scaffolds. Pier Studies re-rigs the disused pier as a walkable instrument — planks tensioned to hum underfoot, railings strung as pickups, the whole structure broadcast on 98.6 after dark."},
+ {id:"brzak",name:"Ivo Brzak",disc:"Composer",origin:"Split",project:"Adriatic Static",medium:"Speaker array facing the water",venue:"CIS",days:"3",type:"SOUND",img:IMG.brzak,feat:false,alt:"Black-and-white portrait of a composer with folded arms.",bio:"Brzak collects the electromagnetic shore of the Adriatic — ferry radar, dock radio, storm static — and scores it for the Cistern’s water. Adriatic Static is performed once, at high tide."},
+ {id:"park",name:"June Park",disc:"Media artist",origin:"Seoul",project:"Ghost Bandwidth",medium:"Light field, decommissioned repeaters",venue:"H9",days:"3–7",type:"INSTALLATION",img:IMG.park,feat:false,alt:"A hazy wall of slow grid light with seated visitors.",bio:"Park studies the afterlife of network infrastructure. Ghost Bandwidth suspends decommissioned submarine-cable repeaters in a field of slow light on the Halle 9 mezzanine; each repeater pulses with the archived traffic of its final day in service."},
+ {id:"vandamme",name:"Léa Vandamme",disc:"Video artist",origin:"Brussels",project:"The Weather Inside",medium:"Three-screen installation",venue:"MUM",days:"2–7",type:"FILM",img:IMG.vandamme,feat:false,alt:"Row of tinted video screens in a dark gallery.",bio:"Vandamme films interior weathers — server rooms, greenhouses, waiting halls — until architecture seems to breathe. The Weather Inside hangs three screens in the Museu atrium, each running on the museum’s own ventilation rhythm."},
+ {id:"ortiz",name:"Rafael Ortiz",disc:"Performance artist",origin:"Mexico City",project:"Slow Broadcast",medium:"Durational performance, 90 min",venue:"CIS",days:"3",type:"PERFORMANCE",img:IMG.ortiz,feat:false,alt:"Two performers in warm low light on a dark stage.",bio:"Ortiz slows transmission to the speed of the body. In Slow Broadcast a single sentence is carried by hand across the Cistern water, performer to performer, for ninety minutes. Nothing is amplified; the room does the rest."},
+ {id:"antena",name:"Coletivo Antena Sul",disc:"Radio collective",origin:"Lisbon / São Paulo",project:"Open Channel",medium:"7-day transmission, 98.6 FM",venue:"PLA",days:"1–7",type:"SOUND",img:IMG.antena,feat:false,alt:"Vertical red light poles glowing in a night park among visitors.",bio:"A radio collective broadcasting between Lisbon and São Paulo. Open Channel turns Farol Plaza into a seven-day transmitter: a field of light poles wired as antennae, and a microphone anyone may take after dusk."}
+];
+const VN = {H9:"Halle 9",MUM:"Museu do Mar",CIS:"The Cistern",PLA:"Farol Plaza",ALL:"All venues"};
+const TC = {FILM:"var(--signal)",SOUND:"var(--sea)",PERFORMANCE:"var(--ink)",INSTALLATION:"var(--mute)",TALK:"var(--mute)"};
+const DAYS = [["Mon","12"],["Tue","13"],["Wed","14"],["Thu","15"],["Fri","16"],["Sat","17"],["Sun","18"]];
+const E = [
+ [1,"09:30","Harbour Walk — Opening Route","", "TALK","PLA",0,"A 90-minute guided walk linking all four venues along the water, ending at the lighthouse as Open Channel goes live."],
+ [1,"12:00","Latent Harbour — Opening","Vera Rönfeldt","INSTALLATION","H9",0,"The phantom port wakes on the north wall, synced to the day’s real tide table."],
+ [1,"15:00","Afterimage Coast","Kaori Tsunoda","FILM","MUM",0,"16 mm triptych, 74 min. Projected in sea light; introduced by the filmmaker."],
+ [1,"18:00","Open Channel — First Transmission","Coletivo Antena Sul","SOUND","PLA",0,"The plaza transmitter opens at 98.6 FM. First voice: the harbour master."],
+ [1,"20:30","Saltation — Premiere","Ensemble Halocline","PERFORMANCE","H9",0,"Dance with infrasound; rhythm through the floor. 55 min, no late entry."],
+ [1,"23:00","Carrier Wave — Opening Night","DUO MERIDIAN","SOUND","H9",1,"The monitor wall wakes. Set tuned to Halle 9’s resonant frequency."],
+ [2,"10:00","Tidal Memory — Session I","Mira Okonkwo-Lange","SOUND","CIS",0,"Seated listening, 45 min. 120 bodies, silent entry."],
+ [2,"13:00","Pier Studies — Walkthrough","Tomás Aguirre","TALK","PLA",0,"The architect walks the rigged pier; planks hum underfoot."],
+ [2,"16:00","The Weather Inside","Léa Vandamme","FILM","MUM",0,"Three-screen installation activated with the museum’s ventilation cycle."],
+ [2,"19:00","What Remains Between? — Roundtable","Curatorial team","TALK","MUM",0,"The edition’s curators in conversation; hearing loop & interpretation on."],
+ [2,"22:00","Chorus of Antennae","Hana Malak","PERFORMANCE","PLA",1,"Forty performers under the lighthouse, moving to live radio interference."],
+ [3,"10:00","Adriatic Static — Session","Ivo Brzak","SOUND","CIS",0,"Performed once at high tide; speaker array facing the water."],
+ [3,"12:30","Ghost Bandwidth — Opening","June Park","INSTALLATION","H9",0,"Submarine-cable repeaters in a field of slow light, mezzanine level."],
+ [3,"16:00","Coastal Frequencies — Shorts","Various artists","FILM","MUM",0,"Six short works on coastlines that transmit; 88 min programme."],
+ [3,"18:30","Slow Broadcast","Rafael Ortiz","PERFORMANCE","CIS",0,"One sentence carried by hand across the water. 90 min."],
+ [3,"23:00","Carrier Wave II — Modular Night","DUO MERIDIAN + guests","SOUND","H9",1,"Extended set with local modular players until 03:00."],
+ [4,"10:30","Signal Ethics: AI & the Image","Panel","TALK","MUM",0,"On trained archives and phantom harbours, with V. Rönfeldt and guests."],
+ [4,"12:00","Latent Harbour — Artist in Attendance","Vera Rönfeldt","INSTALLATION","H9",0,"The artist at the north wall; tide-synced regeneration at 13:12."],
+ [4,"15:00","Afterimage Coast + Q&A","Kaori Tsunoda","FILM","MUM",0,"Screening followed by conversation with Y. Hanashima."],
+ [4,"18:00","Saltation — Reprise","Ensemble Halocline","PERFORMANCE","H9",0,"Second performance; floor seating encouraged."],
+ [4,"21:30","Open Channel — Night Radio","Coletivo Antena Sul","SOUND","PLA",1,"The microphone opens to the public until 02:00."],
+ [5,"10:00","Tidal Memory — Session II","Mira Okonkwo-Lange","SOUND","CIS",0,"Seated listening, 45 min."],
+ [5,"14:00","Field Recording on the Pier","Ivo Brzak","SOUND","PLA",0,"Open workshop; hydrophones and contact mics provided, 20 places."],
+ [5,"17:00","Body, Buffer — Shorts","Various artists","FILM","MUM",0,"Performance on screen: six works on latency and gesture, 92 min."],
+ [5,"20:00","Chorus of Antennae — Reprise","Hana Malak","PERFORMANCE","PLA",0,"Final outdoor performance of the edition."],
+ [5,"23:00","MERIDIAN — Full AV Set","DUO MERIDIAN","SOUND","H9",1,"The complete monitor wall, full array."],
+ [6,"11:00","Open Day — All Installations","", "INSTALLATION","ALL",0,"Every installation open across the four venues; family routes from 11:00."],
+ [6,"13:00","Acoustic Commons — Talk & Listen","Panel","TALK","MUM",0,"Who owns a coastline’s sound? With port authority & artists."],
+ [6,"16:30","Pier Studies — Dusk Walk","Tomás Aguirre","TALK","PLA",0,"The rigged pier at golden hour; broadcast live on 98.6."],
+ [6,"19:30","Saltation — Final","Ensemble Halocline","PERFORMANCE","H9",0,"Last performance; followed by open floor."],
+ [6,"22:30","Long Night — Late Installations","", "INSTALLATION","H9",1,"Halle 9 and the Cistern open until 03:00."],
+ [7,"11:00","Tidal Memory — Full Array","Mira Okonkwo-Lange","SOUND","CIS",0,"Closing session with all twenty-four channels at water level."],
+ [7,"13:30","What Remained? — Closing Conversation","Curatorial team","TALK","MUM",0,"The week, reviewed from its residue."],
+ [7,"16:00","Afterimage Coast — Closing Screening","Kaori Tsunoda","FILM","MUM",0,"Final projection as the sea light falls."],
+ [7,"19:00","Procession: Open Channel × Chorus","","PERFORMANCE","PLA",0,"The plaza walks to the pier behind the lighthouse beam; everyone is the chorus."],
+ [7,"22:00","Closing Night — All Signals","", "SOUND","H9",1,"Every artist, one wall of monitors, one last carrier wave."]
+];
+/* ---------- HEADER / MENU ---------- */
+const header = document.getElementById("siteHeader");
+addEventListener("scroll", () => header.classList.toggle("scrolled", scrollY > 24), {passive:true});
+const burger = document.getElementById("burger");
+burger.addEventListener("click", () => {
+  const open = document.body.classList.toggle("menu-open");
+  burger.setAttribute("aria-expanded", open);
+  document.getElementById("mmenu").setAttribute("aria-hidden", !open);
+});
+document.querySelectorAll("#mmenu a").forEach(a => a.addEventListener("click", () => {
+  document.body.classList.remove("menu-open"); burger.setAttribute("aria-expanded","false");
+}));
+addEventListener("load", () => document.body.classList.add("loaded"));
+setTimeout(() => document.body.classList.add("loaded"), 600);
+/* ---------- REVEAL ---------- */
+const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting){ e.target.classList.add("in"); io.unobserve(e.target);} }), {threshold:.15});
+document.querySelectorAll("[data-rv]").forEach(el => io.observe(el));
+/* ---------- PARALLAX ---------- */
+const plx = [...document.querySelectorAll("[data-plx]")];
+if (plx.length){
+  let tick = false;
+  const run = () => { tick = false; if (RM.matches) return;
+    plx.forEach(el => { const r = el.getBoundingClientRect();
+      if (r.bottom < 0 || r.top > innerHeight) return;
+      const off = (r.top + r.height/2 - innerHeight/2) * parseFloat(el.dataset.plx);
+      el.style.transform = `translateY(${off.toFixed(1)}px) scale(1.08)`; });
+  };
+  addEventListener("scroll", () => { if (!tick){ tick = true; requestAnimationFrame(run); } }, {passive:true});
+  run();
+}
+/* ---------- WAVEFORM ---------- */
+(function(){
+  const cv = document.getElementById("waveCanvas"), ctx = cv.getContext("2d");
+  let w, h, t = 0, visible = true;
+  const fit = () => { const d = Math.min(devicePixelRatio||1, 2);
+    w = cv.clientWidth; h = cv.clientHeight; cv.width = w*d; cv.height = h*d; ctx.setTransform(d,0,0,d,0,0); };
+  fit(); addEventListener("resize", fit);
+  new IntersectionObserver(es => visible = es[0].isIntersecting).observe(cv);
+  const y = x => h/2 + (Math.sin(x*.011 + t*2)*6 + Math.sin(x*.023 - t*1.3)*4 + Math.sin(x*.005 + t*.7)*8) * (.35 + .65*Math.sin(x/w*Math.PI));
+  function draw(){ ctx.clearRect(0,0,w,h);
+    ctx.beginPath(); for (let x=0;x<=w;x+=3) x?ctx.lineTo(x,y(x)):ctx.moveTo(x,y(x));
+    ctx.strokeStyle = "#FF4B00"; ctx.lineWidth = 1.6; ctx.stroke();
+    ctx.beginPath(); for (let x=0;x<=w;x+=3) x?ctx.lineTo(x,y(x+40)+7):ctx.moveTo(x,y(x+40)+7);
+    ctx.strokeStyle = "rgba(16,22,21,.25)"; ctx.lineWidth = 1; ctx.stroke(); }
+  function loop(){ if (visible && !RM.matches){ t += .012; draw(); } requestAnimationFrame(loop); }
+  draw(); if (!RM.matches) loop(); else addEventListener("resize", draw);
+})();
+/* ---------- ARTISTS RENDER ---------- */
+const strip = document.getElementById("artistStrip");
+strip.innerHTML = A.filter(a=>a.feat).map(a => `
+  <button class="scard js-dossier" data-artist="${a.id}">
+    <figure><img src="${U(a.img)}" alt="${a.alt}" loading="lazy" width="800" height="600"></figure>
+    <span class="nm">${a.name}</span><span class="pj">${a.project}</span>
+    <span class="mt">${a.type} · ${VN[a.venue]} · Days ${a.days}</span>
+  </button>`).join("");
+const idx = document.getElementById("artistIndex");
+idx.innerHTML = A.map((a,i) => `
+  <button class="irow js-dossier" data-artist="${a.id}">
+    <span class="n">${String(i+1).padStart(2,"0")}</span>
+    <span class="nm">${a.name}</span><span class="ds">${a.disc}</span>
+    <span class="or">${a.origin}</span><span class="pj">${a.project}</span>
+    <span class="vn">${a.venue}</span>
+    <svg width="18" height="12" viewBox="0 0 18 12" fill="none" aria-hidden="true"><path d="M0 6h16M11 1l5 5-5 5" stroke="currentColor" stroke-width="1.6"/></svg>
+  </button>`).join("");
+/* ---------- DOSSIER ---------- */
+const dlg = document.getElementById("dossier"), dzGrid = document.getElementById("dzGrid");
+let lastFocus = null, curA = 0;
+function openDossier(id){
+  const a = A.find(x=>x.id===id); if (!a) return; curA = A.indexOf(a);
+  const apps = E.filter(e => e[2] && (e[3]||"").includes(a.name.split(" ")[0]) || (e[3]||"").includes(a.name));
+  dzGrid.innerHTML = `
+    <div class="dz-media"><img src="${U(a.img)}" alt="${a.alt}"></div>
+    <div class="dz-body">
+      <button class="dz-close" id="dzClose" aria-label="Close dossier"><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M2 2l12 12M14 2L2 14" stroke="currentColor" stroke-width="1.8"/></svg></button>
+      <span class="mono" style="color:var(--signal)">${a.disc} — ${a.origin}</span>
+      <h3 class="disp">${a.name}</h3>
+      <p class="proj">${a.project} · ${a.medium}</p>
+      <div class="dz-chips">
+        <span class="tag" style="--tc:${TC[a.type]}"><i></i>${a.type}</span>
+        <span class="tag venue">${VN[a.venue]}</span>
+        <span class="tag">Days ${a.days}</span>
+      </div>
+      <p class="bio">${a.bio}</p>
+      <div class="dz-appear"><h4>In the programme</h4><ul>
+        ${apps.map(e=>`<li><span class="mono">D${e[0]} · ${e[1]}</span><span>${e[2]} — ${VN[e[5]]}</span></li>`).join("") || "<li>See programme.</li>"}
+      </ul></div>
+      <div class="dz-nav">
+        <button id="dzPrev">← Prev artist</button><button id="dzNext">Next artist →</button>
+        <button id="dzProg">See in programme</button>
+      </div>
+    </div>`;
+  lastFocus = document.activeElement;
+  dlg.showModal();
+  dzGrid.querySelector("#dzClose").onclick = () => dlg.close();
+  dzGrid.querySelector("#dzPrev").onclick = () => openDossier(A[(curA+A.length-1)%A.length].id);
+  dzGrid.querySelector("#dzNext").onclick = () => openDossier(A[(curA+1)%A.length].id);
+  dzGrid.querySelector("#dzProg").onclick = () => { dlg.close(); state.day = A[curA] && apps.length ? apps[0][0] : 1; buildControls(); render(); location.hash = "#programme"; };
+  dzGrid.querySelector("#dzClose").focus();
+}
+dlg.addEventListener("close", () => lastFocus && lastFocus.focus());
+document.addEventListener("click", e => { const b = e.target.closest(".js-dossier"); if (b) openDossier(b.dataset.artist); });
+/* ---------- PROGRAMME ---------- */
+const state = {day:1, type:"ALL", venue:"ALL"};
+const dayTabs = document.getElementById("dayTabs"),
+      typeChips = document.getElementById("typeChips"),
+      venueChips = document.getElementById("venueChips"),
+      evList = document.getElementById("evList"),
+      evCount = document.getElementById("evCount");
+function buildControls(){
+  dayTabs.innerHTML = DAYS.map((d,i) => `<button class="dtab" role="tab" aria-selected="${state.day===i+1}" data-day="${i+1}"><b>Day ${i+1}</b><span>${d[0]} ${d[1]}</span></button>`).join("");
+  typeChips.querySelectorAll(".chip").forEach(c=>c.remove());
+  ["ALL","FILM","PERFORMANCE","SOUND","INSTALLATION","TALK"].forEach(t =>
+    typeChips.insertAdjacentHTML("beforeend", `<button class="chip" aria-pressed="${state.type===t}" data-type="${t}">${t==="ALL"?"All":t}</button>`));
+  venueChips.querySelectorAll(".chip").forEach(c=>c.remove());
+  ["ALL","H9","MUM","CIS","PLA"].forEach(v =>
+    venueChips.insertAdjacentHTML("beforeend", `<button class="chip" aria-pressed="${state.venue===v}" data-venue="${v}">${v==="ALL"?"All venues":VN[v]}</button>`));
+}
+function render(){
+  const rows = E.filter(e => e[0]===state.day && (state.type==="ALL"||e[4]===state.type) && (state.venue==="ALL"||e[5]===state.venue));
+  evCount.textContent = `${rows.length} event${rows.length===1?"":"s"} — Day ${state.day} · ${DAYS[state.day-1][0]} ${DAYS[state.day-1][1]} July`;
+  evList.innerHTML = rows.map((e,i) => `
+    <div class="ev">
+      <button class="ev-row" aria-expanded="false" data-i="${i}">
+        <span class="ev-time">${e[1]}</span>
+        <span class="ev-main"><span class="t">${e[2]}</span>${e[3]?` <span class="a">— ${e[3]}</span>`:""}</span>
+        <span class="ev-side">
+          ${e[6]?`<span class="tag night">Night</span>`:""}
+          <span class="tag" style="--tc:${TC[e[4]]}"><i></i>${e[4]}</span>
+          <span class="tag venue">${VN[e[5]]}</span>
+        </span>
+        <span class="ev-x"><svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><path d="M7 0v14M0 7h14" stroke="currentColor" stroke-width="1.6"/></svg></span>
+      </button>
+      <div class="ev-body"><div><p>${e[7]}</p></div></div>
+    </div>`).join("") || `<p class="prog-note">No events match this filter on this day.</p>`;
+}
+dayTabs.addEventListener("click", e => { const b = e.target.closest("[data-day]"); if (!b) return; state.day = +b.dataset.day; buildControls(); render(); });
+typeChips.addEventListener("click", e => { const b = e.target.closest("[data-type]"); if (!b) return; state.type = b.dataset.type; buildControls(); render(); });
+venueChips.addEventListener("click", e => { const b = e.target.closest("[data-venue]"); if (!b) return; state.venue = b.dataset.venue; buildControls(); render(); });
+evList.addEventListener("click", e => { const b = e.target.closest(".ev-row"); if (!b) return;
+  const ev = b.parentElement, open = ev.classList.toggle("open"); b.setAttribute("aria-expanded", open); });
+buildControls(); render();
+/* ---------- NOTICE / RESERVE / NEWSLETTER ---------- */
+const notice = document.getElementById("notice");
+document.getElementById("noticeClose").addEventListener("click", () => notice.close());
+document.addEventListener("click", e => { const b = e.target.closest(".js-reserve"); if (!b) return;
+  document.getElementById("noticeTitle").textContent = b.dataset.pass;
+  document.getElementById("noticeText").textContent = "The box office opens 3 May 2027 at 10:00 CET. This is a concept edition of NOMAD — reservations are not yet live, but the queue, like the signal, begins early.";
+  notice.showModal(); });
+document.getElementById("nlForm").addEventListener("submit", e => { e.preventDefault();
+  document.getElementById("nlMsg").textContent = "Received. One transmission per month until July 2027.";
+  e.target.reset(); });
+</script>
+</body>
+</html>
