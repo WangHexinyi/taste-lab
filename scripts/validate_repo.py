@@ -12,6 +12,11 @@ from zipfile import BadZipFile, ZipFile
 
 
 ROOT = Path(__file__).resolve().parents[1]
+REPOSITORY_URL = "https://github.com/WangHexinyi/taste-lab"
+TRACK_URLS = {
+    "prompt": f"{REPOSITORY_URL}/tree/main/prompt",
+    "agent": f"{REPOSITORY_URL}/tree/main/agent",
+}
 PROMPT_ARCHIVES = {
     "v0.0": ROOT / "archive" / "v0.0" / "TasteSkill.md",
     "v0.1": ROOT / "archive" / "v0.1" / "TasteSkill--V10.2.md",
@@ -199,9 +204,10 @@ def validate_track_readmes(errors: list[str]) -> None:
     prompt_readme = ROOT / "prompt" / "README.md"
     agent_readme = ROOT / "agent" / "README.md"
 
-    for href, target in (("prompt/", prompt_readme), ("agent/", agent_readme)):
+    for track, target in (("prompt", prompt_readme), ("agent", agent_readme)):
+        href = TRACK_URLS[track]
         if f'href="{href}"' not in landing:
-            errors.append(f"repository landing page must link to independent {href} page")
+            errors.append(f"repository landing page must link to canonical {track} page URL")
         if not target.is_file():
             errors.append(f"missing independent track page: {target.relative_to(ROOT)}")
 
@@ -218,6 +224,31 @@ def validate_track_readmes(errors: list[str]) -> None:
         errors.append("Prompt Lab page must not inline Agent Lab content")
     if "## Prompt Lab" in agent_text:
         errors.append("Agent Lab page must not inline Prompt Lab content")
+
+    for readme, text, other_track in (
+        (prompt_readme, prompt_text, "agent"),
+        (agent_readme, agent_text, "prompt"),
+    ):
+        for required_url in (REPOSITORY_URL, TRACK_URLS[other_track]):
+            if f'href="{required_url}"' not in text:
+                errors.append(
+                    f"track navigation must use canonical URL in {readme.relative_to(ROOT)}: "
+                    f"{required_url}"
+                )
+        if 'href="../"' in text:
+            errors.append(f"track home link must not resolve through /blob/main: {readme.relative_to(ROOT)}")
+
+    gallery_text = (ROOT / "docs" / "index.html").read_text(encoding="utf-8")
+    for public_path, public_text in (
+        (agent_readme, agent_text),
+        (ROOT / "docs" / "index.html", gallery_text),
+    ):
+        for product_specific_text in ("Antigravity", ".agent/skill"):
+            if product_specific_text in public_text:
+                errors.append(
+                    f"public Agent guidance must remain host-neutral: "
+                    f"{public_path.relative_to(ROOT)} contains {product_specific_text}"
+                )
 
     for readme, text in (
         (landing_readme, landing),

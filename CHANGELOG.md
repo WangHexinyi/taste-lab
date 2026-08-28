@@ -4,6 +4,7 @@ All notable public releases of Taste Lab are documented here.
 
 ## [Unreleased]
 
+- Fixed independent-track home links to use the canonical repository URL and made public Agent installation guidance host-neutral.
 - Replaced same-page README anchors with independent Prompt Lab and Agent Lab pages, with direct switching between them.
 - Split Taste Lab into parallel Prompt Lab and Agent Lab tracks.
 - Added Prompt V0.5–V0.7 with six original HTML demos; V0.7 is the current prompt release.

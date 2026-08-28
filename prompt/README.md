@@ -1,4 +1,4 @@
-<p align="center"><a href="../">Taste Lab 首页</a> · <strong>Prompt Lab</strong> · <a href="../agent/">切换到 Agent Lab →</a></p>
+<p align="center"><a href="https://github.com/WangHexinyi/taste-lab">Taste Lab 首页</a> · <strong>Prompt Lab</strong> · <a href="https://github.com/WangHexinyi/taste-lab/tree/main/agent">切换到 Agent Lab →</a></p>
 
 <h1 align="center">Prompt Lab · 纯提示词路线</h1>
 
@@ -10,7 +10,7 @@
 <p align="center">
   <a href="../archive/v0.7/TasteSkillAdaptive.md"><img alt="Prompt V0.7" src="https://img.shields.io/badge/PROMPT-V0.7-66705f?style=for-the-badge"></a>
   <a href="https://wanghexinyi.github.io/taste-lab/#prompt"><img alt="Prompt Gallery" src="https://img.shields.io/badge/OPEN-PROMPT_GALLERY-bc8f6f?style=for-the-badge"></a>
-  <a href="../agent/"><img alt="Switch to Agent Lab" src="https://img.shields.io/badge/SWITCH-AGENT_LAB-667f98?style=for-the-badge"></a>
+  <a href="https://github.com/WangHexinyi/taste-lab/tree/main/agent"><img alt="Switch to Agent Lab" src="https://img.shields.io/badge/SWITCH-AGENT_LAB-667f98?style=for-the-badge"></a>
 </p>
 
 ### 怎么使用
@@ -162,4 +162,4 @@ V0.0 原始目录没有 HTML，因此只保留 prompt-only 起点，不用其他
 
 ---
 
-<p align="center"><a href="../">← 返回路线选择</a> · <a href="../agent/">切换到 Agent Lab →</a></p>
+<p align="center"><a href="https://github.com/WangHexinyi/taste-lab">← 返回路线选择</a> · <a href="https://github.com/WangHexinyi/taste-lab/tree/main/agent">切换到 Agent Lab →</a></p>

@@ -7,8 +7,8 @@
 
 <p align="center">
   <a href="https://wanghexinyi.github.io/taste-lab/"><img alt="Interactive Track Switch" src="https://img.shields.io/badge/INTERACTIVE-TRACK_SWITCH-bc8f6f?style=for-the-badge"></a>
-  <a href="prompt/"><img alt="Prompt Lab" src="https://img.shields.io/badge/OPEN-PROMPT_LAB-66705f?style=for-the-badge"></a>
-  <a href="agent/"><img alt="Agent Lab" src="https://img.shields.io/badge/OPEN-AGENT_LAB-667f98?style=for-the-badge"></a>
+  <a href="https://github.com/WangHexinyi/taste-lab/tree/main/prompt"><img alt="Prompt Lab" src="https://img.shields.io/badge/OPEN-PROMPT_LAB-66705f?style=for-the-badge"></a>
+  <a href="https://github.com/WangHexinyi/taste-lab/tree/main/agent"><img alt="Agent Lab" src="https://img.shields.io/badge/OPEN-AGENT_LAB-667f98?style=for-the-badge"></a>
   <a href="LICENSE"><img alt="MIT License" src="https://img.shields.io/badge/LICENSE-MIT-222222?style=for-the-badge"></a>
 </p>
 
@@ -20,13 +20,13 @@
       <h3>Prompt Lab · 纯提示词路线</h3>
       <p><strong>无需安装。</strong>把一个 Markdown 文件与你自己的需求一起发给任意 AI，并要求它严格按文件完成任务。</p>
       <p><strong>版本：</strong>V0.0–V0.7<br><strong>证据：</strong>13 个原始 HTML<br><strong>当前版：</strong>V0.7</p>
-      <p><strong><a href="prompt/">进入 Prompt Lab 独立页面 →</a></strong></p>
+      <p><strong><a href="https://github.com/WangHexinyi/taste-lab/tree/main/prompt">进入 Prompt Lab 独立页面 →</a></strong></p>
     </td>
     <td width="50%" valign="top">
       <h3>Agent Lab · Agent 配置路线</h3>
       <p><strong>需要安装。</strong>每个版本都包含 SKILL.md、references、scripts 和样例，用来长期增强 Agent 的前端能力。</p>
       <p><strong>版本：</strong>A0.1–A0.3<br><strong>证据：</strong>包内自测脚本<br><strong>当前版：</strong>A0.3</p>
-      <p><strong><a href="agent/">进入 Agent Lab 独立页面 →</a></strong></p>
+      <p><strong><a href="https://github.com/WangHexinyi/taste-lab/tree/main/agent">进入 Agent Lab 独立页面 →</a></strong></p>
     </td>
   </tr>
 </table>
