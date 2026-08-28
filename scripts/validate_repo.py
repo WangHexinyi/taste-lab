@@ -193,15 +193,62 @@ def validate_gallery_links(errors: list[str]) -> None:
             errors.append(f"broken local gallery link: {href}")
 
 
-def validate_readme_previews(errors: list[str]) -> None:
-    readme = (ROOT / "README.md").read_text(encoding="utf-8")
-    refs = re.findall(r'src="(docs/previews/[^"]+\.webp)"', readme)
+def validate_track_readmes(errors: list[str]) -> None:
+    landing_readme = ROOT / "README.md"
+    landing = landing_readme.read_text(encoding="utf-8")
+    prompt_readme = ROOT / "prompt" / "README.md"
+    agent_readme = ROOT / "agent" / "README.md"
+
+    for href, target in (("prompt/", prompt_readme), ("agent/", agent_readme)):
+        if f'href="{href}"' not in landing:
+            errors.append(f"repository landing page must link to independent {href} page")
+        if not target.is_file():
+            errors.append(f"missing independent track page: {target.relative_to(ROOT)}")
+
+    if 'href="#prompt-lab' in landing or 'href="#agent-lab' in landing:
+        errors.append("repository landing page must not use same-page track anchors")
+    if "## Prompt Lab" in landing or "## Agent Lab" in landing:
+        errors.append("repository landing page must not inline either track's long content")
+    if not prompt_readme.is_file() or not agent_readme.is_file():
+        return
+
+    prompt_text = prompt_readme.read_text(encoding="utf-8")
+    agent_text = agent_readme.read_text(encoding="utf-8")
+    if "## Agent Lab" in prompt_text:
+        errors.append("Prompt Lab page must not inline Agent Lab content")
+    if "## Prompt Lab" in agent_text:
+        errors.append("Agent Lab page must not inline Prompt Lab content")
+
+    for readme, text in (
+        (landing_readme, landing),
+        (prompt_readme, prompt_text),
+        (agent_readme, agent_text),
+    ):
+        refs = re.findall(r'\[[^\]]*\]\(([^)]+)\)', text)
+        refs += re.findall(r'(?:href|src)="([^"]+)"', text)
+        for ref in refs:
+            parsed = urlparse(ref)
+            if parsed.scheme or parsed.netloc or ref.startswith(("#", "mailto:")):
+                continue
+            target = (readme.parent / unquote(parsed.path)).resolve()
+            try:
+                target.relative_to(ROOT)
+            except ValueError:
+                errors.append(f"track README link escapes repository: {readme.relative_to(ROOT)} -> {ref}")
+                continue
+            if not target.exists():
+                errors.append(f"broken track README link: {readme.relative_to(ROOT)} -> {ref}")
+
+    refs = re.findall(r'src="(\.\./docs/previews/[^"]+\.webp)"', prompt_text)
     expected = sum(PREVIEW_COUNTS.values())
     if len(refs) != expected or len(set(refs)) != expected:
-        errors.append(f"README must embed {expected} unique animated previews, found {len(set(refs))}")
+        errors.append(
+            f"Prompt Lab page must embed {expected} unique animated previews, "
+            f"found {len(set(refs))}"
+        )
     for ref in refs:
-        if not (ROOT / ref).is_file():
-            errors.append(f"README references a missing animated preview: {ref}")
+        if not (prompt_readme.parent / ref).is_file():
+            errors.append(f"Prompt Lab page references a missing animated preview: {ref}")
 
 
 def validate_secrets(errors: list[str]) -> None:
@@ -221,7 +268,7 @@ def main() -> int:
     validate_previews(errors)
     validate_agent_versions(errors)
     validate_gallery_links(errors)
-    validate_readme_previews(errors)
+    validate_track_readmes(errors)
     validate_secrets(errors)
     if errors:
         for error in errors:

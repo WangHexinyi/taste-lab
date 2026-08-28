@@ -1,12 +1,25 @@
-# Agent Lab
+<p align="center"><a href="../">Taste Lab 首页</a> · <a href="../prompt/">← 切换到 Prompt Lab</a> · <strong>Agent Lab</strong></p>
 
-这里保存三套可安装的 `taste-frontend` Agent Skill。每个版本都同时提供原始 ZIP 和完全展开、可直接审阅的源文件。
+<h1 align="center">Agent Lab · Agent 配置路线</h1>
 
-| 版本 | 包内版本 | 主要变化 | 自测 |
-| --- | --- | --- | --- |
-| A0.1 | `4.2-portable` | Portable foundation | PASS |
-| A0.2 | `4.3-spatial-experiment` | Spatial media reference + benchmark | PASS |
-| **A0.3** | `4.4-composition-motion-experiment` | Composition/motion reference + handoff | **PASS** |
+<p align="center">
+  <strong>安装完整文件夹，长期增强 Agent 的前端能力。</strong><br>
+  A0.1–A0.3 · 完整源码与原始 ZIP · 当前版 A0.3
+</p>
+
+<p align="center">
+  <a href="a0.3/taste-frontend/SKILL.md"><img alt="Agent A0.3" src="https://img.shields.io/badge/AGENT-A0.3-667f98?style=for-the-badge"></a>
+  <a href="downloads/taste_frontend_A0.3_bundle.zip?raw=1"><img alt="Download Agent A0.3" src="https://img.shields.io/badge/DOWNLOAD-A0.3-bc8f6f?style=for-the-badge"></a>
+  <a href="../prompt/"><img alt="Switch to Prompt Lab" src="https://img.shields.io/badge/SWITCH-PROMPT_LAB-66705f?style=for-the-badge"></a>
+</p>
+
+这里保存三套可安装的 `taste-frontend` Agent Skill。这条路线不是把 Markdown 临时附在提示词里，而是安装包含 `SKILL.md`、`references/`、`scripts/` 和样例的完整文件夹。每个版本都同时提供原始 ZIP 和完全展开、可直接审阅的源文件。
+
+| 版本 | 包内版本 | 主要变化 | 源码 | 下载 | 自测 |
+| --- | --- | --- | --- | --- | --- |
+| A0.1 | `4.2-portable` | Portable foundation | [浏览完整文件夹](a0.1/taste-frontend) | [下载 ZIP](downloads/taste_frontend_A0.1_portable_bundle.zip?raw=1) | PASS |
+| A0.2 | `4.3-spatial-experiment` | Spatial media reference + benchmark | [浏览完整文件夹](a0.2/taste-frontend) | [下载 ZIP](downloads/taste_frontend_A0.2_spatial_experiment_bundle.zip?raw=1) | PASS |
+| **A0.3** | `4.4-composition-motion-experiment` | Composition/motion reference + handoff | **[浏览完整文件夹](a0.3/taste-frontend)** | **[下载当前版 ZIP](downloads/taste_frontend_A0.3_bundle.zip?raw=1)** | **PASS** |
 
 ## Antigravity 安装
 
@@ -33,3 +46,7 @@ your-project/
 - 三个版本的 `scripts/self-test.mjs` 均返回 `RESULT: PASS`。
 - 原始包使用便携式 `compatibility` frontmatter。Codex 专用 `quick_validate.py` 不接受这个扩展字段，因此仓库原样保留它，不将 Codex 的宿主规则冒充成通用 Agent 标准。
 - 目前没有专门对应三套 Agent 版本的演示 HTML；Prompt Lab 的页面不会被标成 Agent Lab 的效果。
+
+---
+
+<p align="center"><a href="../">← 返回路线选择</a> · <a href="../prompt/">← 切换到 Prompt Lab</a></p>
